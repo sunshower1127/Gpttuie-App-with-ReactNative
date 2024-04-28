@@ -4,7 +4,7 @@ import Recipes from "../pages/tabs/recipes";
 import Subscribes from "../pages/tabs/subscribes";
 import Profile from "../pages/tabs/profile";
 import { BottomNavigation } from "react-native-paper";
-import CreateRecipeBtn from "../components/create-recipe-btn";
+import CreateRecipeBtn from "../components/createRecipeBtn";
 import CreateRecipe from "../pages/tabs/createRecipe";
 
 export default function TabNavigation() {
