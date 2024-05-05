@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   icon: {
     borderColor: "black",
     borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 20,
     width: 40,
     height: 40,
     alignItems: "center",
