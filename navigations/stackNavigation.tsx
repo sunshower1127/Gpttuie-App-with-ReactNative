@@ -13,7 +13,11 @@ export type RootStackParamList = {
   메인: undefined;
   알림: undefined;
   검색: undefined;
-  "레시피 선택": undefined;
+  "레시피 선택": {
+    servingSize: number;
+    country: string;
+    ingredients: string[];
+  };
   "레시피 프로세스": undefined;
 };
 

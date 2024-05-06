@@ -1,25 +1,32 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import Picker from "react-native-picker-select";
 
 export default function ServingSizePicker(props) {
   const theme = useTheme();
+  const pickerStyle = {
+    inputAndroid: { fontSize: 16, padding: 10 },
+    inputIOS: {
+      width: 36,
+      height: 36,
+      fontSize: 22,
+      padding: 10,
+      borderRadius: 18,
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+    },
+  };
+
   return (
-    <View style={[styles.container]}>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+    >
       <Picker
         {...props}
-        style={{
-          inputAndroid: { fontSize: 16, padding: 10 },
-          inputIOS: {
-            width: 36,
-            height: 36,
-            fontSize: 22,
-            padding: 10,
-            borderRadius: 18,
-            borderWidth: 2,
-            borderColor: theme.colors.primary,
-          },
-        }}
+        style={pickerStyle}
         items={[
           { label: "1", value: 1 },
           { label: "2", value: 2 },
@@ -36,10 +43,3 @@ export default function ServingSizePicker(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});

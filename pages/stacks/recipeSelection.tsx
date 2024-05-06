@@ -4,7 +4,7 @@ import { Text } from "react-native-paper";
 export default function RecipeSelection() {
   return (
     <View>
-      <Text variant={"headlineLarge"}>Recipe Setup</Text>
+      <Text variant={"headlineLarge"}>Recipe Selection</Text>
     </View>
   );
 }

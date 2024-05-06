@@ -1,26 +1,18 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
-import {
-  Button,
-  Divider,
-  SegmentedButtons,
-  Snackbar,
-  Text,
-  useTheme,
-} from "react-native-paper";
-import { ingredients } from "../../assets/ingredients";
+import { Button, Snackbar, Text } from "react-native-paper";
 import IngredigentsPicker from "../../components/ingredientsPicker";
 import CountryBtn from "../../components/countryBtn";
 import ServingSizePicker from "../../components/servingSizePicker";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../../navigations/stackNavigation";
 
 export default function CreateRecipe() {
   const [ingredients, setIngredients] = useState([]);
   const [country, setCountry] = useState("한식");
   const [servingSize, setServingSize] = useState(1);
   const [visible, setVisible] = useState(false);
-  const theme = useTheme();
-
+  const navigation = useNavigation<RootStackNavigationProp>();
   const onPress = () => {
     if (ingredients.length === 0) {
       setVisible(true);
@@ -30,6 +22,11 @@ export default function CreateRecipe() {
     console.log("servingSize", servingSize);
     console.log("country", country);
     console.log("ingredients", ingredients);
+    navigation.push("레시피 선택", {
+      servingSize,
+      country,
+      ingredients,
+    });
   };
 
   return (
