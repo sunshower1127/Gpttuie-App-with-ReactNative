@@ -8,6 +8,7 @@ import RecipeSelection from "../pages/stacks/recipeSelection";
 import RecipeProcess from "../pages/stacks/recipeProcess";
 import Notifications from "../pages/stacks/notifications";
 import Search from "../pages/stacks/search";
+import { useTheme } from "react-native-paper";
 
 export type RootStackParamList = {
   메인: undefined;
@@ -27,6 +28,7 @@ export type RootStackNavigationProp =
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
+  const theme = useTheme();
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -37,7 +39,11 @@ export default function StackNavigation() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="알림" component={Notifications} />
+        <Stack.Screen
+          name="알림"
+          component={Notifications}
+          options={{ headerStyle: { backgroundColor: theme.colors.primary } }}
+        />
         <Stack.Screen name="검색" component={Search} />
         <Stack.Screen name="레시피 선택" component={RecipeSelection} />
         <Stack.Screen name="레시피 프로세스" component={RecipeProcess} />
