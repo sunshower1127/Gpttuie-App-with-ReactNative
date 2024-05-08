@@ -1,10 +1,5 @@
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import WebView from "react-native-webview";
 
 export default function Home() {
-  return (
-    <View>
-      <Text variant={"headlineLarge"}>Home</Text>
-    </View>
-  );
+  return <WebView source={{ uri: "https://gpttuie.web.app/" }} />;
 }

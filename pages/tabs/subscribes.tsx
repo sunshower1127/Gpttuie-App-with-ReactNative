@@ -1,10 +1,5 @@
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import WebView from "react-native-webview";
 
 export default function Subscribes() {
-  return (
-    <View>
-      <Text variant={"headlineLarge"}>Subscribes</Text>
-    </View>
-  );
+  return <WebView source={{ uri: "https://gpttuie.web.app/login" }} />;
 }
