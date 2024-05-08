@@ -1,29 +1,10 @@
-import React from "react";
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-} from "react-native";
-import SimpleRecipeCard from "../../components/SimpleRecipeCard";
+import { View } from "react-native";
+import { Text } from "react-native-paper";
 
 export default function RecipeSelection() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <SimpleRecipeCard />
-        <SimpleRecipeCard />
-        <SimpleRecipeCard />
-      </ScrollView>
-    </SafeAreaView>
+    <View>
+      <Text variant={"headlineLarge"}>Recipe Setup</Text>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    backgroundColor: "#fff",
-  },
-});
