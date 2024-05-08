@@ -5,7 +5,15 @@ import Picker from "react-native-picker-select";
 export default function ServingSizePicker(props) {
   const theme = useTheme();
   const pickerStyle = {
-    inputAndroid: { fontSize: 16, padding: 10 },
+    inputAndroid: {
+      width: 36,
+      height: 36,
+      fontSize: 22,
+      padding: 10,
+      borderRadius: 18,
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+    },
     inputIOS: {
       width: 36,
       height: 36,
