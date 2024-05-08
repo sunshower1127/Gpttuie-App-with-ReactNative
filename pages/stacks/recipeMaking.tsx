@@ -65,7 +65,7 @@ export default function RecipeMaking() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: 'Bearer ' + config.apiKey,
+                    Authorization: 'Bearer ' + config.API_KEY,
                 },
                 body: JSON.stringify(data)
             });
