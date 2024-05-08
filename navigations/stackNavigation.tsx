@@ -8,6 +8,7 @@ import RecipeSelection from "../pages/stacks/recipeSelection";
 import RecipeProcess from "../pages/stacks/recipeProcess";
 import Notifications from "../pages/stacks/notifications";
 import Search from "../pages/stacks/search";
+import { useTheme } from "react-native-paper";
 
 export type RootStackParamList = {
   메인: undefined;
@@ -27,8 +28,21 @@ export type RootStackNavigationProp =
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
+  const theme = useTheme();
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      theme={{
+        colors: {
+          primary: theme.colors.primary,
+          background: theme.colors.background,
+          card: theme.colors.surface,
+          text: "black",
+          border: "black",
+          notification: "black",
+        },
+        dark: false,
+      }}
+    >
       <Stack.Navigator>
         <Stack.Screen
           name="메인"
