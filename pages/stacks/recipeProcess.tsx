@@ -11,11 +11,12 @@ import {
   StatusBar,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const App = () => {
   const [steps, setSteps] = useState([
     { image: null, description: "1. 재료 준비", timer: null },
-    { image: null, description: "2. ", timer: null },
+    { image: null, description: "2. ", timer: "5분" },
     { image: null, description: "3. ", timer: null },
   ]);
 
@@ -63,8 +64,14 @@ const App = () => {
     }
   };
 
+  const handleShowTimer = () => {};
+
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.recipeTitle}>두마리 치킨</Text>
+        <Text style={styles.servingInfo}>2인분</Text>
+      </View>
       <TouchableOpacity onPress={handlePickImage} style={styles.imageContainer}>
         {item.image ? (
           <Image source={{ uri: item.image }} style={styles.image} />
@@ -73,11 +80,15 @@ const App = () => {
         )}
       </TouchableOpacity>
       <Text style={styles.recipeTitle}>{item.description}</Text>
-      <Text style={styles.servingInfo}>Serving</Text>
       <Text style={styles.ingredientsTitle}>요리 재료</Text>
-      <Text style={styles.stepsTitle}>
-        {item.timer ? `타이머: ${item.timer}` : "타이머 없음"}
-      </Text>
+      <View style={styles.stepsTitle}>
+        {item.timer ? (
+          <TouchableOpacity onPress={handleShowTimer}>
+            <Icon name="clock-o" size={50} color="black" />
+            <Text>{item.timer}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
     </View>
   );
 
@@ -135,10 +146,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginTop: 16,
+    marginLeft: 5,
   },
   servingInfo: {
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 24,
+    marginRight: 5,
   },
   ingredientsTitle: {
     fontSize: 18,
