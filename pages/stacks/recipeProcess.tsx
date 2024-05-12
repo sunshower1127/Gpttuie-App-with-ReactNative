@@ -1,34 +1,22 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  Animated,
-  Dimensions,
-  StatusBar,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Animated, Dimensions, StatusBar } from "react-native";
+import { IconButton, MD3Colors } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const App = () => {
   const [steps, setSteps] = useState([
-    { image: null, description: "1. 재료 준비", timer: null },
-    { image: null, description: "2. ", timer: "5분" },
-    { image: null, description: "3. ", timer: null },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "1. 재료 준비", timer: null },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "2. 식빵을 준비해주세요. 그리고 밀대로 밀어줍니다.", timer: null },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 올려주세요", timer: "5분" },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "4. 식빵 끝부분에 계란물을 묻혀 줍니다.", timer: null },
   ]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
-  const renderDots = (steps) => {
-    const dotPosition = Animated.divide(
-      scrollX,
-      Dimensions.get("window").width
-    );
-    const dotsArray = Array(steps.length).fill(0);
+  const renderDots = (pages) => {
+    const dotPosition = Animated.divide(scrollX, Dimensions.get("window").width);
+    const dotsArray = Array(pages.length).fill(0);
 
     return (
       <View style={styles.dotContainerHorizontal}>
@@ -45,7 +33,7 @@ const App = () => {
     );
   };
 
-  const handlePickImage = async () => {
+  const handlePickImage = async (index) => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
       alert("카메라 권한을 허용해 주세요");
@@ -61,6 +49,8 @@ const App = () => {
 
     if (!result.canceled) {
       const newSteps = [...steps];
+      newSteps[index].image = result.assets[0].uri;
+      setSteps(newSteps);
     }
   };
 
@@ -69,22 +59,21 @@ const App = () => {
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={styles.recipeTitle}>두마리 치킨</Text>
-        <Text style={styles.servingInfo}>2인분</Text>
+        <Text style={styles.recipeTitle}>{item.title}</Text>
+        <Text style={styles.servingInfo}>{item.serving}</Text>
       </View>
-      <TouchableOpacity onPress={handlePickImage} style={styles.imageContainer}>
+      <TouchableOpacity onPress={() => handlePickImage(index)} style={styles.imageContainer}>
         {item.image ? (
           <Image source={{ uri: item.image }} style={styles.image} />
         ) : (
-          <Text style={styles.cameraText}>Touch to take a photo</Text>
+          <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
         )}
       </TouchableOpacity>
-      <Text style={styles.recipeTitle}>{item.description}</Text>
-      <Text style={styles.ingredientsTitle}>요리 재료</Text>
+
+      <Text style={styles.stepsTitle}>{item.description}</Text>
       <View style={styles.stepsTitle}>
         {item.timer ? (
           <TouchableOpacity onPress={handleShowTimer}>
-            <Icon name="clock-o" size={50} color="black" />
             <Text>{item.timer}</Text>
           </TouchableOpacity>
         ) : null}
@@ -101,16 +90,9 @@ const App = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
         onMomentumScrollEnd={(event) => {
-          setCurrentIndex(
-            Math.floor(
-              event.nativeEvent.contentOffset.x / Dimensions.get("window").width
-            )
-          );
+          setCurrentIndex(Math.floor(event.nativeEvent.contentOffset.x / Dimensions.get("window").width));
         }}
       />
       {renderDots(steps)}
@@ -130,7 +112,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: 200,
-    backgroundColor: "lightgray",
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
   },

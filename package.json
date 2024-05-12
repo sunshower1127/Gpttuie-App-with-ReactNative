@@ -12,7 +12,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@types/react": "~18.2.45",
-    "expo": "^51.0.1",
+    "expo": "^50.0.14",
     "expo-image-picker": "~14.7.1",
     "expo-status-bar": "~1.11.1",
     "openai": "^4.0.0",
