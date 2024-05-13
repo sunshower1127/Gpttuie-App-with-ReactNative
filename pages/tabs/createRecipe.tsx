@@ -7,6 +7,7 @@ import ServingSizePicker from "../../components/servingSizePicker";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../../navigations/stackNavigation";
 
+
 export default function CreateRecipe() {
   const [ingredients, setIngredients] = useState([]);
   const [country, setCountry] = useState("한식");
@@ -47,6 +48,7 @@ export default function CreateRecipe() {
         value={ingredients}
         setValue={setIngredients}
       />
+
       <Button
         mode={"contained"}
         style={styles.item}
