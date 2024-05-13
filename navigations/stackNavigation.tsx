@@ -55,8 +55,20 @@ export default function StackNavigation() {
         />
         <Stack.Screen name="알림" component={Notifications} />
         <Stack.Screen name="검색" component={Search} />
-        <Stack.Screen name="레시피 선택" component={RecipeSelection} />
-        <Stack.Screen name="레시피 프로세스" component={RecipeProcess} />
+        <Stack.Screen
+          name="레시피 선택"
+          component={RecipeSelection}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="레시피 프로세스"
+          component={RecipeProcess}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="레시피 생성" component={RecipeMaking} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,25 +1,42 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  Animated, // 추가: 애니메이션을 위해 Animated import
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Animated, Dimensions, StatusBar } from "react-native";
+import { IconButton, MD3Colors } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 
-const RecipeStep = () => {
-  const [steps, setSteps] = useState([{ image: null, description: "" }]);
-  const scrollX = new Animated.Value(0); // 추가: 페이지 스크롤 위치를 추적하기 위한 Animated.Value
+const App = () => {
+  const [steps, setSteps] = useState([
+    { title: "치즈토스트", serving: "2인분", image: null, description: "1. 재료 준비", timer: null },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "2. 식빵을 준비해주세요. 그리고 밀대로 밀어줍니다.", timer: null },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 올려주세요", timer: "5분" },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "4. 식빵 끝부분에 계란물을 묻혀 줍니다.", timer: null },
+  ]);
 
-  const pickImage = async () => {
-    // 권한 요청 수정
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollX = React.useRef(new Animated.Value(0)).current;
+
+  const renderDots = (pages) => {
+    const dotPosition = Animated.divide(scrollX, Dimensions.get("window").width);
+    const dotsArray = Array(pages.length).fill(0);
+
+    return (
+      <View style={styles.dotContainerHorizontal}>
+        {dotsArray.map((_, i) => {
+          const opacity = dotPosition.interpolate({
+            inputRange: [i - 1, i, i + 1],
+            outputRange: [0.3, 1, 0.3],
+            extrapolate: "clamp",
+          });
+
+          return <Animated.View key={i} style={[styles.dot, { opacity }]} />;
+        })}
+      </View>
+    );
+  };
+
+  const handlePickImage = async (index) => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
-      alert("Sorry, we need camera roll permissions to make this work!");
+      alert("카메라 권한을 허용해 주세요");
       return;
     }
 
@@ -32,141 +49,115 @@ const RecipeStep = () => {
 
     if (!result.canceled) {
       const newSteps = [...steps];
+      newSteps[index].image = result.assets[0].uri;
+      setSteps(newSteps);
     }
   };
 
-  const renderDots = () => {
-    const dotPosition = Animated.divide(scrollX, 300); // 수정: 페이지 너비로 scrollX를 나눔 (300은 카드 너비)
+  const handleShowTimer = () => { };
 
-    return (
-      <View style={styles.dotContainer}>
-        {steps.map((_, i) => {
-          // Animated.View 및 interpolate를 사용하여 동적 스타일링
-          const opacity = dotPosition.interpolate({
-            inputRange: [i - 1, i, i + 1],
-            outputRange: [0.3, 1, 0.3], // 현재 페이지의 점은 불투명
-            extrapolate: "clamp",
-          });
-
-          return (
-            <Animated.View
-              key={i}
-              style={[styles.dot, { opacity }]} // 수정: 동적으로 opacity 적용
-            />
-          );
-        })}
+  const renderItem = ({ item, index }) => (
+    <View style={styles.card}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.recipeTitle}>{item.title}</Text>
+        <Text style={styles.servingInfo}>{item.serving}</Text>
       </View>
-    );
-  };
+      <TouchableOpacity onPress={() => handlePickImage(index)} style={styles.imageContainer}>
+        {item.image ? (
+          <Image source={{ uri: item.image }} style={styles.image} />
+        ) : (
+          <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
+        )}
+      </TouchableOpacity>
+
+      <Text style={styles.stepsTitle}>{item.description}</Text>
+      <View style={styles.stepsTitle}>
+        {item.timer ? (
+          <TouchableOpacity onPress={handleShowTimer}>
+            <Text>{item.timer}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      {steps.map((step, index) => (
-        <View key={index} style={styles.card}>
-          <TouchableOpacity onPress={pickImage} style={styles.imageContainer}>
-            {step.image ? (
-              <Image source={{ uri: step.image }} style={styles.image} />
-            ) : (
-              <Text style={styles.cameraText}>Touch to take a photo</Text>
-            )}
-          </TouchableOpacity>
-          <Text style={styles.recipeTitle}>요리 이름</Text>
-          <Text style={styles.servingInfo}>Serving</Text>
-          <Text style={styles.ingredientsTitle}>요리 재료</Text>
-          <Text style={styles.stepsTitle}>요리 단계</Text>
-        </View>
-      ))}
-      {renderDots()}
-      <TextInput
-        style={[styles.input, { marginTop: 50, maxHeight: 120 }]}
-        placeholder="요리 단계 입력"
-        multiline
+      <FlatList
+        data={steps}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
+        onMomentumScrollEnd={(event) => {
+          setCurrentIndex(Math.floor(event.nativeEvent.contentOffset.x / Dimensions.get("window").width));
+        }}
       />
+      {renderDots(steps)}
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    paddingTop: StatusBar.currentHeight,
   },
   card: {
-    marginTop: 20,
-    height: 600,
-    backgroundColor: "white",
-    borderRadius: 8,
+    width: Dimensions.get("window").width,
     padding: 16,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    backgroundColor: "white",
   },
   imageContainer: {
-    width: 300,
     height: 200,
-    borderRadius: 8,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 16,
   },
   image: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: 8,
   },
   cameraText: {
     fontSize: 16,
-    color: "#999",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    marginVertical: 10,
-    width: 300,
-  },
-  dotContainer: {
-    flexDirection: "row",
-    marginTop: 16,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#ccc",
-    marginHorizontal: 4,
-  },
-  activeDot: {
-    backgroundColor: "#333",
   },
   recipeTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginTop: 16,
+    marginLeft: 5,
   },
   servingInfo: {
     fontSize: 16,
-    color: "gray",
-    marginBottom: 20,
+    marginTop: 24,
+    marginRight: 5,
   },
   ingredientsTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginTop: 16,
   },
   stepsTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 16,
+  },
+  dotContainerHorizontal: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 16,
+  },
+  dot: {
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    backgroundColor: "gray",
+    marginHorizontal: 4,
   },
 });
 
-export default RecipeStep;
+export default App;
