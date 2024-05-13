@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, Image, TouchableOpacity, StyleSheet, TextInput, ScrollView, Animated, } from 'react-native';
+import { View, Button, Text, Image, TouchableOpacity, StyleSheet, TextInput, ScrollView, Animated, StatusBar } from 'react-native';
 import config from '../../apikey.js';
 import { useRoute } from '@react-navigation/native'; //useRoute 사용을 하여 값을 가져옴
 import { RootStackParamList } from '../../navigations/stackNavigation';  //값 저장된 위치 => navigations/stackNavigation.tsx

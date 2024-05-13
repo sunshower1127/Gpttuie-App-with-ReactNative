@@ -9,7 +9,6 @@ import RecipeProcess from "../pages/stacks/recipeProcess";
 import Notifications from "../pages/stacks/notifications";
 import Search from "../pages/stacks/search";
 import { useTheme } from "react-native-paper";
-import RecipeMaking from "../pages/stacks/recipeMaking";
 
 export type RootStackParamList = {
   메인: undefined;
@@ -69,7 +68,6 @@ export default function StackNavigation() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="레시피 생성" component={RecipeMaking} />
       </Stack.Navigator>
     </NavigationContainer>
   );
