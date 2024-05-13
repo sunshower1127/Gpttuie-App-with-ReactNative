@@ -30,7 +30,10 @@ const SimpleRecipeCard = () => {
   return (
     <View style={styles.container}>
       <Card mode="outlined">
-        <Card.Title title={recipeInfo[0].title} subtitle={recipeInfo[0].estimatedTime} />
+        <Card.Title
+          title={recipeInfo[0].title}
+          subtitle={recipeInfo[0].estimatedTime}
+        />
         <Card.Content>
           <Text variant="titleLarge">재료</Text>
           <Text variant="bodyMedium">{recipeInfo[0].ingredients}</Text>

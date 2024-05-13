@@ -1,14 +1,51 @@
 import React, { useState } from "react";
-import { Modal, Alert, View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Animated, Dimensions, StatusBar, Vibration } from "react-native";
+import {
+  Modal,
+  Alert,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  Animated,
+  Dimensions,
+  StatusBar,
+  Vibration,
+} from "react-native";
 import { IconButton, MD3Colors, List, Icon } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 
 const App = () => {
   const [steps, setSteps] = useState([
-    { title: "치즈토스트", serving: "2인분", image: null, description: "1. 재료를 준비합니다.", timer: null },
-    { title: "치즈토스트", serving: "2인분", image: null, description: "2. 식빵을 준비해주세요. \n 그리고 밀대로 밀어줍니다.", timer: "00:10" },
-    { title: "치즈토스트", serving: "2인분", image: null, description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 \n 올려주세요", timer: null },
-    { title: "치즈토스트", serving: "2인분", image: null, description: "4. 식빵 끝부분에 계란물을 묻혀 줍니다.", timer: null },
+    {
+      title: "치즈토스트",
+      serving: "2인분",
+      image: null,
+      description: "1. 재료를 준비합니다.",
+      timer: null,
+    },
+    {
+      title: "치즈토스트",
+      serving: "2인분",
+      image: null,
+      description: "2. 식빵을 준비해주세요. \n 그리고 밀대로 밀어줍니다.",
+      timer: "00:10",
+    },
+    {
+      title: "치즈토스트",
+      serving: "2인분",
+      image: null,
+      description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 \n 올려주세요",
+      timer: null,
+    },
+    {
+      title: "치즈토스트",
+      serving: "2인분",
+      image: null,
+      description: "4. 식빵 끝부분에 계란물을 묻혀 줍니다.",
+      timer: null,
+    },
   ]);
   const [ingredients, setIngredients] = useState([
     { name: "밀가루", amount: "2컵" },
@@ -23,7 +60,9 @@ const App = () => {
         <List.Item
           key={index}
           title={
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
               <Text style={styles.ingredinet}>{ingredient.name} </Text>
               <Text style={styles.ingredinet}>{ingredient.amount}</Text>
             </View>
@@ -38,7 +77,10 @@ const App = () => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
   const renderDots = (pages) => {
-    const dotPosition = Animated.divide(scrollX, Dimensions.get("window").width);
+    const dotPosition = Animated.divide(
+      scrollX,
+      Dimensions.get("window").width
+    );
     const dotsArray = Array(pages.length).fill(0);
 
     return (
@@ -93,7 +135,11 @@ const App = () => {
           if (prevTotalSeconds > 0) {
             const remainingMinutes = Math.floor(prevTotalSeconds / 60);
             const remainingSeconds = prevTotalSeconds % 60;
-            const formattedTime = `${remainingMinutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+            const formattedTime = `${remainingMinutes
+              .toString()
+              .padStart(2, "0")}:${remainingSeconds
+              .toString()
+              .padStart(2, "0")}`;
             setTimerText(formattedTime);
             return prevTotalSeconds - 1;
           } else {
@@ -121,7 +167,10 @@ const App = () => {
         <Text style={styles.recipeTitle}>{item.title}</Text>
         <Text style={styles.servingInfo}>{item.serving}</Text>
       </View>
-      <TouchableOpacity onPress={() => handlePickImage(index)} style={styles.imageContainer}>
+      <TouchableOpacity
+        onPress={() => handlePickImage(index)}
+        style={styles.imageContainer}
+      >
         {item.image ? (
           <Image source={{ uri: item.image }} style={styles.image} />
         ) : (
@@ -133,7 +182,11 @@ const App = () => {
       <View>
         {item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
-            {timerText ? <Text style={styles.timer}>{timerText}</Text> : <IconButton icon="timer" iconColor={"yellowgreen"} size={60} />}
+            {timerText ? (
+              <Text style={styles.timer}>{timerText}</Text>
+            ) : (
+              <IconButton icon="timer" iconColor={"yellowgreen"} size={60} />
+            )}
           </TouchableOpacity>
         ) : null}
       </View>
@@ -147,13 +200,22 @@ const App = () => {
                 [
                   // 버튼 배열
                   { text: "아니오", onPress: () => console.log("아니오 선택") },
-                  { text: "예", onPress: () => console.log("예 선택"), style: "cancel" },
+                  {
+                    text: "예",
+                    onPress: () => console.log("예 선택"),
+                    style: "cancel",
+                  },
                 ],
                 { cancelable: true }
               );
             }}
           >
-            <IconButton mode="contained" icon="check" size={30} iconColor="purple" />
+            <IconButton
+              mode="contained"
+              icon="check"
+              size={30}
+              iconColor="purple"
+            />
           </TouchableOpacity>
         </View>
       )}
@@ -169,9 +231,16 @@ const App = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: false }
+        )}
         onMomentumScrollEnd={(event) => {
-          setCurrentIndex(Math.floor(event.nativeEvent.contentOffset.x / Dimensions.get("window").width));
+          setCurrentIndex(
+            Math.floor(
+              event.nativeEvent.contentOffset.x / Dimensions.get("window").width
+            )
+          );
         }}
       />
       {renderDots(steps)}

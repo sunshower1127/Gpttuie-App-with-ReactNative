@@ -13,11 +13,22 @@ const RatingModal = ({ visible, onClose, onSave }) => {
   };
 
   return (
-    <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.ratingText}>별점을 선택해주세요:</Text>
-          <Slider step={0.5} maximumValue={5} value={rating} onValueChange={(value) => setRating(value)} style={styles.slider} />
+          <Slider
+            step={0.5}
+            maximumValue={5}
+            value={rating}
+            onValueChange={(value) => setRating(value)}
+            style={styles.slider}
+          />
           <Text style={styles.ratingText}>선택한 별점: {rating}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleSave}>
