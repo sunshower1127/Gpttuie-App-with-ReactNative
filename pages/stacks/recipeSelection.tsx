@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-} from "react-native";
+import { View, StyleSheet, SafeAreaView, ScrollView, StatusBar } from "react-native";
 import SimpleRecipeCard from "../../components/SimpleRecipeCard";
 
 export default function RecipeSelection() {

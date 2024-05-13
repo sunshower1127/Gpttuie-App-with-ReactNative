@@ -1,15 +1,38 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Animated, Dimensions, StatusBar } from "react-native";
-import { IconButton, MD3Colors } from "react-native-paper";
+import { Modal, Alert, View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Animated, Dimensions, StatusBar, Vibration } from "react-native";
+import { IconButton, MD3Colors, List, Icon } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 
 const App = () => {
   const [steps, setSteps] = useState([
-    { title: "치즈토스트", serving: "2인분", image: null, description: "1. 재료 준비", timer: null },
-    { title: "치즈토스트", serving: "2인분", image: null, description: "2. 식빵을 준비해주세요. 그리고 밀대로 밀어줍니다.", timer: null },
-    { title: "치즈토스트", serving: "2인분", image: null, description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 올려주세요", timer: "5분" },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "1. 재료를 준비합니다.", timer: null },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "2. 식빵을 준비해주세요. \n 그리고 밀대로 밀어줍니다.", timer: "00:10" },
+    { title: "치즈토스트", serving: "2인분", image: null, description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 \n 올려주세요", timer: null },
     { title: "치즈토스트", serving: "2인분", image: null, description: "4. 식빵 끝부분에 계란물을 묻혀 줍니다.", timer: null },
   ]);
+  const [ingredients, setIngredients] = useState([
+    { name: "밀가루", amount: "2컵" },
+    { name: "설탕", amount: "1컵" },
+    { name: "계란", amount: "3개" },
+    { name: "버터", amount: "1/2컵" },
+  ]);
+
+  const IngredientList = ({ ingredients }) => (
+    <List.Section>
+      {ingredients.map((ingredient, index) => (
+        <List.Item
+          key={index}
+          title={
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text style={styles.ingredinet}>{ingredient.name} </Text>
+              <Text style={styles.ingredinet}>{ingredient.amount}</Text>
+            </View>
+          }
+          left={(props) => <List.Icon {...props} icon="egg" />}
+        />
+      ))}
+    </List.Section>
+  );
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -54,7 +77,43 @@ const App = () => {
     }
   };
 
-  const handleShowTimer = () => {};
+  //타이머 관련 함수
+  const [timerText, setTimerText] = useState("");
+  const [timerInterval, setTimerInterval] = useState(null);
+  const [totalSeconds, setTotalSeconds] = useState(0);
+
+  const handleShowTimer = (item) => {
+    if (!timerInterval) {
+      const [minutes, seconds] = item.timer.split(":").map(Number);
+      const initialTotalSeconds = minutes * 60 + seconds;
+      setTotalSeconds(initialTotalSeconds);
+
+      const interval = setInterval(() => {
+        setTotalSeconds((prevTotalSeconds) => {
+          if (prevTotalSeconds > 0) {
+            const remainingMinutes = Math.floor(prevTotalSeconds / 60);
+            const remainingSeconds = prevTotalSeconds % 60;
+            const formattedTime = `${remainingMinutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+            setTimerText(formattedTime);
+            return prevTotalSeconds - 1;
+          } else {
+            clearInterval(interval);
+            setTimerInterval(null);
+            Vibration.vibrate();
+            setTimerText("");
+            return 0;
+          }
+        });
+      }, 1000);
+
+      setTimerInterval(interval);
+    } else {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+      setTimerText("");
+      setTotalSeconds(0);
+    }
+  };
 
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
@@ -70,14 +129,34 @@ const App = () => {
         )}
       </TouchableOpacity>
 
-      <Text style={styles.stepsTitle}>{item.description}</Text>
-      <View style={styles.stepsTitle}>
+      <Text style={styles.stepDescription}>{item.description}</Text>
+      <View>
         {item.timer ? (
-          <TouchableOpacity onPress={handleShowTimer}>
-            <Text>{item.timer}</Text>
+          <TouchableOpacity onPress={() => handleShowTimer(item)}>
+            {timerText ? <Text style={styles.timer}>{timerText}</Text> : <IconButton icon="timer" iconColor={"yellowgreen"} size={60} />}
           </TouchableOpacity>
         ) : null}
       </View>
+      {index === steps.length - 1 && (
+        <View style={{ position: "absolute", right: 20, bottom: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                "요리 완료! ", // 제목
+                "레시피를 저장하시겠습니까?", // 메시지
+                [
+                  // 버튼 배열
+                  { text: "아니오", onPress: () => console.log("아니오 선택") },
+                  { text: "예", onPress: () => console.log("예 선택"), style: "cancel" },
+                ],
+                { cancelable: true }
+              );
+            }}
+          >
+            <IconButton mode="contained" icon="check" size={30} iconColor="purple" />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 
@@ -121,9 +200,6 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
   },
-  cameraText: {
-    fontSize: 16,
-  },
   recipeTitle: {
     fontSize: 24,
     fontWeight: "bold",
@@ -135,12 +211,11 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginRight: 5,
   },
-  ingredientsTitle: {
+  ingredinet: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 16,
   },
-  stepsTitle: {
+  stepDescription: {
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 16,
@@ -157,6 +232,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "gray",
     marginHorizontal: 4,
+  },
+  timer: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "yellowgreen",
+    marginTop: 16,
+    marginLeft: 5,
   },
 });
 
