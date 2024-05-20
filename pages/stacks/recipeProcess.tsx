@@ -1,21 +1,23 @@
+import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
   Animated,
   Dimensions,
+  FlatList,
+  Image,
   StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
   Vibration,
+  View,
 } from "react-native";
-import { IconButton, MD3Colors, List } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
+import { IconButton, List, MD3Colors } from "react-native-paper";
 import RatingModal from "../../components/starRating";
 //import Timer from "../../components/timer";
 
+// RecipeCreation에서 받아온 레시피의 단계별 이미지, 설명, 타이머, 재료를 보여주는 페이지
+// 현이가 만들고 있음
 // 요리 제목 및 설명 단계  할당
 const App = () => {
   const [steps, setSteps] = useState([

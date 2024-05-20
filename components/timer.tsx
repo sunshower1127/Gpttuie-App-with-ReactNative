@@ -1,10 +1,11 @@
-import { TimerPickerModal } from "react-native-timer-picker";
-import { LinearGradient } from "expo-linear-gradient"; // or `import LinearGradient from "react-native-linear-gradient"`
 import { Audio } from "expo-av"; // for audio feedback (click sound as you scroll)
 import * as Haptics from "expo-haptics"; // for haptic feedback
+import { LinearGradient } from "expo-linear-gradient"; // or `import LinearGradient from "react-native-linear-gradient"`
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { TimerPickerModal } from "react-native-timer-picker";
 
+// 레시피 프로세스에 들어가는 타이머 컴포넌트
 const Timer = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [alarmString, setAlarmString] = useState<string | null>(null);
@@ -54,7 +55,8 @@ const Timer = () => {
         visible={showPicker}
         setIsVisible={setShowPicker}
         onConfirm={(pickedDuration) => {
-          setAlarmString(formatTime(pickedDuration));
+          // formatTime에서 에러나서 일단 주석처리함.
+          // setAlarmString(formatTime(pickedDuration));
           setShowPicker(false);
         }}
         modalTitle="Set Alarm"

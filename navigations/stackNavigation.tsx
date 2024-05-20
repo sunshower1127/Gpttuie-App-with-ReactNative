@@ -1,37 +1,19 @@
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  NativeStackNavigationProp,
-  createNativeStackNavigator,
-} from "@react-navigation/native-stack";
-import Main from "../pages/stacks/main";
-import RecipeSelection from "../pages/stacks/recipeSelection";
-import RecipeProcess from "../pages/stacks/recipeProcess";
-import Notifications from "../pages/stacks/notifications";
-import Search from "../pages/stacks/search";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "react-native-paper";
-import recipeSelection from "../pages/stacks/recipeSelection";
+import { StackRouteProp } from "../models/stackNav";
+import Main from "../pages/stacks/main";
+import Notifications from "../pages/stacks/notifications";
+import RecipeCreation from "../pages/stacks/recipeCreation";
+import RecipeProcess from "../pages/stacks/recipeProcess";
+import RecipeSelection from "../pages/stacks/recipeSelection";
+import Search from "../pages/stacks/search";
 
-export type RootStackParamList = {
-  메인: undefined;
-  알림: undefined;
-  검색: undefined;
-  "레시피 선택": {
-    servingSize: number;
-    country: string;
-    ingredients: string[];
-  };
-  "레시피 프로세스": undefined;
-  
-  "레시피 생성": {
-  recipeName: string[]
-  };
-};
+const Stack = createNativeStackNavigator<StackRouteProp>();
 
-export type RootStackNavigationProp =
-  NativeStackNavigationProp<RootStackParamList>;
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
+// 스택 내비게이션
+// 스택 내비게이션에 관련된 모델을 보려면
+// models/stackNav.tsx 파일을 확인하세요.
 export default function StackNavigation() {
   const theme = useTheme();
   return (
@@ -59,22 +41,22 @@ export default function StackNavigation() {
         <Stack.Screen name="알림" component={Notifications} />
         <Stack.Screen name="검색" component={Search} />
         <Stack.Screen
-          name="레시피 선택"
+          name="레시피_선택"
           component={RecipeSelection}
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
         />
         <Stack.Screen
-          name="레시피 프로세스"
-          component={RecipeProcess}
+          name="레시피_생성"
+          component={RecipeCreation}
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
-          />
-          <Stack.Screen
-          name="레시피 생성"
-          component={recipeSelection}
+        />
+        <Stack.Screen
+          name="레시피_프로세스"
+          component={RecipeProcess}
           options={{
             headerShown: false,
           }}

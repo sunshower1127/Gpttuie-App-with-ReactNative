@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Modal, Portal, Text, PaperProvider, Button } from "react-native-paper";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Button, Modal, PaperProvider, Portal, Text } from "react-native-paper";
 import StarRating from "react-native-star-rating-widget";
 
+// 레시피 프로세스 마지막 단계에서 레시피 평점을 입력받는 모달
 const RatingModal = () => {
   const [visible, setVisible] = React.useState(false);
 

@@ -1,12 +1,13 @@
 import { useState } from "react";
-import Home from "../pages/tabs/home";
-import Recipes from "../pages/tabs/recipes";
-import Subscribes from "../pages/tabs/subscribes";
-import Profile from "../pages/tabs/profile";
 import { BottomNavigation } from "react-native-paper";
 import CreateRecipeBtn from "../components/createRecipeBtn";
-import CreateRecipe from "../pages/tabs/createRecipe";
+import Home from "../pages/tabs/home";
+import Profile from "../pages/tabs/profile";
+import RecipeSetting from "../pages/tabs/recipeSetting";
+import Recipes from "../pages/tabs/recipes";
+import Subscribes from "../pages/tabs/subscribes";
 
+// 하단 탭 내비게이션
 export default function TabNavigation() {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -42,7 +43,7 @@ export default function TabNavigation() {
     recipes: Recipes,
     subscribes: Subscribes,
     profile: Profile,
-    create: CreateRecipe,
+    create: RecipeSetting,
   });
 
   return (

@@ -1,95 +1,64 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
-import { Card, Text } from "react-native-paper";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import {
-  RootStackParamList,
-  RootStackNavigationProp,
-} from "../../navigations/stackNavigation";
-import choiceRecipe from "../../choiceRecipe";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, Text } from "react-native-paper";
+import RecipeSelectionCard from "../../components/recipeSelectionCard";
+import { Recipe } from "../../models/recipe";
+import { StackRouteProp } from "../../models/stackNav";
+import { getRecipeCandidates } from "../../utils/gpt";
 
-type RecipeSelectionRouteProp = RouteProp<RootStackParamList, "레시피 선택">; //재료, 종류, 인원 수
-type RecipeCreationRouteProp = RouteProp<RootStackParamList, "레시피 생성">; // 레시피 이름
-
-const RecipeSelection = () => {
-  const navigation = useNavigation<RootStackNavigationProp>();
-  const routeSelection = useRoute<RecipeSelectionRouteProp>();
-  const routeCreation = useRoute<RecipeCreationRouteProp>();
-
-  // 레시피 선택 파라미터
-  const [servings, setServings] = useState(routeSelection.params?.servingSize);
-  console.log("recipeSelection", servings);
-  const [ingredients, setIngredients] = useState(
-    routeSelection.params?.ingredients
+// 유저의 레시피 세팅에 따라서 GPT에게 레시피 후보를 물어보는 페이지
+// 레시피 후보를 3개 받아와서 보여줌.
+// 유저가 그중 하나를 선택하면 RecipeCreation 페이지로 이동함
+export default function RecipeSelection() {
+  const route = useRoute<RouteProp<StackRouteProp, "레시피_선택">>();
+  const [recipeCandidates, setRecipeCandidates] = useState<Recipe[] | null>(
+    null
   );
-  console.log("recipeSelection", ingredients);
-  const [country, setCountry] = useState(routeSelection.params?.country);
-  console.log("recipeSelection", country);
+  const [isLoading, setIsLoading] = useState(true);
 
-  choiceRecipe();
-  // 레시피 생성 파라미터
-  const [recipeName, setRecipeName] = useState(
-    routeCreation.params?.recipeName
-  );
-  console.log("recipeSelection", recipeName);
+  // useEffect쓰면 단 한번만 실행됨
+  useEffect(() => {
+    const recipeSetting = route.params;
+    if (!recipeSetting) {
+      alert("에러 : 레시피 설정이 없습니다.");
+      return;
+    }
 
-  const [isPressed, setIsPressed] = useState(false);
+    const getCandidates = async () => {
+      const candidates = await getRecipeCandidates(recipeSetting);
+      if (candidates) setRecipeCandidates(candidates);
+      console.log("-- RecipeSelection --");
+      console.log("Recipes: ", candidates);
+      console.log("");
+      setIsLoading(false);
+    };
 
-  const handlePressIn = () => {
-    setIsPressed(true);
-  };
+    getCandidates();
+  }, []);
 
-  const handlePressOut = () => {
-    setIsPressed(false);
-  };
-
-  const onPress = () => {
-    navigation.push("레시피 프로세스");
-  };
-
-  return (
+  return isLoading ? (
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator animating={true} size="large" />
+      <Text>GPT에게 물어보는중...</Text>
+    </View>
+  ) : (
     <View style={styles.container}>
-      <Card mode="outlined">
-        <Card.Title
-          title={recipeName ? recipeName.join(", ") : "Unknown Recipe"}
-        />
-        <Card.Content>
-          <Text variant="titleLarge">재료</Text>
-          <Text variant="bodyMedium">
-            {ingredients ? ingredients.join(", ") : "No Ingredients"}
-          </Text>
-          <Text variant="bodyMedium">Description of the recipe here</Text>
-        </Card.Content>
-        <Card.Actions>
-          <Pressable
-            style={[styles.button, isPressed && styles.buttonPressed]}
-            onPress={onPress}
-            onPressIn={handlePressIn}
-            onPressOut={handlePressOut}
-          >
-            <Text>선택</Text>
-          </Pressable>
-        </Card.Actions>
-      </Card>
+      {recipeCandidates?.map((recipe, index) => (
+        <RecipeSelectionCard key={index} recipe={recipe} />
+      ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
   },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 100,
-  },
-  buttonPressed: {
-    backgroundColor: "gray",
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
-
-export default RecipeSelection;

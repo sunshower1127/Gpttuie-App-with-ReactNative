@@ -1,5 +1,6 @@
 import { MD3LightTheme } from "react-native-paper";
 
+// Theme 관련 색상 파일
 export default {
   ...MD3LightTheme,
   colors: {

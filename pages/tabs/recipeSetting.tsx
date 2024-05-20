@@ -1,28 +1,34 @@
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Snackbar, Text } from "react-native-paper";
-import IngredigentsPicker from "../../components/ingredientsPicker";
 import CountryBtn from "../../components/countryBtn";
+import IngredigentsPicker from "../../components/ingredientsPicker";
 import ServingSizePicker from "../../components/servingSizePicker";
-import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "../../navigations/stackNavigation";
+import { Recipe } from "../../models/recipe";
+import { StackNavigation } from "../../models/stackNav";
 
-export default function CreateRecipe() {
+// 기존 CreateRecipe.tsx 파일을 RecipeSetting.tsx로 변경
+// 유저가 레시피에 대한 설정을 하는 페이지임
+// 예) 한식, 2인분, 밥, 김치, 된장
+// 설정이 끝나면 stack의 RecipeSelection 페이지로 이동함
+export default function RecipeSetting() {
   const [ingredients, setIngredients] = useState([]);
   const [country, setCountry] = useState("한식");
   const [servingSize, setServingSize] = useState(1);
   const [visible, setVisible] = useState(false);
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<StackNavigation>();
   const onPress = () => {
     if (ingredients.length === 0) {
       setVisible(true);
       return;
     }
-    console.log("AI 레시피 생성");
-    console.log("servingSize", servingSize);
-    console.log("country", country);
-    console.log("ingredients", ingredients);
-    navigation.push("레시피 프로세스");
+
+    const recipeSetting: Recipe = { servingSize, country, ingredients };
+    console.log("-- RecipeSetting --");
+    console.log("Recipe : ", recipeSetting);
+    console.log("");
+    navigation.push("레시피_선택", recipeSetting);
   };
 
   return (

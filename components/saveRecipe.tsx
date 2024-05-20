@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { Button, FlatList, Text, View } from "react-native";
 import RNFS from "react-native-fs";
-import React, { useState, useEffect } from "react";
-import { View, FlatList, Text } from "react-native";
 
 const FILE_PATH = `${RNFS.DocumentDirectoryPath}/flatListData.json`;
 
