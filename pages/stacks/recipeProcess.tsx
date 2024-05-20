@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  Modal,
-  Alert,
   View,
   Text,
   Image,
@@ -13,26 +11,12 @@ import {
   StatusBar,
   Vibration,
 } from "react-native";
-import { IconButton, MD3Colors, List, Icon } from "react-native-paper";
+import { IconButton, MD3Colors, List } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import { RootStackParamList, RootStackNavigationProp } from '../../navigations/stackNavigation';
+import RatingModal from "../../components/starRating";
+//import Timer from "../../components/timer";
 
-type RecipeSelectionRouteProp = RouteProp<RootStackParamList, '레시피 선택'>;  //재료, 종류, 인원 수
-type RecipeCreationRouteProp = RouteProp<RootStackParamList, '레시피 생성'>;   // 레시피 이름
-
-const RecipeSelection = () => {
-  const navigation = useNavigation<RootStackNavigationProp>();
-  const routeSelection = useRoute<RecipeSelectionRouteProp>();
-  const routeCreation = useRoute<RecipeCreationRouteProp>();
-
-  // 레시피 선택 파라미터
-  const [servings, setServings] = useState(routeSelection.params?.servingSize);
-  const [ingredients, setIngredients] = useState(routeSelection.params?.ingredients);
-  const [country, setCountry] = useState(routeSelection.params?.country);
-  // 레시피 생성 파라미터
-  const [recipeName, setRecipeName] = useState(routeCreation.params?.recipeName);
-};
+// 요리 제목 및 설명 단계  할당
 const App = () => {
   const [steps, setSteps] = useState([
     {
@@ -71,6 +55,7 @@ const App = () => {
     { name: "버터", amount: "1/2컵" },
   ]);
 
+  // 재료 변수 할당
   const IngredientList = ({ ingredients }) => (
     <List.Section>
       {ingredients.map((ingredient, index) => (
@@ -93,6 +78,7 @@ const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
+  // 페이지 표시기
   const renderDots = (pages) => {
     const dotPosition = Animated.divide(
       scrollX,
@@ -115,6 +101,7 @@ const App = () => {
     );
   };
 
+  //이미지 picker 함수
   const handlePickImage = async (index) => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -178,12 +165,14 @@ const App = () => {
     }
   };
 
+  // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.recipeTitle}>{item.title}</Text>
         <Text style={styles.servingInfo}>{item.serving}</Text>
       </View>
+
       <TouchableOpacity
         onPress={() => handlePickImage(index)}
         style={styles.imageContainer}
@@ -196,6 +185,7 @@ const App = () => {
       </TouchableOpacity>
 
       <Text style={styles.stepDescription}>{item.description}</Text>
+
       <View>
         {item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
@@ -207,35 +197,14 @@ const App = () => {
           </TouchableOpacity>
         ) : null}
       </View>
+
       {index === steps.length - 1 && (
-        <View style={{ position: "absolute", right: 20, bottom: 20 }}>
-          <TouchableOpacity
-            onPress={() => {
-              Alert.alert(
-                "요리 완료! ", // 제목
-                "레시피를 저장하시겠습니까?", // 메시지
-                [
-                  // 버튼 배열
-                  { text: "아니오", onPress: () => console.log("아니오 선택") },
-                  {
-                    text: "예",
-                    onPress: () => console.log("예 선택"),
-                    style: "cancel",
-                  },
-                ],
-                { cancelable: true }
-              );
-            }}
-          >
-            <IconButton
-              mode="contained"
-              icon="check"
-              size={30}
-              iconColor="purple"
-            />
-          </TouchableOpacity>
+        <View>
+          <RatingModal />
         </View>
       )}
+
+      {index === 0 && <IngredientList ingredients={ingredients} />}
     </View>
   );
 
@@ -269,6 +238,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
+    backgroundColor: "orange",
   },
   card: {
     width: Dimensions.get("window").width,

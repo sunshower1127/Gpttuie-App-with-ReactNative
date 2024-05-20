@@ -22,11 +22,7 @@ export default function CreateRecipe() {
     console.log("servingSize", servingSize);
     console.log("country", country);
     console.log("ingredients", ingredients);
-    navigation.push("레시피 선택", {
-      servingSize,
-      country,
-      ingredients,
-    });
+    navigation.push("레시피 프로세스");
   };
 
   return (
