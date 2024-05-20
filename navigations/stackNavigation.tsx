@@ -9,6 +9,7 @@ import RecipeProcess from "../pages/stacks/recipeProcess";
 import Notifications from "../pages/stacks/notifications";
 import Search from "../pages/stacks/search";
 import { useTheme } from "react-native-paper";
+import recipeSelection from "../pages/stacks/recipeSelection";
 
 export type RootStackParamList = {
   메인: undefined;
@@ -20,7 +21,10 @@ export type RootStackParamList = {
     ingredients: string[];
   };
   "레시피 프로세스": undefined;
-  "레시피 생성": undefined;
+  
+  "레시피 생성": {
+  recipeName: string[]
+  };
 };
 
 export type RootStackNavigationProp =
@@ -64,6 +68,13 @@ export default function StackNavigation() {
         <Stack.Screen
           name="레시피 프로세스"
           component={RecipeProcess}
+          options={{
+            headerShown: false,
+          }}
+          />
+          <Stack.Screen
+          name="레시피 생성"
+          component={recipeSelection}
           options={{
             headerShown: false,
           }}

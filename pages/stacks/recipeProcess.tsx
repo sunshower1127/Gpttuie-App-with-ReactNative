@@ -15,7 +15,24 @@ import {
 } from "react-native";
 import { IconButton, MD3Colors, List, Icon } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import { RootStackParamList, RootStackNavigationProp } from '../../navigations/stackNavigation';
 
+type RecipeSelectionRouteProp = RouteProp<RootStackParamList, '레시피 선택'>;  //재료, 종류, 인원 수
+type RecipeCreationRouteProp = RouteProp<RootStackParamList, '레시피 생성'>;   // 레시피 이름
+
+const RecipeSelection = () => {
+  const navigation = useNavigation<RootStackNavigationProp>();
+  const routeSelection = useRoute<RecipeSelectionRouteProp>();
+  const routeCreation = useRoute<RecipeCreationRouteProp>();
+
+  // 레시피 선택 파라미터
+  const [servings, setServings] = useState(routeSelection.params?.servingSize);
+  const [ingredients, setIngredients] = useState(routeSelection.params?.ingredients);
+  const [country, setCountry] = useState(routeSelection.params?.country);
+  // 레시피 생성 파라미터
+  const [recipeName, setRecipeName] = useState(routeCreation.params?.recipeName);
+};
 const App = () => {
   const [steps, setSteps] = useState([
     {
