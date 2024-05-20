@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-import { ingredients } from "../assets/ingredients";
+import { ingredients } from "../constants/ingredients";
 
 export default function IngredigentsPicker(props) {
   const [open, setOpen] = useState(false);
