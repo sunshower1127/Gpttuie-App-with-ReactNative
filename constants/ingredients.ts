@@ -1,4 +1,4 @@
-export const ingredients = `가다랑어 포
+export default `가다랑어 포
 가리비
 가자미
 가지
@@ -429,4 +429,4 @@ export const ingredients = `가다랑어 포
 홍합
 황두장
 황태
-후추`.split('\n');
+후추`.split("\n");
