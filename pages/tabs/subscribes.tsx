@@ -1,12 +1,6 @@
-import WebView from "react-native-webview";
+import Community from "../../components/community";
 
+// 구독 게시물 미 구현
 export default function Subscribes() {
-  return (
-    <WebView
-      source={{
-        uri: "https://gpttuie.web.app/create-post",
-        headers: { "Cache-Control": "no-cache" },
-      }}
-    />
-  );
+  return <Community nav="/recipes" />;
 }

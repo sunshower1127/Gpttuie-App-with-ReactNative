@@ -1,85 +1,86 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
-import Slider from "@react-native-community/slider";
-import {} from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Button, Modal, PaperProvider, Portal, Text } from "react-native-paper";
+import StarRating from "react-native-star-rating-widget";
 
-const RatingModal = ({ visible, onClose, onSave }) => {
-  const [rating, setRating] = useState(0);
+// 레시피 프로세스 마지막 단계에서 레시피 평점을 입력받는 모달
+const RatingModal = () => {
+  const [visible, setVisible] = React.useState(false);
 
-  const handleSave = () => {
-    onSave(rating);
-    setRating(0);
-    onClose();
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
   };
 
+  // 평점 저장함수
+  const [rating, setRating] = useState(0);
+
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.ratingText}>별점을 선택해주세요:</Text>
-          <Slider
-            step={0.5}
-            maximumValue={5}
-            value={rating}
-            onValueChange={(value) => setRating(value)}
-            style={styles.slider}
-          />
-          <Text style={styles.ratingText}>선택한 별점: {rating}</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleSave}>
-              <Text style={styles.buttonText}>레시피 저장</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={onClose}>
-              <Text style={styles.buttonText}>취소</Text>
-            </TouchableOpacity>
+    <PaperProvider>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={[styles.modal, containerStyle]}
+        >
+          <Text style={{ marginBottom: 10, fontSize: 18 }}>
+            평점을 입력해 주세요
+          </Text>
+          <StarRating rating={rating} onChange={setRating} />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 20,
+            }}
+          >
+            <Button
+              mode="contained"
+              icon="book"
+              style={styles.button}
+              onPress={showModal}
+            >
+              레시피 저장
+            </Button>
+            <Button mode="contained" style={styles.button} onPress={showModal}>
+              저장하지 않고 닫기
+            </Button>
           </View>
-        </View>
-      </View>
-    </Modal>
+        </Modal>
+      </Portal>
+      <Button
+        mode="contained"
+        icon="check"
+        buttonColor="purple"
+        onPress={showModal}
+        style={styles.check}
+      >
+        완료
+      </Button>
+    </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
+  check: {
+    position: "absolute",
+    right: 0,
+    bottom: -470,
+  },
+  modal: {
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  ratingText: {
-    fontSize: 18,
-    marginVertical: 10,
-  },
-  slider: {
-    width: "80%",
-    marginVertical: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginTop: 20,
+    width: "90%",
+    height: 300,
   },
   button: {
-    backgroundColor: "blue",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
+    marginTop: 10,
+    marginHorizontal: 5,
   },
 });
 

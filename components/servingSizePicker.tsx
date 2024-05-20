@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import Picker from "react-native-picker-select";
 
+// RecipeSetting 페이지에서 사용되는 사람수 선택하는 컴포넌트
 export default function ServingSizePicker(props) {
   const theme = useTheme();
   const pickerStyle = {

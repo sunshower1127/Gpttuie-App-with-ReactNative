@@ -1,5 +1,6 @@
 import { Image } from "react-native";
 
+// GPTTUIE 로고 이미지 컴포넌트
 export default function Logo() {
   return (
     <Image

@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { Icon } from "react-native-paper";
 
+// 바텀 네비게이션바 가운데에 있는 레시피 생성 버튼
 export default function CreateRecipeBtn() {
   return (
     <View
