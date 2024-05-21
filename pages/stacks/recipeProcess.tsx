@@ -1,25 +1,25 @@
-import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
   Animated,
   Dimensions,
-  FlatList,
-  Image,
   StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   Vibration,
-  View,
 } from "react-native";
-import { IconButton, List, MD3Colors } from "react-native-paper";
+import { IconButton, MD3Colors, List, FAB } from "react-native-paper";
+import * as ImagePicker from "expo-image-picker";
 import RatingModal from "../../components/starRating";
-//import Timer from "../../components/timer";
 
 // RecipeCreation에서 받아온 레시피의 단계별 이미지, 설명, 타이머, 재료를 보여주는 페이지
 // 현이가 만들고 있음
+
 // 요리 제목 및 설명 단계  할당
-const App = () => {
+const RecipeProcess = () => {
   const [steps, setSteps] = useState([
     {
       title: "치즈토스트",
@@ -167,9 +167,16 @@ const App = () => {
     }
   };
 
+  // Modal 보이는지 여부 설정 함수
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleModalVisibility = (visible) => {
+    setIsModalVisible(visible);
+  };
+
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
-    <View style={styles.card}>
+    <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.recipeTitle}>{item.title}</Text>
         <Text style={styles.servingInfo}>{item.serving}</Text>
@@ -177,7 +184,10 @@ const App = () => {
 
       <TouchableOpacity
         onPress={() => handlePickImage(index)}
-        style={styles.imageContainer}
+        style={[
+          styles.imageContainer,
+          isModalVisible && styles.cardModalVisible,
+        ]}
       >
         {item.image ? (
           <Image source={{ uri: item.image }} style={styles.image} />
@@ -192,9 +202,9 @@ const App = () => {
         {item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
             {timerText ? (
-              <Text style={styles.timer}>{timerText}</Text>
+              <Text style={styles.timerText}>{timerText}</Text>
             ) : (
-              <IconButton icon="timer" iconColor={"yellowgreen"} size={60} />
+              <FAB icon="timer" style={styles.timer} size="large" />
             )}
           </TouchableOpacity>
         ) : null}
@@ -202,7 +212,7 @@ const App = () => {
 
       {index === steps.length - 1 && (
         <View>
-          <RatingModal />
+          <RatingModal onModalVisibilityChange={handleModalVisibility} />
         </View>
       )}
 
@@ -240,7 +250,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    backgroundColor: "orange",
+    backgroundColor: "#fofofo",
   },
   card: {
     width: Dimensions.get("window").width,
@@ -291,13 +301,20 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
     marginHorizontal: 4,
   },
-  timer: {
+  timerText: {
+    position: "absolute",
+    margin: 20,
     fontSize: 40,
     fontWeight: "bold",
     color: "yellowgreen",
-    marginTop: 16,
-    marginLeft: 5,
+  },
+  timer: {
+    position: "absolute",
+    margin: 20,
+  },
+  cardModalVisible: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 
-export default App;
+export default RecipeProcess;
