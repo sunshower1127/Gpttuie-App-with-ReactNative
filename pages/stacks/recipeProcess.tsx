@@ -1,63 +1,38 @@
-import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
   Animated,
   Dimensions,
-  FlatList,
-  Image,
   StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   Vibration,
-  View,
 } from "react-native";
-import { IconButton, List, MD3Colors } from "react-native-paper";
+import { IconButton, MD3Colors, List, FAB } from "react-native-paper";
+import * as ImagePicker from "expo-image-picker";
 import RatingModal from "../../components/starRating";
-//import Timer from "../../components/timer";
+import { Step, Recipe } from "../../models/recipe";
 
-// RecipeCreation에서 받아온 레시피의 단계별 이미지, 설명, 타이머, 재료를 보여주는 페이지
-// 현이가 만들고 있음
-// 요리 제목 및 설명 단계  할당
-const App = () => {
-  const [steps, setSteps] = useState([
-    {
-      title: "치즈토스트",
-      serving: "2인분",
-      image: null,
-      description: "1. 재료를 준비합니다.",
-      timer: null,
-    },
-    {
-      title: "치즈토스트",
-      serving: "2인분",
-      image: null,
-      description: "2. 식빵을 준비해주세요. \n 그리고 밀대로 밀어줍니다.",
-      timer: "00:10",
-    },
-    {
-      title: "치즈토스트",
-      serving: "2인분",
-      image: null,
-      description: "3. 밀어 놓은 식빵,체다치즈를 반으로 자르고 \n 올려주세요",
-      timer: null,
-    },
-    {
-      title: "치즈토스트",
-      serving: "2인분",
-      image: null,
-      description: "4. 식빵 끝부분에 계란물을 묻혀 줍니다.",
-      timer: null,
-    },
-  ]);
-  const [ingredients, setIngredients] = useState([
-    { name: "밀가루", amount: "2컵" },
-    { name: "설탕", amount: "1컵" },
-    { name: "계란", amount: "3개" },
-    { name: "버터", amount: "1/2컵" },
-  ]);
+const RecipeProcess = () => {
+  //임시로 선언
+  const [recipe, setRecipe] = useState<Recipe>({
+    title: "치즈토스트",
+    servingSize: 2,
+    country: "한국",
+    ingredients: ["식빵", "체다치즈", "계란"],
+    steps: [
+      { description: "1. 식빵을 준비합니다." },
+      { description: "2. 체다치즈를 올립니다.", timer: "00:05" },
+      { description: "3. 계란물을 끼얹습니다." },
+    ],
+    rating: 4.5,
+    oneLineReview: "맛있어요",
+  });
 
-  // 재료 변수 할당
+  // 재료 리스트
   const IngredientList = ({ ingredients }) => (
     <List.Section>
       {ingredients.map((ingredient, index) => (
@@ -67,8 +42,7 @@ const App = () => {
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <Text style={styles.ingredinet}>{ingredient.name} </Text>
-              <Text style={styles.ingredinet}>{ingredient.amount}</Text>
+              <Text style={styles.ingredinet}>{recipe.ingredients} </Text>
             </View>
           }
           left={(props) => <List.Icon {...props} icon="egg" />}
@@ -119,9 +93,12 @@ const App = () => {
     });
 
     if (!result.canceled) {
-      const newSteps = [...steps];
+      const newSteps = [...recipe.steps];
       newSteps[index].image = result.assets[0].uri;
-      setSteps(newSteps);
+      setRecipe({
+        ...recipe,
+        steps: newSteps,
+      });
     }
   };
 
@@ -167,9 +144,16 @@ const App = () => {
     }
   };
 
+  // Modal 보이는지 여부 설정 함수
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleModalVisibility = (visible) => {
+    setIsModalVisible(visible);
+  };
+
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
-    <View style={styles.card}>
+    <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.recipeTitle}>{item.title}</Text>
         <Text style={styles.servingInfo}>{item.serving}</Text>
@@ -177,7 +161,10 @@ const App = () => {
 
       <TouchableOpacity
         onPress={() => handlePickImage(index)}
-        style={styles.imageContainer}
+        style={[
+          styles.imageContainer,
+          isModalVisible && styles.cardModalVisible,
+        ]}
       >
         {item.image ? (
           <Image source={{ uri: item.image }} style={styles.image} />
@@ -192,28 +179,28 @@ const App = () => {
         {item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
             {timerText ? (
-              <Text style={styles.timer}>{timerText}</Text>
+              <Text style={styles.timerText}>{timerText}</Text>
             ) : (
-              <IconButton icon="timer" iconColor={"yellowgreen"} size={60} />
+              <FAB icon="timer" style={styles.timer} size="large" />
             )}
           </TouchableOpacity>
         ) : null}
       </View>
 
-      {index === steps.length - 1 && (
+      {index === recipe.steps.length - 1 && (
         <View>
-          <RatingModal />
+          <RatingModal onModalVisibilityChange={handleModalVisibility} />
         </View>
       )}
 
-      {index === 0 && <IngredientList ingredients={ingredients} />}
+      {index === 0 && <IngredientList ingredients={recipe.ingredients} />}
     </View>
   );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={steps}
+        data={recipe.steps}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         horizontal
@@ -231,7 +218,7 @@ const App = () => {
           );
         }}
       />
-      {renderDots(steps)}
+      {renderDots(recipe.steps)}
     </View>
   );
 };
@@ -240,7 +227,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    backgroundColor: "orange",
+    backgroundColor: "#fofofo",
   },
   card: {
     width: Dimensions.get("window").width,
@@ -291,13 +278,20 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
     marginHorizontal: 4,
   },
-  timer: {
+  timerText: {
+    position: "absolute",
+    margin: 20,
     fontSize: 40,
     fontWeight: "bold",
     color: "yellowgreen",
-    marginTop: 16,
-    marginLeft: 5,
+  },
+  timer: {
+    position: "absolute",
+    margin: 20,
+  },
+  cardModalVisible: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 
-export default App;
+export default RecipeProcess;
