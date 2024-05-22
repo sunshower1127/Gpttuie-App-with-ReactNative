@@ -34,11 +34,6 @@ const RecipeProcess = () => {
     oneLineReview: "맛있어요",
   });
 
-  const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
-  useEffect(() => {
-    setRecipe(route.params);
-  }, []);
-
   // 재료 리스트
   const IngredientList = ({ ingredients }) => (
     <List.Section>

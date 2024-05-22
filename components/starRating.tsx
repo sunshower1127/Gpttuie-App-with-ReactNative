@@ -52,15 +52,16 @@ const RatingModal = ({ onModalVisibilityChange }) => {
           <StarRating rating={rating} onChange={setRating} />
 
           <TextInput
-            label="Email"
+            label="한줄평"
             value={text}
-            onChangeText={(text) => setText(text)}
+            onChangeText={setText}
+            style={{ marginTop: 5, width: "100%" }}
           />
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginHorizontal: 20,
+              marginHorizontal: 5,
             }}
           >
             <Button
