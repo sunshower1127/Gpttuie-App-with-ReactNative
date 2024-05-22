@@ -18,5 +18,5 @@ export interface Recipe {
   ingredients?: string[] | null;
   steps?: Step[] | null;
   rating?: number | null;
-  oneLineReview: string | null;
+  oneLineReview?: string | null;
 }

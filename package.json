@@ -14,7 +14,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@types/react": "~18.2.45",
-    "expo": "~51.0.4",
+    "expo": "~51.0.8",
     "expo-av": "^14.0.5",
     "expo-haptics": "^13.0.1",
     "expo-image-picker": "~15.0.4",
@@ -35,8 +35,7 @@
     "react-native-star-rating-widget": "^1.7.3",
     "react-native-timer-picker": "^1.8.2",
     "react-native-webview": "13.8.6",
-    "typescript": "~5.3.3",
-    "uuid": "^9.0.1"
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
