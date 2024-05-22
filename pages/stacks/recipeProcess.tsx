@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import { IconButton, MD3Colors, List, FAB } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import RatingModal from "../../components/starRating";
 import { Step, Recipe } from "../../models/recipe";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { StackRouteProp } from "../../models/stackNav";
 
 const RecipeProcess = () => {
   //임시로 선언
@@ -31,6 +33,11 @@ const RecipeProcess = () => {
     rating: 4.5,
     oneLineReview: "맛있어요",
   });
+
+  const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
+  useEffect(() => {
+    setRecipe(route.params);
+  }, []);
 
   // 재료 리스트
   const IngredientList = ({ ingredients }) => (
