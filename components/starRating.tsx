@@ -50,6 +50,7 @@ const RatingModal = ({ onModalVisibilityChange }) => {
             평점을 입력해 주세요
           </Text>
           <StarRating rating={rating} onChange={setRating} />
+
           <TextInput
             label="Email"
             value={text}
