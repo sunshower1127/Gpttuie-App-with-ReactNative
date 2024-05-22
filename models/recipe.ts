@@ -11,6 +11,7 @@ export interface Step {
 }
 
 export interface Recipe {
+  id?: string | null;
   title?: string | null;
   servingSize?: number | null;
   country?: string | null;

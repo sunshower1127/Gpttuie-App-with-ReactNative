@@ -24,7 +24,7 @@ export type StackRouteProp = {
 
 // 페이지 이동 하면서 인자 주는법
 /*
-const navigation = useNavigation<StackNavigation>();
+const navigation = useNavigation<MyNavigation>();
 navigation.push("레시피_선택", myRecipe);
 */
-export type StackNavigation = NativeStackNavigationProp<StackRouteProp>;
+export type MyNavigation = NativeStackNavigationProp<StackRouteProp>;

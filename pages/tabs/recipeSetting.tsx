@@ -6,7 +6,7 @@ import CountryBtn from "../../components/countryBtn";
 import IngredigentsPicker from "../../components/ingredientsPicker";
 import ServingSizePicker from "../../components/servingSizePicker";
 import { Recipe } from "../../models/recipe";
-import { StackNavigation } from "../../models/stackNav";
+import { MyNavigation } from "../../models/stackNav";
 
 // 기존 CreateRecipe.tsx 파일을 RecipeSetting.tsx로 변경
 // 유저가 레시피에 대한 설정을 하는 페이지임
@@ -17,7 +17,7 @@ export default function RecipeSetting() {
   const [country, setCountry] = useState("한식");
   const [servingSize, setServingSize] = useState(1);
   const [visible, setVisible] = useState(false);
-  const navigation = useNavigation<StackNavigation>();
+  const navigation = useNavigation<MyNavigation>();
   const onPress = () => {
     if (ingredients.length === 0) {
       setVisible(true);

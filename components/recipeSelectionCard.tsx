@@ -3,11 +3,11 @@ import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { Recipe } from "../models/recipe";
-import { StackNavigation } from "../models/stackNav";
+import { MyNavigation } from "../models/stackNav";
 
 // RecipeSelection에서 후보군을 보여줄때 사용되는 카드 컴포넌트
 export default function RecipeSelectionCard({ recipe }: { recipe: Recipe }) {
-  const navigation = useNavigation<StackNavigation>();
+  const navigation = useNavigation<MyNavigation>();
   const { title, ingredients } = recipe;
   const [isPressed, setIsPressed] = useState(false);
 
