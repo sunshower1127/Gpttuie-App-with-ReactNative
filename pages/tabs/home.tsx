@@ -1,5 +1,12 @@
-import Community from "../../components/community";
+import WebView from "react-native-webview";
 
 export default function Home() {
-  return <Community nav="/" />;
+  return (
+    <WebView
+      source={{
+        uri: "https://gpttuie.web.app/",
+        headers: { "Cache-Control": "no-cache" },
+      }}
+    />
+  );
 }
