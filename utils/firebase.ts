@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -7,7 +8,6 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { Recipe } from "../models/recipe";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,13 +46,8 @@ export async function uploadImages(recipe: Recipe): Promise<void> {
   const alreadyExists = listResult.items.map((item) => item.name);
 
   recipe.steps.forEach(async ({ image }, index, steps) => {
-    if (
-      !image ||
-      index.toString() in alreadyExists ||
-      image.startsWith("http")
-    ) {
+    if (!image || index.toString() in alreadyExists || image.startsWith("http"))
       return;
-    }
     const locationRef = ref(storage, `images/${recipe.id}/${index}`);
     const imageResponse = await fetch(image);
     const imageBlob = await imageResponse.blob();
