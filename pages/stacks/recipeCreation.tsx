@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 import { Recipe } from "../../models/recipe";
-import { StackNavigation, StackRouteProp } from "../../models/stackNav";
+import { MyNavigation, StackRouteProp } from "../../models/stackNav";
 import { getNewRecipe } from "../../utils/gpt";
 
 // 유저가 고른 3개중 하나의 레시피에 대한 조리순서 정보를 GPT에게서 가져옴.
 // 가져온 정보를 보여주고, 요리하기 버튼을 누르면 RecipeProcess 페이지로 이동함
 export default function RecipeCreation() {
-  const navigation = useNavigation<StackNavigation>();
+  const navigation = useNavigation<MyNavigation>();
   const route = useRoute<RouteProp<StackRouteProp, "레시피_선택">>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isLoading, setIsLoading] = useState(true);

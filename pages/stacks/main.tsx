@@ -2,11 +2,11 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { Appbar } from "react-native-paper";
 import Logo from "../../components/logo";
-import { StackNavigation } from "../../models/stackNav";
+import { MyNavigation } from "../../models/stackNav";
 import TabNavigation from "../../navigations/tapNavigation";
 
 export default function Main() {
-  const navigation = useNavigation<StackNavigation>();
+  const navigation = useNavigation<MyNavigation>();
   return (
     <>
       <Appbar.Header mode="small" style={styles.appbar} elevated>
