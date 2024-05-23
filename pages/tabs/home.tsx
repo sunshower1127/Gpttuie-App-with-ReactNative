@@ -4,10 +4,10 @@ import { saveRecipes } from "../../components/saveRecipe";
 
 export default function Home() {
   const handleMessage = (event) => {
-    const { type, data }: { type: string; data: Recipe } = JSON.parse(
+    const { name, data }: { name: string; data: Recipe } = JSON.parse(
       event.nativeEvent.data
     );
-    if (type !== "Recipe") return;
+    if (name !== "Recipe") return;
     console.log("Downloaded Recipe : ", data);
     // saveRecipes([data]);
     alert("레시피 저장 완료");

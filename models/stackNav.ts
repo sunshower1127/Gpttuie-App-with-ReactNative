@@ -15,7 +15,6 @@ if (!recipe) return;
 export type StackRouteProp = {
   메인: undefined;
   알림: undefined;
-  검색: undefined;
   // 띄어쓰기 대신 언더하이픈 추가함
   레시피_선택: Recipe;
   레시피_생성: Recipe;

@@ -15,10 +15,6 @@ export default function Main() {
           icon="bell"
           onPress={() => navigation.navigate("알림")}
         />
-        <Appbar.Action
-          icon="magnify"
-          onPress={() => navigation.navigate("검색")}
-        />
       </Appbar.Header>
       <TabNavigation />
     </>

@@ -7,7 +7,6 @@ import Notifications from "../pages/stacks/notifications";
 import RecipeCreation from "../pages/stacks/recipeCreation";
 import RecipeProcess from "../pages/stacks/recipeProcess";
 import RecipeSelection from "../pages/stacks/recipeSelection";
-import Search from "../pages/stacks/search";
 import CreatePost from "../pages/stacks/createPost";
 
 const Stack = createNativeStackNavigator<StackRouteProp>();
@@ -40,7 +39,6 @@ export default function StackNavigation() {
           }}
         />
         <Stack.Screen name="알림" component={Notifications} />
-        <Stack.Screen name="검색" component={Search} />
         <Stack.Screen
           name="레시피_선택"
           component={RecipeSelection}
