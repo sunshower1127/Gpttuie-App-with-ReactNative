@@ -17,22 +17,23 @@ import RatingModal from "../../components/starRating";
 import { Step, Recipe } from "../../models/recipe";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
+import { useNavigation } from "@react-navigation/native"; //추가사항
+import { MyNavigation } from "../../models/stackNav"; //추가사항
 
-const RecipeProcess = () => {
-  //임시로 선언
-  const [recipe, setRecipe] = useState<Recipe>({
-    title: "치즈토스트",
-    servingSize: 2,
-    country: "한국",
-    ingredients: ["식빵", "체다치즈", "계란"],
-    steps: [
-      { description: "1. 식빵을 준비합니다." },
-      { description: "2. 체다치즈를 올립니다.", timer: "00:05" },
-      { description: "3. 계란물을 끼얹습니다." },
-    ],
-    rating: 4.5,
-    oneLineReview: "맛있어요",
-  });
+
+const RecipeProcess = () => {  //레시피 저장정보 불러오가
+  const navigation = useNavigation<MyNavigation>();
+  const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
+  const recipe = route.params
+  const title = route.params.title;
+  const ingredients = recipe.ingredients || [];
+  const servingSize = recipe.servingSize;
+  const country = recipe.country;
+  const steps = recipe.steps || [];
+  const description = steps.map((step) => step.description).join("\n");
+  const rating = recipe.rating;
+  const oneLineReview = recipe.oneLineReview;
+
 
   // 재료 리스트
   const IngredientList = ({ ingredients }) => (
@@ -44,7 +45,7 @@ const RecipeProcess = () => {
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <Text style={styles.ingredinet}>{recipe.ingredients} </Text>
+              <Text style={styles.ingredinet}>{ingredient} </Text>
             </View>
           }
           left={(props) => <List.Icon {...props} icon="egg" />}
@@ -97,10 +98,6 @@ const RecipeProcess = () => {
     if (!result.canceled) {
       const newSteps = [...recipe.steps];
       newSteps[index].image = result.assets[0].uri;
-      setRecipe({
-        ...recipe,
-        steps: newSteps,
-      });
     }
   };
 
