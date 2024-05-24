@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "react-native-paper";
 import { StackRouteProp } from "../models/stackNav";
 import Main from "../pages/stacks/main";
-import Notifications from "../pages/stacks/notifications";
+import Contact from "../pages/stacks/contact";
 import RecipeCreation from "../pages/stacks/recipeCreation";
 import RecipeProcess from "../pages/stacks/recipeProcess";
 import RecipeSelection from "../pages/stacks/recipeSelection";
@@ -38,7 +38,7 @@ export default function StackNavigation() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="알림" component={Notifications} />
+        <Stack.Screen name="컨택트" component={Contact} />
         <Stack.Screen
           name="레시피_선택"
           component={RecipeSelection}

@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 import { Recipe } from "../../models/recipe";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
@@ -57,14 +57,20 @@ export default function RecipeCreation() {
   return isLoading ? (
     <View style={styles.loadingContainer}>
       <ActivityIndicator animating={true} size="large" />
-      <Text>GPT에게 물어보는중...</Text>
+      <Text>AI에게 물어보는중...</Text>
     </View>
   ) : (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text>{recipe?.title}</Text>
-      <Text>{recipe?.steps.map((step) => step.description).join("\n")}</Text>
-      <Button onPress={handleClick}>이 레시피로 요리하기</Button>
-    </View>
+      <Text>
+        {recipe?.steps.map(
+          (step, index) => `${index + 1}. ${step.description}`
+        )}
+      </Text>
+      <Button mode={"contained"} onPress={handleClick}>
+        이 레시피로 요리하기
+      </Button>
+    </ScrollView>
   );
 }
 

@@ -1,15 +1,15 @@
-import WebView from "react-native-webview";
+import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { Recipe } from "./recipes";
-import { saveRecipes } from "../../components/saveRecipe";
 
 export default function Home() {
-  const handleMessage = (event) => {
+  const handleMessage = (event: WebViewMessageEvent) => {
     const { name, data }: { name: string; data: Recipe } = JSON.parse(
       event.nativeEvent.data
     );
     if (name !== "Recipe") return;
-    console.log("Downloaded Recipe : ", data);
-    // saveRecipes([data]);
+    const recipe = data;
+    console.log("Downloaded Recipe : ", recipe);
+    // saveRecipes([recipe]);
     alert("레시피 저장 완료");
   };
   return (

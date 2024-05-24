@@ -12,8 +12,8 @@ export default function Main() {
       <Appbar.Header mode="small" style={styles.appbar} elevated>
         <Appbar.Content title={<Logo />} />
         <Appbar.Action
-          icon="bell"
-          onPress={() => navigation.navigate("알림")}
+          icon="account-circle"
+          onPress={() => navigation.navigate("컨택트")}
         />
       </Appbar.Header>
       <TabNavigation />

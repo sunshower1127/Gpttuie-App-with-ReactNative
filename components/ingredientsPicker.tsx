@@ -3,7 +3,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import ingredients from "../constants/ingredients";
 
 //RecipeSetting에서 사용되는 재료 선택 컴포넌트
-export default function IngredigentsPicker(props) {
+export default function IngredigentsPicker(props: any) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(
     ingredients.map((value) => ({
@@ -22,7 +22,9 @@ export default function IngredigentsPicker(props) {
       multiple={true}
       placeholder="재료를 선택해주세요."
       maxHeight={400}
-      multipleText={props.value.join(", ")}
+      multipleText={
+        Array.isArray(props.value) ? props.value.join(", ") : props.value
+      }
     />
   );
 }

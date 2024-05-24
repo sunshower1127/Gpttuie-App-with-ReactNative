@@ -12,12 +12,9 @@ import { getRecipeCandidates } from "../../utils/gpt";
 // 유저가 그중 하나를 선택하면 RecipeCreation 페이지로 이동함
 export default function RecipeSelection() {
   const route = useRoute<RouteProp<StackRouteProp, "레시피_선택">>();
-  const [recipeCandidates, setRecipeCandidates] = useState<Recipe[] | null>(
-    null
-  );
+  const [recipeCandidates, setRecipeCandidates] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect쓰면 단 한번만 실행됨
   useEffect(() => {
     const recipeSetting = route.params;
     if (!recipeSetting) {
@@ -28,9 +25,9 @@ export default function RecipeSelection() {
     const getCandidates = async () => {
       const candidates = await getRecipeCandidates(recipeSetting);
       if (candidates) setRecipeCandidates(candidates);
-      console.log("-- RecipeSelection --");
+      console.log("RecipeSelection -->");
       console.log("Recipes: ", candidates);
-      console.log("");
+      console.log("<-- RecipeSelection");
       setIsLoading(false);
     };
 
@@ -40,7 +37,7 @@ export default function RecipeSelection() {
   return isLoading ? (
     <View style={styles.loadingContainer}>
       <ActivityIndicator animating={true} size="large" />
-      <Text>GPT에게 물어보는중...</Text>
+      <Text>AI에게 물어보는중...</Text>
     </View>
   ) : (
     <View style={styles.container}>
