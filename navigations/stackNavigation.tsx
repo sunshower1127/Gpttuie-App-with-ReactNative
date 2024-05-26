@@ -8,6 +8,7 @@ import RecipeCreation from "../pages/stacks/recipeCreation";
 import RecipeProcess from "../pages/stacks/recipeProcess";
 import RecipeSelection from "../pages/stacks/recipeSelection";
 import Search from "../pages/stacks/search";
+import RecipeProcessViewer from "../pages/stacks/recipeProcessViewer";
 
 const Stack = createNativeStackNavigator<StackRouteProp>();
 
@@ -57,6 +58,13 @@ export default function StackNavigation() {
         <Stack.Screen
           name="레시피_프로세스"
           component={RecipeProcess}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="레시피_프로세스_뷰어"
+          component={RecipeProcessViewer}
           options={{
             headerShown: false,
           }}

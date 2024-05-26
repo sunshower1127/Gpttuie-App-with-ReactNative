@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { MyNavigation, StackRouteProp } from "../models/stackNav";
 import { StyleSheet, View } from "react-native";
 import {
   Button,
@@ -10,8 +11,22 @@ import {
   TextInput,
 } from "react-native-paper";
 import StarRating from "react-native-star-rating-widget";
+import { Recipe } from "../models/recipe";
+import { saveRecipe } from "./saveRecipe";
 
-const RatingModal = ({ onModalVisibilityChange }) => {
+type RatingModalProps = {
+  onModalVisibilityChange: (visibility: boolean) => void;
+  newRecipe: Recipe;
+  onRecipeUpdate: (updatedRecipe: Recipe) => void;
+};
+
+const RatingModal = ({
+  onModalVisibilityChange,
+  newRecipe,
+  onRecipeUpdate,
+}: RatingModalProps) => {
+  const navigation = useNavigation<MyNavigation>();
+
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => {
@@ -25,10 +40,20 @@ const RatingModal = ({ onModalVisibilityChange }) => {
   };
 
   // 한줄평 저장함수
-  const [text, setText] = React.useState("");
+  const [text, setText] = useState("");
 
   // 평점 저장함수
   const [rating, setRating] = useState(0);
+
+  //레시피 업데이트 함수
+  const updateRecipe = (newText: string, newRating: number) => {
+    const updatedRecipe = {
+      ...newRecipe,
+      oneLineReview: newText,
+      rating: newRating,
+    };
+    return updatedRecipe;
+  };
 
   return (
     <PaperProvider>
@@ -68,14 +93,18 @@ const RatingModal = ({ onModalVisibilityChange }) => {
               mode="contained"
               icon="book"
               style={styles.button}
-              //onPress={() => navigation.push("레시피_선택")}
+              onPress={() => {
+                const updatedRecipe = updateRecipe(text, rating);
+                onRecipeUpdate(updatedRecipe);
+                navigation.push("메인"), saveRecipe(updatedRecipe);
+              }}
             >
               레시피 저장
             </Button>
             <Button
               mode="contained"
               style={styles.button}
-              //onPress={() => } . home으로 이동
+              onPress={() => navigation.push("메인")}
             >
               저장하지 않고 닫기
             </Button>

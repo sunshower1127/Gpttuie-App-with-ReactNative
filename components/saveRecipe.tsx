@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Step, Recipe } from "../models/recipe";
 
-// Recipe[]를 저장합니다.
-export const saveRecipes = async (recipes: Recipe[]) => {
+// 단일 Recipe를 저장합니다.
+export const saveRecipe = async (recipe: Recipe) => {
   try {
-    const jsonValue = JSON.stringify(recipes);
-    await AsyncStorage.setItem("@recipes", jsonValue);
+    const jsonValue = JSON.stringify(recipe);
+    await AsyncStorage.setItem(`@recipe_${recipe.id}`, jsonValue);
     console.log("레시피 저장 완료");
   } catch (e) {
     // 저장 에러 처리
@@ -13,10 +13,10 @@ export const saveRecipes = async (recipes: Recipe[]) => {
   }
 };
 
-// 저장된 Recipe[]를 불러옵니다.
-export const loadRecipes = async () => {
+// 특정 id의 Recipe를 불러옵니다.
+export const loadRecipe = async (id: string) => {
   try {
-    const jsonValue = await AsyncStorage.getItem("@recipes");
+    const jsonValue = await AsyncStorage.getItem(`@recipe_${id}`);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // 불러오기 에러 처리
@@ -24,18 +24,28 @@ export const loadRecipes = async () => {
   }
 };
 
-export const deleteRecipe = async (index: number) => {
+// 저장된 Recipe[]를 불러옵니다.
+export const loadAllRecipes = async (): Promise<Recipe[]> => {
   try {
-    // 저장된 레시피를 불러옵니다.
-    const recipes = await loadRecipes();
+    const keys = await AsyncStorage.getAllKeys();
+    const recipeKeys = keys.filter((key) => key.startsWith("@recipe_"));
+    const recipes: Recipe[] = await Promise.all(
+      recipeKeys.map(async (key) => {
+        const recipe = await loadRecipe(key.replace("@recipe_", ""));
+        return recipe;
+      })
+    );
+    return recipes;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
 
-    if (recipes) {
-      // 특정 인덱스의 레시피를 삭제합니다.
-      recipes.splice(index, 1);
-
-      // 결과를 다시 저장합니다.
-      await saveRecipes(recipes);
-    }
+// 특정 id의 레시피를 삭제합니다.
+export const deleteRecipe = async (id: string) => {
+  try {
+    await AsyncStorage.removeItem(`@recipe_${id}`);
   } catch (e) {
     // 삭제 에러 처리
     console.error(e);

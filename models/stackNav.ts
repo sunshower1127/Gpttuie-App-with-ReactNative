@@ -20,6 +20,7 @@ export type StackRouteProp = {
   레시피_선택: Recipe;
   레시피_생성: Recipe;
   레시피_프로세스: Recipe;
+  레시피_프로세스_뷰어: Recipe;
 };
 
 // 페이지 이동 하면서 인자 주는법

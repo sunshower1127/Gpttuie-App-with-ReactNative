@@ -20,11 +20,11 @@ import { StackRouteProp } from "../../models/stackNav";
 import { useNavigation } from "@react-navigation/native"; //추가사항
 import { MyNavigation } from "../../models/stackNav"; //추가사항
 
-
-const RecipeProcess = () => {  //레시피 저장정보 불러오가
+const RecipeProcess = () => {
+  //레시피 저장정보 불러오가
   const navigation = useNavigation<MyNavigation>();
   const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
-  const recipe = route.params
+  const [recipe, setRecipe] = useState(route.params);
   const title = route.params.title;
   const ingredients = recipe.ingredients || [];
   const servingSize = recipe.servingSize;
@@ -34,7 +34,6 @@ const RecipeProcess = () => {  //레시피 저장정보 불러오가
   const rating = recipe.rating;
   const oneLineReview = recipe.oneLineReview;
 
-
   // 재료 리스트
   const IngredientList = ({ ingredients }) => (
     <List.Section>
@@ -43,9 +42,12 @@ const RecipeProcess = () => {  //레시피 저장정보 불러오가
           key={index}
           title={
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
             >
-              <Text style={styles.ingredinet}>{ingredient} </Text>
+              <Text style={styles.ingredinet}>{ingredient}</Text>
             </View>
           }
           left={(props) => <List.Icon {...props} icon="egg" />}
@@ -150,6 +152,12 @@ const RecipeProcess = () => {  //레시피 저장정보 불러오가
     setIsModalVisible(visible);
   };
 
+  // 업데이트된 레시피 객체를 처리하는 로직 작성
+  const handleRecipeUpdate = (updatedRecipe) => {
+    console.log("Updated recipe:", updatedRecipe);
+    setRecipe(updatedRecipe);
+  };
+
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
     <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
@@ -172,8 +180,6 @@ const RecipeProcess = () => {  //레시피 저장정보 불러오가
         )}
       </TouchableOpacity>
 
-      <Text style={styles.stepDescription}>{item.description}</Text>
-
       <View>
         {item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
@@ -186,9 +192,17 @@ const RecipeProcess = () => {  //레시피 저장정보 불러오가
         ) : null}
       </View>
 
+      {index != 0 && (
+        <Text style={styles.stepDescription}>{item.description}</Text>
+      )}
+
       {index === recipe.steps.length - 1 && (
         <View>
-          <RatingModal onModalVisibilityChange={handleModalVisibility} />
+          <RatingModal
+            onModalVisibilityChange={handleModalVisibility}
+            newRecipe={recipe}
+            onRecipeUpdate={handleRecipeUpdate}
+          />
         </View>
       )}
 
@@ -256,13 +270,13 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   ingredinet: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
   stepDescription: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 16,
+    marginTop: 15,
   },
   dotContainerHorizontal: {
     flexDirection: "row",
