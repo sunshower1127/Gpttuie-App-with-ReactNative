@@ -11,6 +11,7 @@ import {
   StatusBar,
   Vibration,
   ScrollView,
+  Alert,
 } from "react-native";
 import { IconButton, MD3Colors, List, FAB } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
@@ -20,6 +21,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
 import { useNavigation } from "@react-navigation/native"; //추가사항
 import { MyNavigation } from "../../models/stackNav"; //추가사항
+import theme from "../../constants/theme";
 
 const RecipeProcess = () => {
   //레시피 저장정보 불러오가
@@ -86,23 +88,61 @@ const RecipeProcess = () => {
 
   //이미지 picker 함수
   const handlePickImage = async (index) => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      alert("카메라 권한을 허용해 주세요");
-      return;
-    }
+    Alert.alert(
+      "이미지 선택",
+      "카메라로 사진을 찍거나, 갤러리에서 사진을 선택하세요.",
+      [
+        {
+          text: "카메라",
+          onPress: async () => {
+            const { status } =
+              await ImagePicker.requestCameraPermissionsAsync();
+            if (status !== "granted") {
+              alert("카메라 권한을 허용해 주세요");
+              return;
+            }
 
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+            let result = await ImagePicker.launchCameraAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
 
-    if (!result.canceled) {
-      const newSteps = [...recipe.steps];
-      newSteps[index].image = result.assets[0].uri;
-    }
+            if (!result.canceled) {
+              const newSteps = [...recipe.steps];
+              newSteps[index].image = result.assets[0].uri;
+              setRecipe({ ...recipe, steps: newSteps });
+            }
+          },
+        },
+        {
+          text: "갤러리",
+          onPress: async () => {
+            const { status } =
+              await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== "granted") {
+              alert("갤러리 접근 권한을 허용해 주세요");
+              return;
+            }
+
+            let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+
+            if (!result.canceled) {
+              const newSteps = [...recipe.steps];
+              newSteps[index].image = result.assets[0].uri;
+              setRecipe({ ...recipe, steps: newSteps });
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   //타이머 관련 함수
@@ -164,26 +204,28 @@ const RecipeProcess = () => {
   const renderItem = ({ item, index }) => (
     <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={styles.recipeTitle}>{item.title}</Text>
-        <Text style={styles.servingInfo}>{item.serving}</Text>
+        {<Text style={styles.recipeTitle}>{recipe.title}</Text>}
+        {item && <Text style={styles.servingInfo}>{item.serving}</Text>}
       </View>
 
-      <TouchableOpacity
-        onPress={() => handlePickImage(index)}
-        style={[
-          styles.imageContainer,
-          isModalVisible && styles.cardModalVisible,
-        ]}
-      >
-        {item.image ? (
-          <Image source={{ uri: item.image }} style={styles.image} />
-        ) : (
-          <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
-        )}
-      </TouchableOpacity>
+      {index !== 0 && (
+        <TouchableOpacity
+          onPress={() => handlePickImage(index - 1)}
+          style={[
+            styles.imageContainer,
+            isModalVisible && styles.cardModalVisible,
+          ]}
+        >
+          {item && item.image ? (
+            <Image source={{ uri: item.image }} style={styles.image} />
+          ) : (
+            <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
+          )}
+        </TouchableOpacity>
+      )}
 
       <View>
-        {item.timer ? (
+        {item && item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
             {timerText ? (
               <Text style={styles.timerText}>{timerText}</Text>
@@ -194,11 +236,11 @@ const RecipeProcess = () => {
         ) : null}
       </View>
 
-      {index != 0 && (
+      {index !== 0 && (
         <Text style={styles.stepDescription}>{item.description}</Text>
       )}
 
-      {index === recipe.steps.length - 1 && (
+      {index === recipe.steps.length && (
         <View>
           <RatingModal
             onModalVisibilityChange={handleModalVisibility}
@@ -215,7 +257,7 @@ const RecipeProcess = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={recipe.steps}
+        data={[null, ...recipe.steps]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         horizontal
@@ -233,7 +275,7 @@ const RecipeProcess = () => {
           );
         }}
       />
-      {renderDots(recipe.steps)}
+      {renderDots([null, ...recipe.steps])}
     </View>
   );
 };
@@ -242,16 +284,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    backgroundColor: "#fofofo",
+    backgroundColor: theme.colors.background,
   },
   card: {
     width: Dimensions.get("window").width,
     padding: 16,
-    backgroundColor: "white",
+    backgroundColor: theme.colors.background,
   },
   imageContainer: {
     height: 200,
-    backgroundColor: "white",
+    backgroundColor: theme.colors.onSecondary,
     justifyContent: "center",
     alignItems: "center",
   },

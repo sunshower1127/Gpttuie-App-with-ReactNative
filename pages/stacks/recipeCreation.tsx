@@ -61,13 +61,21 @@ export default function RecipeCreation() {
     </View>
   ) : (
     <ScrollView style={styles.container}>
-      <Text>{recipe?.title}</Text>
-      <Text>
-        {recipe?.steps.map(
-          (step, index) => `${index + 1}. ${step.description}`
-        )}
+      <Text variant="headlineMedium">{`${recipe?.title} ${recipe.servingSize}인분`}</Text>
+      <Text variant="titleLarge" style={styles.subtitle}>
+        재료
       </Text>
-      <Button mode={"contained"} onPress={handleClick}>
+      <Text>{recipe.ingredients.join("\n")}</Text>
+      <Text variant="titleLarge" style={styles.subtitle}>
+        레시피
+      </Text>
+      <Text>{recipe.steps.map((step) => step.description)}</Text>
+      <Button
+        mode={"contained"}
+        onPress={handleClick}
+        icon="chef-hat"
+        style={styles.btn}
+      >
         이 레시피로 요리하기
       </Button>
     </ScrollView>
@@ -78,10 +86,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
+    gap: 10,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  subtitle: {
+    marginTop: 20,
+  },
+  btn: {
+    marginTop: 20,
+    width: 200,
+    alignSelf: "center",
   },
 });

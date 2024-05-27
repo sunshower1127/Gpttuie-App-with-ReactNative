@@ -83,6 +83,7 @@ const RatingModal = ({
             label={newRecipe.oneLineReview ? null : "한줄평"}
             value={text}
             onChangeText={setText}
+            multiline={true}
             style={{ marginTop: 5, width: "100%" }}
           />
           <View

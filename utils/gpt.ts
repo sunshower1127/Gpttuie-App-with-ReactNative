@@ -6,12 +6,13 @@ import { Recipe } from "../models/recipe";
 // 재료, 국가, 사람수의 데이터가 들어있는 Recipe 객체를 받아서,
 // 3개의 레시피 후보의 title을 받아와 Recipe[3]을 리턴함.
 export async function getRecipeCandidates(
-  recipeSetting: Readonly<Recipe>
+  recipeSetting: Readonly<Recipe>,
+  n = 1
 ): Promise<Recipe[]> {
   const { ingredients, country, servingSize } = recipeSetting;
-  if (!ingredients || !country || !servingSize) {
+  if (!ingredients || !country || !servingSize || n > 3) {
     alert("에러 : 레시피 세팅이 없습니다.");
-    return;
+    return [];
   }
 
   const systemMessages = [
@@ -74,7 +75,7 @@ export async function getRecipeCandidates(
     ];
   } catch (error) {
     console.error("API 호출 중 오류 발생:", error);
-    return [];
+    return await getRecipeCandidates(recipeSetting, n + 1);
   }
 }
 
@@ -82,12 +83,18 @@ export async function getRecipeCandidates(
 // title, ingredients, country, servingSize의 데이터가 들어있는 Recipe 객체를 받아서,
 // steps의 description을 채워넣어 Recipe 객체를 리턴함.
 export async function getNewRecipe(
-  recipeSetting: Readonly<Recipe>
+  recipeSetting: Readonly<Recipe>,
+  n = 1
 ): Promise<Recipe | null> {
   const { title } = recipeSetting;
   if (!title) {
     alert("에러 : 선택된 레시피가 없습니다.");
-    return;
+    return null;
+  }
+
+  if (n > 3) {
+    alert("레시피 생성에 실패했습니다.");
+    return null;
   }
 
   const messages = [
@@ -116,10 +123,15 @@ export async function getNewRecipe(
     const un_responseData = await response.json();
     const content: string = un_responseData.choices[0].message.content;
     // 1. 2. 3. 기준으로 받은 레시피 문자열 나누기
-    const descriptions = content.split(/\d\.\s/).filter(Boolean);
-    const ingre_descriptions = content.split('\n')
-  .filter(line => line.startsWith('- '))
-  .map(ing => ing.slice(2).trim());
+    const descriptions = content
+      .split(/\d\.\s/)
+      .filter(Boolean)
+      .map((desc, index) => `${index}. ${desc}`)
+      .slice(1);
+    const ingre_descriptions = content
+      .split("\n")
+      .filter((line) => line.startsWith("- "))
+      .map((ing) => ing.slice(2).trim());
 
     // Step 에다가 나눈 레시피 description에 넣기.
     const newRecipe: Recipe = {
@@ -130,6 +142,6 @@ export async function getNewRecipe(
     return newRecipe;
   } catch (error) {
     console.error("API 호출 중 오류 발생:", error);
-    return null;
+    return await getNewRecipe(recipeSetting, n + 1);
   }
 }
