@@ -14,12 +14,12 @@ if (!recipe) return;
 */
 export type StackRouteProp = {
   메인: undefined;
-  알림: undefined;
-  검색: undefined;
+  컨택트: undefined;
   // 띄어쓰기 대신 언더하이픈 추가함
   레시피_선택: Recipe;
   레시피_생성: Recipe;
   레시피_프로세스: Recipe;
+  게시물_작성: Recipe;
 };
 
 // 페이지 이동 하면서 인자 주는법

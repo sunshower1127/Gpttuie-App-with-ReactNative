@@ -5,7 +5,7 @@ import Home from "../pages/tabs/home";
 import Profile from "../pages/tabs/profile";
 import RecipeSetting from "../pages/tabs/recipeSetting";
 import Recipes from "../pages/tabs/recipes";
-import Subscribes from "../pages/tabs/subscribes";
+import Search from "../pages/tabs/search";
 
 // 하단 탭 내비게이션
 export default function TabNavigation() {
@@ -17,9 +17,9 @@ export default function TabNavigation() {
       focusedIcon: "home",
     },
     {
-      key: "subscribes",
-      title: "Subs",
-      focusedIcon: "heart",
+      key: "search",
+      title: "Search",
+      focusedIcon: "magnify",
     },
     {
       key: "create",
@@ -41,7 +41,7 @@ export default function TabNavigation() {
   const renderScene = BottomNavigation.SceneMap({
     home: Home,
     recipes: Recipes,
-    subscribes: Subscribes,
+    search: Search,
     profile: Profile,
     create: RecipeSetting,
   });

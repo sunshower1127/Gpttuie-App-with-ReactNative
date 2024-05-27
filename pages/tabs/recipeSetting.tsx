@@ -13,21 +13,23 @@ import { MyNavigation } from "../../models/stackNav";
 // 예) 한식, 2인분, 밥, 김치, 된장
 // 설정이 끝나면 stack의 RecipeSelection 페이지로 이동함
 export default function RecipeSetting() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
   const [country, setCountry] = useState("한식");
   const [servingSize, setServingSize] = useState(1);
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation<MyNavigation>();
   const onPress = () => {
-    if (ingredients.length === 0) {
+    if (!ingredients) {
       setVisible(true);
       return;
     }
 
     const recipeSetting: Recipe = { servingSize, country, ingredients };
-    console.log("-- RecipeSetting --");
-    console.log("Recipe : ", recipeSetting);
-    console.log("");
+
+    console.log("RecipeSetting -->");
+    console.log("RecipeSetting: ", recipeSetting);
+    console.log("<-- RecipeSetting");
+
     navigation.push("레시피_선택", recipeSetting);
   };
 

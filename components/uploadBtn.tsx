@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { Button, Modal } from "react-native-paper";
-import Community from "./community"; // Community 컴포넌트를 임포트합니다.
+import React from "react";
+import { Button } from "react-native-paper";
+import { Recipe } from "../models/recipe";
+import { useNavigation } from "@react-navigation/native";
+import { MyNavigation } from "../models/stackNav";
 
-export default function uploadBtn() {
-  const [visible, setVisible] = useState(false);
-
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-
+export default function uploadBtn({ recipe }: { recipe: Recipe }) {
+  const navigation = useNavigation<MyNavigation>();
   return (
-    <>
-      <Button mode="contained" onPress={showModal}>
-        Share
-      </Button>
-      <Modal visible={visible} onDismiss={hideModal}>
-        <Community nav="/upload" />
-      </Modal>
-    </>
+    <Button
+      mode="contained"
+      onPress={() => navigation.navigate("게시물_작성", recipe)}
+    >
+      Share
+    </Button>
   );
 }

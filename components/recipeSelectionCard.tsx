@@ -17,13 +17,13 @@ export default function RecipeSelectionCard({ recipe }: { recipe: Recipe }) {
   return (
     <Card mode="outlined">
       <Card.Title title={title} />
-      <Card.Content>
+      {/* <Card.Content>
         <Text variant="titleLarge">재료</Text>
         <Text variant="bodyMedium">
           {ingredients ? ingredients.join(", ") : "No Ingredients"}
         </Text>
         <Text variant="bodyMedium">Description of the recipe here</Text>
-      </Card.Content>
+      </Card.Content> */}
       <Card.Actions>
         <Pressable
           style={[styles.button, isPressed && styles.buttonPressed]}
