@@ -18,7 +18,6 @@ const MyComponent = () => {
     const fetchRecipes = async () => {
       const loadedRecipes = await loadAllRecipes();
       setRecipes(loadedRecipes);
-      console.log(loadedRecipes); // 모든 레시피 출력
     };
     fetchRecipes();
   }, []);
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   uploadBtn: {
-    marginVertical: 5, // 위아래 마진 5
+    marginVertical: 5,
     marginLeft: "auto",
   },
 });
