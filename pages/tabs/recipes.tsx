@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Avatar, Button, Divider } from "react-native-paper";
 import { Recipe } from "../../models/recipe";
-import { loadAllRecipes, deleteRecipe } from "../../components/saveRecipe";
+import {
+  saveRecipe,
+  loadAllRecipes,
+  deleteRecipe,
+} from "../../components/saveRecipe";
 import { useNavigation } from "@react-navigation/native";
 import { MyNavigation } from "../../models/stackNav";
+import UploadBtn from "../../components/uploadBtn";
 
 const MyComponent = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -26,6 +31,16 @@ const MyComponent = () => {
       setRecipes(updatedRecipes);
     } catch (error) {
       console.error("레시피 삭제 중 에러 발생:", error);
+    }
+  };
+
+  const handleSaveRecipe = async (recipe: Recipe) => {
+    try {
+      await saveRecipe(recipe);
+      const loadedRecipes = await loadAllRecipes();
+      setRecipes(loadedRecipes);
+    } catch (error) {
+      console.error("레시피 저장 중 에러 발생:", error);
     }
   };
 
@@ -80,6 +95,9 @@ const MyComponent = () => {
               삭제
             </Button>
           </View>
+          <View style={styles.uploadBtn}>
+            <UploadBtn recipe={recipe} />
+          </View>
           <Divider style={styles.divider} />
         </View>
       ))}
@@ -127,6 +145,10 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginTop: 10,
+  },
+  uploadBtn: {
+    marginVertical: 5, // 위아래 마진 5
+    marginLeft: "auto",
   },
 });
 
