@@ -52,6 +52,6 @@ export async function uploadImages(recipe: Recipe): Promise<void> {
     const imageResponse = await fetch(image);
     const imageBlob = await imageResponse.blob();
     const result = await uploadBytes(locationRef, imageBlob);
-    steps[index].image = await getDownloadURL(result.ref);
+    recipe.steps[index].image = await getDownloadURL(result.ref);
   });
 }
