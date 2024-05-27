@@ -11,7 +11,7 @@ export default function UploadBtn({ recipe }: { recipe: Recipe }) {
     <Button
       mode="contained"
       onPress={() => {
-        console.log("레시피", recipe.id);
+        console.log("레시피", recipe);
         navigation.navigate("게시물_작성", recipe);
       }}
     >

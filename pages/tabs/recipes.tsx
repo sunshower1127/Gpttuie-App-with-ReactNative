@@ -18,7 +18,6 @@ const MyComponent = () => {
     const fetchRecipes = async () => {
       const loadedRecipes = await loadAllRecipes();
       setRecipes(loadedRecipes);
-      console.log(loadedRecipes); // 모든 레시피 출력
     };
     fetchRecipes();
   }, []);
@@ -75,28 +74,28 @@ const MyComponent = () => {
               </Button>
             </View>
           </View>
-          <View style={styles.buttonsContainer}>
+          <View style={styles.bottomcontainer}>
             <View style={styles.reviewContainer}>
               <Text style={styles.oneLineReview}>{recipe.oneLineReview}</Text>
             </View>
-            <Button
-              icon="play"
-              mode="elevated"
-              style={styles.button}
-              onPress={() => handleOpenRecipe(recipe)}
-            >
-              열기
-            </Button>
-            <Button
-              mode="elevated"
-              style={styles.button}
-              onPress={() => handleDeleteRecipe(index)}
-            >
-              삭제
-            </Button>
-          </View>
-          <View style={styles.uploadBtn}>
-            <UploadBtn recipe={recipe} />
+            <View style={styles.buttoncontainer}>
+              <Button
+                icon="play"
+                mode="elevated"
+                style={styles.button}
+                onPress={() => handleOpenRecipe(recipe)}
+              >
+                열기
+              </Button>
+              <UploadBtn recipe={recipe} />
+              <Button
+                mode="elevated"
+                style={styles.button}
+                onPress={() => handleDeleteRecipe(index)}
+              >
+                삭제
+              </Button>
+            </View>
           </View>
           <Divider style={styles.divider} />
         </View>
@@ -128,14 +127,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   button: {
-    marginLeft: 10,
+    marginHorizontal: 10,
   },
   reviewContainer: {
     marginHorizontal: 10,
-    flex: 1,
+    padding: 10,
   },
-  buttonsContainer: {
-    flexDirection: "row",
+  bottomcontainer: {
     justifyContent: "flex-end",
     marginTop: 10,
   },
@@ -146,9 +144,11 @@ const styles = StyleSheet.create({
   divider: {
     marginTop: 10,
   },
-  uploadBtn: {
-    marginVertical: 5, // 위아래 마진 5
-    marginLeft: "auto",
+
+  buttoncontainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginHorizontal: 10,
   },
 });
 

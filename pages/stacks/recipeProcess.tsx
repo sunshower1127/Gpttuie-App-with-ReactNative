@@ -10,6 +10,7 @@ import {
   Dimensions,
   StatusBar,
   Vibration,
+  ScrollView,
 } from "react-native";
 import { IconButton, MD3Colors, List, FAB } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
@@ -50,6 +51,7 @@ const RecipeProcess = () => {
               <Text style={styles.ingredinet}>{ingredient}</Text>
             </View>
           }
+          description="한 모"
           left={(props) => <List.Icon {...props} icon="egg" />}
         />
       ))}
