@@ -30,7 +30,7 @@ const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 export const db = getFirestore(app);
 
-export async function uploadImages(recipe: Recipe): Promise<void> {
+export async function uploadImages(recipe: Recipe): Promise<Recipe> {
   // 만약 recipe에 있는 image가 file로 시작하는 uri라면 storage에 검색해보고, 없으면 업로드하기.
   // 만약 recipe에 있는 image가 http로 시작하는 uri라면 그대로 사용하기.
   if (!recipe.steps || !recipe.id) {
@@ -54,4 +54,7 @@ export async function uploadImages(recipe: Recipe): Promise<void> {
     const result = await uploadBytes(locationRef, imageBlob);
     recipe.steps[index].image = await getDownloadURL(result.ref);
   });
+
+  return recipe;
+
 }

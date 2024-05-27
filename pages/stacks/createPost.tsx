@@ -13,9 +13,9 @@ export default function CreatePost() {
   const handleMessage = async (event: any) => {
     if (event.nativeEvent.data === "submit") {
       console.log("Submit Btn Clicked");
-      await uploadImages(recipe);
+      const newRecipe = await uploadImages(recipe);
       webRef.current.postMessage(
-        JSON.stringify({ name: "Recipe", data: recipe })
+        JSON.stringify({ name: "Recipe", data: newRecipe })
       );
       console.log("Recipe Data Sent");
     } else if (event.nativeEvent.data === "posted") {
