@@ -1,5 +1,6 @@
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { Recipe } from "../../models/recipe";
+import { saveRecipe } from "../../components/saveRecipe";
 
 export default function Home() {
   const handleMessage = (event: WebViewMessageEvent) => {
@@ -9,7 +10,7 @@ export default function Home() {
     if (name !== "Recipe") return;
     const recipe = data;
     console.log("Downloaded Recipe : ", recipe);
-    // saveRecipes([recipe]);
+    saveRecipe(recipe);
     alert("레시피 저장 완료");
   };
   return (
