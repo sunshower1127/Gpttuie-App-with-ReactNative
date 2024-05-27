@@ -45,16 +45,20 @@ export async function uploadImages(recipe: Recipe): Promise<Recipe> {
   );
   const alreadyExists = listResult.items.map((item) => item.name);
 
-  recipe.steps.forEach(async ({ image }, index, steps) => {
-    if (!image || index.toString() in alreadyExists || image.startsWith("http"))
-      return;
+  const newRecipe = { ...recipe };
+
+  newRecipe.steps = await Promise.all(recipe.steps.map(async (step, index) => {
+    if (!step.image || step.image.startsWith("http"))
+      return step;
     const locationRef = ref(storage, `images/${recipe.id}/${index}`);
-    const imageResponse = await fetch(image);
-    const imageBlob = await imageResponse.blob();
-    const result = await uploadBytes(locationRef, imageBlob);
-    recipe.steps[index].image = await getDownloadURL(result.ref);
-  });
+    if (!(index.toString() in alreadyExists)) {
+      const imageResponse = await fetch(step.image);
+      const imageBlob = await imageResponse.blob();
+      await uploadBytes(locationRef, imageBlob);
+    }
+    step.image = await getDownloadURL(locationRef);
+    return step;
+  }));
 
-  return recipe;
-
+  return newRecipe;
 }

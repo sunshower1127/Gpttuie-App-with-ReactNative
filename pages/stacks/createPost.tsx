@@ -20,7 +20,7 @@ export default function CreatePost() {
       console.log("Recipe Data Sent");
     } else if (event.nativeEvent.data === "posted") {
       console.log("Post Success");
-      navigation.pop(-1);
+      navigation.pop();
     }
   };
   return (
