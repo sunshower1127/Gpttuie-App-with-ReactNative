@@ -2,6 +2,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useRef } from "react";
 import WebView from "react-native-webview";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
+import { uploadImages } from "../../utils/firebase";
 
 export default function CreatePost() {
   const webRef = useRef<WebView>();
@@ -9,9 +10,10 @@ export default function CreatePost() {
   const route = useRoute<RouteProp<StackRouteProp, "게시물_작성">>();
   const recipe = route.params;
 
-  const handleMessage = (event: any) => {
+  const handleMessage = async (event: any) => {
     if (event.nativeEvent.data === "submit") {
       console.log("Submit Btn Clicked");
+      await uploadImages(recipe);
       webRef.current.postMessage(
         JSON.stringify({ name: "Recipe", data: recipe })
       );
