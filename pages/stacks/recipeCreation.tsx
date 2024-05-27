@@ -49,7 +49,7 @@ export default function RecipeCreation() {
       index: 1,
       routes: [
         { name: "메인" },
-        { name: "레시피_프로세스", params: { recipe: recipe } },
+        { name: "레시피_프로세스", params: recipe }, // tlqkf 절대로 객체를 params로 주지마...
       ],
     });
   };

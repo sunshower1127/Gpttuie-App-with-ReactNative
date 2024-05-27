@@ -1,4 +1,5 @@
 import config from "../apikey";
+import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
 // GPT API를 사용하여 레시피 후보 3개를 추천받는 함수
@@ -115,12 +116,16 @@ export async function getNewRecipe(
     const un_responseData = await response.json();
     const content: string = un_responseData.choices[0].message.content;
     // 1. 2. 3. 기준으로 받은 레시피 문자열 나누기
-    const descriptions = content.split(/\d+\.\s/).filter(Boolean);
+    const descriptions = content.split(/\d\.\s/).filter(Boolean);
+    const ingre_descriptions = content.split('\n')
+  .filter(line => line.startsWith('- '))
+  .map(ing => ing.slice(2).trim());
 
     // Step 에다가 나눈 레시피 description에 넣기.
     const newRecipe: Recipe = {
       ...recipeSetting,
       steps: descriptions.map((description) => ({ description })),
+      ingredients: ingre_descriptions.map((ingredients) => ingredients),
     };
     return newRecipe;
   } catch (error) {
