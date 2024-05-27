@@ -10,7 +10,7 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
-import StarRating from "react-native-star-rating-widget";
+import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
 import { Recipe } from "../models/recipe";
 import { saveRecipe } from "./saveRecipe";
 
@@ -40,10 +40,10 @@ const RatingModal = ({
   };
 
   // 한줄평 저장함수
-  const [text, setText] = useState("");
+  const [text, setText] = useState(newRecipe.oneLineReview);
 
   // 평점 저장함수
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(newRecipe.rating);
 
   //레시피 업데이트 함수
   const updateRecipe = (newText: string, newRating: number) => {
@@ -74,10 +74,13 @@ const RatingModal = ({
           <Text style={{ marginBottom: 10, fontSize: 18 }}>
             평점을 입력해 주세요
           </Text>
-          <StarRating rating={rating} onChange={setRating} />
-
+          {newRecipe.rating ? (
+            <StarRatingDisplay rating={newRecipe.rating} />
+          ) : (
+            <StarRating rating={rating} onChange={setRating} />
+          )}
           <TextInput
-            label="한줄평"
+            label={newRecipe.oneLineReview ? null : "한줄평"}
             value={text}
             onChangeText={setText}
             style={{ marginTop: 5, width: "100%" }}
@@ -99,15 +102,17 @@ const RatingModal = ({
                 navigation.push("메인"), saveRecipe(updatedRecipe);
               }}
             >
-              레시피 저장
+              {newRecipe.rating ? "닫기" : "레시피 저장"}
             </Button>
-            <Button
-              mode="contained"
-              style={styles.button}
-              onPress={() => navigation.push("메인")}
-            >
-              저장하지 않고 닫기
-            </Button>
+            {newRecipe.rating ? null : (
+              <Button
+                mode="contained"
+                style={styles.button}
+                onPress={() => navigation.push("메인")}
+              >
+                저장하지 않고 닫기
+              </Button>
+            )}
           </View>
         </Modal>
       </Portal>

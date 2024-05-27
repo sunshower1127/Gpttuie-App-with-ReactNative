@@ -30,7 +30,7 @@ const MyComponent = () => {
   };
 
   const handleOpenRecipe = (recipe: Recipe) => {
-    navigation.push("레시피_프로세스_뷰어", recipe);
+    navigation.push("레시피_프로세스", recipe);
   };
 
   return (
@@ -49,9 +49,7 @@ const MyComponent = () => {
                     ? "food-takeout-box"
                     : recipe.country === "일식"
                     ? "noodles"
-                    : recipe.country === "미국" ||
-                      recipe.country === "이탈리아" ||
-                      recipe.country === "멕시코"
+                    : recipe.country === "양식"
                     ? "hamburger"
                     : "food"
                 }

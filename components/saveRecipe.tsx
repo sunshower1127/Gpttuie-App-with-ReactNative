@@ -6,7 +6,7 @@ export const saveRecipe = async (recipe: Recipe) => {
   try {
     const jsonValue = JSON.stringify(recipe);
     await AsyncStorage.setItem(`@recipe_${recipe.id}`, jsonValue);
-    console.log("레시피 저장 완료");
+    console.log("레시피 저장/업데이트 완료");
   } catch (e) {
     // 저장 에러 처리
     console.error(e);
