@@ -1,7 +1,7 @@
 import { SegmentedButtons } from "react-native-paper";
 
 // RecipeSetting 페이지에서 사용되는 나라 선택 컴포넌트
-export default function CountryBtn(props) {
+export default function CountryBtn(props: any) {
   return (
     <SegmentedButtons
       {...props}

@@ -7,13 +7,11 @@ import { MyNavigation } from "../models/stackNav";
 export default function uploadBtn({ recipe }: { recipe: Recipe }) {
   const navigation = useNavigation<MyNavigation>();
   return (
-    <>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate("게시물_작성", recipe)}
-      >
-        Share
-      </Button>
-    </>
+    <Button
+      mode="contained"
+      onPress={() => navigation.navigate("게시물_작성", recipe)}
+    >
+      Share
+    </Button>
   );
 }

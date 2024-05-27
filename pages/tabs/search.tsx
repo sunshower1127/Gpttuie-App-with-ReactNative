@@ -1,5 +1,6 @@
-import { Recipe } from "../../models/recipe";
 import WebView from "react-native-webview";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import { Recipe } from "../../models/recipe";
 
 export default function Search() {
   // const recipe: Recipe = {
@@ -34,14 +35,13 @@ export default function Search() {
   //   oneLineReview: "맛있어요!",
   // };
 
-  const handleMessage = (event) => {
+  const handleMessage = (event: WebViewMessageEvent) => {
     const { name, data }: { name: string; data: Recipe } = JSON.parse(
       event.nativeEvent.data
     );
     if (name !== "Recipe") return;
-    console.log("Downloaded Recipe : ", data);
     // saveRecipes([data]);
-    alert("레시피 저장 완료");
+    alert("레시피 저장 완료!");
   };
 
   return (
