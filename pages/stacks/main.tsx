@@ -12,7 +12,7 @@ export default function Main() {
       <Appbar.Header mode="small" style={styles.appbar} elevated>
         <Appbar.Content title={<Logo />} />
         <Appbar.Action
-          icon="account-circle"
+          icon="information-outline"
           onPress={() => navigation.navigate("컨택트")}
         />
       </Appbar.Header>

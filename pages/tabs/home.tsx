@@ -1,5 +1,5 @@
 import WebView, { WebViewMessageEvent } from "react-native-webview";
-import { Recipe } from "./recipes";
+import { Recipe } from "../../models/recipe";
 
 export default function Home() {
   const handleMessage = (event: WebViewMessageEvent) => {

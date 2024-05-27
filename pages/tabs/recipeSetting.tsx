@@ -1,10 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Snackbar, Text } from "react-native-paper";
+import { Button, Snackbar, Text, TextInput } from "react-native-paper";
 import CountryBtn from "../../components/countryBtn";
 import IngredigentsPicker from "../../components/ingredientsPicker";
-import ServingSizePicker from "../../components/servingSizePicker";
 import { Recipe } from "../../models/recipe";
 import { MyNavigation } from "../../models/stackNav";
 
@@ -15,16 +14,20 @@ import { MyNavigation } from "../../models/stackNav";
 export default function RecipeSetting() {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [country, setCountry] = useState("한식");
-  const [servingSize, setServingSize] = useState(1);
+  const [servingSize, setServingSize] = useState("1");
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation<MyNavigation>();
   const onPress = () => {
-    if (!ingredients) {
+    const servingSizeInt = parseInt(servingSize);
+    if (!ingredients || isNaN(servingSizeInt) || servingSizeInt <= 0) {
       setVisible(true);
       return;
     }
-
-    const recipeSetting: Recipe = { servingSize, country, ingredients };
+    const recipeSetting: Recipe = {
+      servingSize: servingSizeInt,
+      country,
+      ingredients,
+    };
 
     console.log("RecipeSetting -->");
     console.log("RecipeSetting: ", recipeSetting);
@@ -38,7 +41,17 @@ export default function RecipeSetting() {
       <Text style={styles.title} variant={"titleLarge"}>
         레시피 설정
       </Text>
-      <ServingSizePicker value={servingSize} onValueChange={setServingSize} />
+
+      <View style={{ flexDirection: "column" }}>
+        <TextInput
+          style={styles.item}
+          label="인분"
+          keyboardType="number-pad"
+          mode="outlined"
+          value={servingSize}
+          onChangeText={(text) => setServingSize(text)}
+        />
+      </View>
 
       <CountryBtn
         style={[styles.item, { marginTop: 30 }]}
