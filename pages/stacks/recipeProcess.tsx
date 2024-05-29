@@ -162,25 +162,33 @@ const RecipeProcess = () => {
 
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
-    <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={styles.recipeTitle}>{item.title}</Text>
-        <Text style={styles.servingInfo}>{item.serving}</Text>
+    <ScrollView
+      style={[styles.card, isModalVisible && styles.cardModalVisible]}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={styles.recipeTitle}>{recipe.title}</Text>
       </View>
 
-      <TouchableOpacity
-        onPress={() => handlePickImage(index)}
-        style={[
-          styles.imageContainer,
-          isModalVisible && styles.cardModalVisible,
-        ]}
-      >
-        {item.image ? (
-          <Image source={{ uri: item.image }} style={styles.image} />
-        ) : (
-          <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
-        )}
-      </TouchableOpacity>
+      {index != 0 && (
+        <TouchableOpacity
+          onPress={() => handlePickImage(index)}
+          style={[
+            styles.imageContainer,
+            isModalVisible && styles.cardModalVisible,
+          ]}
+        >
+          {item.image ? (
+            <Image source={{ uri: item.image }} style={styles.image} />
+          ) : (
+            <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
+          )}
+        </TouchableOpacity>
+      )}
 
       <View>
         {item.timer ? (
@@ -209,7 +217,7 @@ const RecipeProcess = () => {
       )}
 
       {index === 0 && <IngredientList ingredients={recipe.ingredients} />}
-    </View>
+    </ScrollView>
   );
 
   return (
@@ -248,12 +256,14 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     padding: 16,
     backgroundColor: "white",
+    flex: 1,
   },
   imageContainer: {
     height: 200,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 5,
   },
   image: {
     width: "100%",
