@@ -9,12 +9,12 @@ import {
   Animated,
   Dimensions,
   StatusBar,
-  Vibration,
-  ScrollView,
 } from "react-native";
-import { IconButton, MD3Colors, List, AnimatedFAB } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
+import { IconButton, MD3Colors, AnimatedFAB } from "react-native-paper";
 import RatingModal from "../../components/starRating";
+import IngredientList from "../../components/IngredientList";
+import PageIndicator from "../../components/PageIndicator";
+import handlePickImage from "../../components/ImagePicker";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
 import { useNavigation } from "@react-navigation/native"; //추가사항
@@ -34,123 +34,8 @@ const RecipeProcess = () => {
   const rating = recipe.rating;
   const oneLineReview = recipe.oneLineReview;
 
-  // 재료 리스트
-  const IngredientList = ({ ingredients }) => (
-    <List.Section>
-      {ingredients.map((ingredient, index) => {
-        const [item, unit] = ingredient.split(/ (?=\d|약)/);
-
-        return (
-          <List.Item
-            key={index}
-            title={
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text>{item}</Text>
-              </View>
-            }
-            description={unit}
-            left={(props) => (
-              <List.Icon {...props} icon="bread-slice-outline" />
-            )}
-          />
-        );
-      })}
-    </List.Section>
-  );
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
-
-  // 페이지 표시기
-  const renderDots = (pages) => {
-    const dotPosition = Animated.divide(
-      scrollX,
-      Dimensions.get("window").width
-    );
-    const dotsArray = Array(pages.length).fill(0);
-
-    return (
-      <View style={styles.dotContainerHorizontal}>
-        {dotsArray.map((_, i) => {
-          const opacity = dotPosition.interpolate({
-            inputRange: [i - 1, i, i + 1],
-            outputRange: [0.3, 1, 0.3],
-            extrapolate: "clamp",
-          });
-
-          return <Animated.View key={i} style={[styles.dot, { opacity }]} />;
-        })}
-      </View>
-    );
-  };
-
-  //이미지 picker 함수
-  const handlePickImage = async (index) => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      alert("카메라 권한을 허용해 주세요");
-      return;
-    }
-
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const newSteps = [...recipe.steps];
-      newSteps[index].image = result.assets[0].uri;
-    }
-  };
-
-  //타이머 관련 함수
-  const [timerText, setTimerText] = useState("");
-  const [timerInterval, setTimerInterval] = useState(null);
-  const [totalSeconds, setTotalSeconds] = useState(0);
-
-  const handleShowTimer = (item) => {
-    if (!timerInterval) {
-      const [minutes, seconds] = item.timer.split(":").map(Number);
-      const initialTotalSeconds = minutes * 60 + seconds;
-      setTotalSeconds(initialTotalSeconds);
-
-      const interval = setInterval(() => {
-        setTotalSeconds((prevTotalSeconds) => {
-          if (prevTotalSeconds > 0) {
-            const remainingMinutes = Math.floor(prevTotalSeconds / 60);
-            const remainingSeconds = prevTotalSeconds % 60;
-            const formattedTime = `${remainingMinutes
-              .toString()
-              .padStart(2, "0")}:${remainingSeconds
-              .toString()
-              .padStart(2, "0")}`;
-            setTimerText(formattedTime);
-            return prevTotalSeconds - 1;
-          } else {
-            clearInterval(interval);
-            setTimerInterval(null);
-            Vibration.vibrate();
-            setTimerText("");
-            return 0;
-          }
-        });
-      }, 1000);
-
-      setTimerInterval(interval);
-    } else {
-      clearInterval(timerInterval);
-      setTimerInterval(null);
-      setTimerText("");
-      setTotalSeconds(0);
-    }
-  };
 
   // Modal 보이는지 여부 설정 함수
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -166,9 +51,7 @@ const RecipeProcess = () => {
 
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
-    <ScrollView
-      style={[styles.card, isModalVisible && styles.cardModalVisible]}
-    >
+    <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
       <View
         style={{
           flexDirection: "row",
@@ -180,7 +63,9 @@ const RecipeProcess = () => {
 
       {index != 0 && (
         <TouchableOpacity
-          onPress={() => handlePickImage(index)}
+          onPress={() => {
+            handlePickImage(recipe, index);
+          }}
           style={[
             styles.imageContainer,
             isModalVisible && styles.cardModalVisible,
@@ -193,18 +78,6 @@ const RecipeProcess = () => {
           )}
         </TouchableOpacity>
       )}
-
-      {/* <View>
-        {item.timer ? (
-          <TouchableOpacity onPress={() => handleShowTimer(item)}>
-            {timerText ? (
-              <Text style={styles.timerText}>{timerText}</Text>
-            ) : (
-              <FAB icon="timer" style={styles.timer} size="large" />
-            )}
-          </TouchableOpacity>
-        ) : null}
-      </View> */}
 
       {index != 0 && (
         <Text style={styles.stepDescription}>{item.description}</Text>
@@ -234,7 +107,7 @@ const RecipeProcess = () => {
           <IngredientList ingredients={recipe.ingredients} />
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 
   return (
@@ -258,7 +131,8 @@ const RecipeProcess = () => {
           );
         }}
       />
-      {renderDots(recipe.steps)}
+
+      <PageIndicator scrollX={scrollX} pages={recipe.steps} />
     </View>
   );
 };
@@ -267,7 +141,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    backgroundColor: "#fofofo",
   },
   card: {
     width: Dimensions.get("window").width,
@@ -306,19 +179,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 15,
-  },
-  dotContainerHorizontal: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 16,
-  },
-  dot: {
-    height: 10,
-    width: 10,
-    borderRadius: 5,
-    backgroundColor: "gray",
-    marginHorizontal: 4,
   },
   timerText: {
     position: "absolute",
