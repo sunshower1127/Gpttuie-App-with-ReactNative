@@ -12,10 +12,9 @@ import {
   Vibration,
   ScrollView,
 } from "react-native";
-import { IconButton, MD3Colors, List, FAB } from "react-native-paper";
+import { IconButton, MD3Colors, List, AnimatedFAB } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import RatingModal from "../../components/starRating";
-import { Step, Recipe } from "../../models/recipe";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
 import { useNavigation } from "@react-navigation/native"; //추가사항
@@ -38,23 +37,29 @@ const RecipeProcess = () => {
   // 재료 리스트
   const IngredientList = ({ ingredients }) => (
     <List.Section>
-      {ingredients.map((ingredient, index) => (
-        <List.Item
-          key={index}
-          title={
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text style={styles.ingredinet}>{ingredient}</Text>
-            </View>
-          }
-          description="한 모"
-          left={(props) => <List.Icon {...props} icon="egg" />}
-        />
-      ))}
+      {ingredients.map((ingredient, index) => {
+        const [item, unit] = ingredient.split(/ (?=\d|약)/);
+
+        return (
+          <List.Item
+            key={index}
+            title={
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text>{item}</Text>
+              </View>
+            }
+            description={unit}
+            left={(props) => (
+              <List.Icon {...props} icon="bread-slice-outline" />
+            )}
+          />
+        );
+      })}
     </List.Section>
   );
 
@@ -156,7 +161,6 @@ const RecipeProcess = () => {
 
   // 업데이트된 레시피 객체를 처리하는 로직 작성
   const handleRecipeUpdate = (updatedRecipe) => {
-    console.log("Updated recipe:", updatedRecipe);
     setRecipe(updatedRecipe);
   };
 
@@ -190,7 +194,7 @@ const RecipeProcess = () => {
         </TouchableOpacity>
       )}
 
-      <View>
+      {/* <View>
         {item.timer ? (
           <TouchableOpacity onPress={() => handleShowTimer(item)}>
             {timerText ? (
@@ -200,7 +204,7 @@ const RecipeProcess = () => {
             )}
           </TouchableOpacity>
         ) : null}
-      </View>
+      </View> */}
 
       {index != 0 && (
         <Text style={styles.stepDescription}>{item.description}</Text>
@@ -216,7 +220,20 @@ const RecipeProcess = () => {
         </View>
       )}
 
-      {index === 0 && <IngredientList ingredients={recipe.ingredients} />}
+      {index === 0 && (
+        <View>
+          <Text
+            style={{
+              marginTop: 10,
+              fontSize: 30,
+              color: "darkgreen",
+            }}
+          >
+            재료
+          </Text>
+          <IngredientList ingredients={recipe.ingredients} />
+        </View>
+      )}
     </ScrollView>
   );
 
