@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { List } from "react-native-paper";
 
 // 재료 리스트
 const IngredientList = ({ ingredients }) => (
-  <List.Section>
+  <ScrollView>
     {ingredients.map((ingredient, index) => {
       const [item, unit] = ingredient.split(/ (?=\d|약)/);
 
@@ -25,7 +25,7 @@ const IngredientList = ({ ingredients }) => (
         />
       );
     })}
-  </List.Section>
+  </ScrollView>
 );
 
 export default IngredientList;

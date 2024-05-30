@@ -10,11 +10,13 @@ import {
   Dimensions,
   StatusBar,
 } from "react-native";
-import { IconButton, MD3Colors, AnimatedFAB } from "react-native-paper";
+import { IconButton, MD3Colors } from "react-native-paper";
 import RatingModal from "../../components/starRating";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/ImagePicker";
+import Timer from "../../components/timer";
+import ChatScreen from "../../components/GptUI";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
 import { useNavigation } from "@react-navigation/native"; //추가사항
@@ -131,7 +133,7 @@ const RecipeProcess = () => {
           );
         }}
       />
-
+      <ChatScreen />
       <PageIndicator scrollX={scrollX} pages={recipe.steps} />
     </View>
   );
