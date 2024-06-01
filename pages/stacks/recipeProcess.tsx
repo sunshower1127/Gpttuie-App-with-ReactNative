@@ -16,7 +16,7 @@ import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/ImagePicker";
 import Timer from "../../components/timer";
-import ChatScreen from "../../components/GptUI";
+import App from "../../components/GptUI";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
 import { useNavigation } from "@react-navigation/native"; //추가사항
@@ -114,26 +114,32 @@ const RecipeProcess = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={recipe.steps}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
-        onMomentumScrollEnd={(event) => {
-          setCurrentIndex(
-            Math.floor(
-              event.nativeEvent.contentOffset.x / Dimensions.get("window").width
-            )
-          );
-        }}
-      />
-      <ChatScreen />
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={recipe.steps}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false }
+          )}
+          onMomentumScrollEnd={(event) => {
+            setCurrentIndex(
+              Math.floor(
+                event.nativeEvent.contentOffset.x /
+                  Dimensions.get("window").width
+              )
+            );
+          }}
+        />
+      </View>
+      <View style={{ flex: 0.4, backgroundColor: "skyblue" }}>
+        <App />
+      </View>
+
       <PageIndicator scrollX={scrollX} pages={recipe.steps} />
     </View>
   );
@@ -142,11 +148,10 @@ const RecipeProcess = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
   },
   card: {
     width: Dimensions.get("window").width,
-    padding: 16,
+    padding: 10,
     backgroundColor: "white",
     flex: 1,
   },
