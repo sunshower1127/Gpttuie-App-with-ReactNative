@@ -55,8 +55,7 @@ const Timer = () => {
         visible={showPicker}
         setIsVisible={setShowPicker}
         onConfirm={(pickedDuration) => {
-          // formatTime에서 에러나서 일단 주석처리함.
-          // setAlarmString(formatTime(pickedDuration));
+          //setAlarmString(formatTime(pickedDuration));
           setShowPicker(false);
         }}
         modalTitle="Set Alarm"

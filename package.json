@@ -19,11 +19,13 @@
     "expo-haptics": "^13.0.1",
     "expo-image-picker": "~15.0.4",
     "expo-linear-gradient": "^13.0.2",
+    "expo-secure-store": "~13.0.1",
     "expo-status-bar": "~1.12.1",
     "firebase": "^10.12.1",
     "openai": "^4.0.0",
     "react": "18.2.0",
     "react-native": "^0.74.1",
+    "react-native-chatgpt": "^0.9.0",
     "react-native-dotenv": "^3.4.11",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-fs": "^2.20.0",
@@ -34,7 +36,8 @@
     "react-native-screens": "^3.31.1",
     "react-native-star-rating-widget": "^1.7.3",
     "react-native-timer-picker": "^1.8.2",
-    "react-native-webview": "13.8.6",
+    "react-native-vector-icons": "^10.1.0",
+    "react-native-webview": "^13.8.6",
     "typescript": "~5.3.3"
   },
   "devDependencies": {
