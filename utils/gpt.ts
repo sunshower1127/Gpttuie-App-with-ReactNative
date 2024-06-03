@@ -23,7 +23,7 @@ export async function getRecipeCandidates(
     "만약 현재 가진 재료가 없다면 추가적인 재료는 없는지 물어봐줘.",
     "마지막으로, 너는 사용자가 제공한 재료를 바탕으로 3개의 레시피 중 어떤 것을 선택할지 질문하고, 여기서 사용자가 선택한 레시피를 알려줘야 해",
     "3가지 레시피를 선택하라고 할 때는 레시피 이름을 쌍따음표 사이에 넣어서 제공해줘",
-    "또한 너는 사용자가 선택한 레시피에 대해 질문이 생기면 그 레시피에 맞는 올바른 답변을 제공해 주어야 해"
+    "또한 너는 사용자가 선택한 레시피에 대해 질문이 생기면 그 레시피에 맞는 올바른 답변을 제공해 주어야 해",
   ];
 
   const messages = systemMessages.map((content) => ({
@@ -146,10 +146,8 @@ export async function getNewRecipe(
     return await getNewRecipe(recipeSetting, n + 1);
   }
 }
-     //여기에 추가사항 입력 구현
-export async function getAdditionalInfo(
-  question: string
-): Promise<string> {
+//여기에 추가사항 입력 구현
+export async function generateGPTResponse(question: string): Promise<string> {
   const messages = [
     {
       role: "user",
@@ -158,26 +156,26 @@ export async function getAdditionalInfo(
   ];
 
   const data = {
-        model: "gpt-3.5-turbo",
-        messages: messages,
-        temperature: 0.5,
-        top_p: 1.0,
-      };
+    model: "gpt-3.5-turbo",
+    messages: messages,
+    temperature: 0.5,
+    top_p: 1.0,
+  };
 
-      try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${config.API_KEY}`,
-          },
-          body: JSON.stringify(data),
-        });
-        const un_responseData = await response.json();
-        const content: string = un_responseData.choices[0].message.content;
-        return content;
-      } catch (error) {
-        console.error("API 호출 중 오류 발생:", error);
-        return "";
-      }
-    }
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${config.API_KEY}`,
+      },
+      body: JSON.stringify(data),
+    });
+    const un_responseData = await response.json();
+    const content: string = un_responseData.choices[0].message.content;
+    return content;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+    return "";
+  }
+}

@@ -61,15 +61,7 @@ const RatingModal = ({
         <Modal
           visible={visible}
           onDismiss={hideModal}
-          contentContainerStyle={[
-            styles.modal,
-            {
-              backgroundColor: "white",
-              padding: 20,
-              margin: 20,
-              borderRadius: 10,
-            },
-          ]}
+          contentContainerStyle={[styles.modal]}
         >
           <Text style={{ marginBottom: 10, fontSize: 18 }}>
             평점을 입력해 주세요
@@ -142,6 +134,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "90%",
     height: 300,
+    backgroundColor: "white",
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
   },
   button: {
     marginTop: 30,

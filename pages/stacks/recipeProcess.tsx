@@ -8,14 +8,12 @@ import {
   FlatList,
   Animated,
   Dimensions,
-  StatusBar,
 } from "react-native";
 import { IconButton, MD3Colors } from "react-native-paper";
 import RatingModal from "../../components/starRating";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/ImagePicker";
-import Timer from "../../components/timer";
 import App from "../../components/GptUI";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
@@ -27,6 +25,7 @@ const RecipeProcess = () => {
   //레시피 저장정보 불러오가
   const navigation = useNavigation<MyNavigation>();
   const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
+  const [showTimer, setShowTimer] = useState(false);
   const [recipe, setRecipe] = useState(route.params);
   const title = route.params.title;
   const ingredients = recipe.ingredients || [];
@@ -43,18 +42,16 @@ const RecipeProcess = () => {
   // Modal 보이는지 여부 설정 함수
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleModalVisibility = (visible) => {
-    setIsModalVisible(visible);
-  };
-
   // 업데이트된 레시피 객체를 처리하는 로직 작성
   const handleRecipeUpdate = (updatedRecipe) => {
     setRecipe(updatedRecipe);
   };
 
+  // 타이머 모달 보이는지 여부 설정 함수
+
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
-    <View style={[styles.card, isModalVisible && styles.cardModalVisible]}>
+    <View style={styles.card}>
       <View
         style={{
           flexDirection: "row",
@@ -69,10 +66,7 @@ const RecipeProcess = () => {
           onPress={() => {
             handlePickImage(recipe, index);
           }}
-          style={[
-            styles.imageContainer,
-            isModalVisible && styles.cardModalVisible,
-          ]}
+          style={[styles.imageContainer]}
         >
           {item.image ? (
             <Image source={{ uri: item.image }} style={styles.image} />
@@ -86,10 +80,10 @@ const RecipeProcess = () => {
         <Text style={styles.stepDescription}>{item.description}</Text>
       )}
 
-      {index === recipe.steps.length && (
+      {index === recipe.steps.length - 1 && (
         <View>
           <RatingModal
-            onModalVisibilityChange={handleModalVisibility}
+            onModalVisibilityChange={setIsModalVisible}
             newRecipe={recipe}
             onRecipeUpdate={handleRecipeUpdate}
           />
@@ -137,8 +131,15 @@ const RecipeProcess = () => {
           }}
         />
       </View>
-      <View style={{ flex: 0.4, backgroundColor: "skyblue" }}>
-        <App />
+      <View
+        style={{
+          flex: 0.5,
+          backgroundColor: isModalVisible
+            ? "rgba(0, 0, 0, 0.5)"
+            : "transparent",
+        }}
+      >
+        {!isModalVisible && <App />}
       </View>
 
       <PageIndicator scrollX={scrollX} pages={recipe.steps} />
@@ -187,20 +188,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 15,
-  },
-  timerText: {
-    position: "absolute",
-    margin: 20,
-    fontSize: 40,
-    fontWeight: "bold",
-    color: "yellowgreen",
-  },
-  timer: {
-    position: "absolute",
-    margin: 20,
-  },
-  cardModalVisible: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 
