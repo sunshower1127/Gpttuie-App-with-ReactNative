@@ -131,16 +131,16 @@ const RecipeProcess = () => {
           }}
         />
       </View>
-      <View
-        style={{
-          flex: 0.5,
-          backgroundColor: isModalVisible
-            ? "rgba(0, 0, 0, 0.5)"
-            : "transparent",
-        }}
-      >
-        {!isModalVisible && <App />}
-      </View>
+      {!isModalVisible && (
+        <View
+          style={{
+            flex: 0.5,
+            backgroundColor: isModalVisible ? "rgba(0, 0, 0, 0.5)" : null,
+          }}
+        >
+          <App />
+        </View>
+      )}
 
       <PageIndicator scrollX={scrollX} pages={recipe.steps} />
     </View>

@@ -174,7 +174,7 @@ const App = () => {
                 </View>
                 <View
                   style={{
-                    backgroundColor: "#007AFF",
+                    backgroundColor: "green",
                     borderRadius: 10,
                     padding: 10,
                     maxWidth: "90%",
