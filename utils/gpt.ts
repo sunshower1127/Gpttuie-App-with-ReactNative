@@ -39,7 +39,7 @@ export async function getRecipeCandidates(
   });
 
   const data = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-4o",
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
@@ -106,7 +106,7 @@ export async function getNewRecipe(
   ];
 
   const data = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-4o",
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
@@ -156,7 +156,7 @@ export async function generateGPTResponse(question: string): Promise<string> {
   ];
 
   const data = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-4o",
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
