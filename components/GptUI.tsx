@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import * as Haptics from "expo-haptics";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  Alert,
   Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import { Chip, Avatar } from "react-native-paper";
+import { Avatar, Chip } from "react-native-paper";
+import theme from "../constants/theme";
 import { generateGPTResponse } from "../utils/gpt";
 import TimerPicker from "./TimePicker";
-import * as Haptics from "expo-haptics";
-import theme from "../constants/theme";
 
 const App = () => {
   // 스크롤뷰 관련 함수

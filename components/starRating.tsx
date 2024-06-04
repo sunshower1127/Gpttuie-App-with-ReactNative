@@ -1,6 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { MyNavigation, StackRouteProp } from "../models/stackNav";
 import { StyleSheet, View } from "react-native";
 import {
   Button,
@@ -10,10 +9,11 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
-import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
-import { Recipe } from "../models/recipe";
-import { saveRecipe } from "./saveRecipe";
+import StarRating from "react-native-star-rating-widget";
 import theme from "../constants/theme";
+import { Recipe } from "../models/recipe";
+import { MyNavigation } from "../models/stackNav";
+import { saveRecipe } from "./saveRecipe";
 
 type RatingModalProps = {
   onModalVisibilityChange: (visibility: boolean) => void;

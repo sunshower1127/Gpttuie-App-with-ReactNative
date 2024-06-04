@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Step, Recipe } from "../models/recipe";
+import { Recipe } from "../models/recipe";
 
 // 단일 Recipe를 저장합니다.
 export const saveRecipe = async (recipe: Recipe) => {

@@ -1,4 +1,4 @@
-import config from "../apikey";
+import apikey from "../constants/apikey";
 import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
@@ -50,7 +50,7 @@ export async function getRecipeCandidates(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${config.API_KEY}`,
+        Authorization: `Bearer ${apikey}`,
       },
       body: JSON.stringify(data),
     });
@@ -127,7 +127,7 @@ export async function getNewRecipe(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${config.API_KEY}`,
+        Authorization: `Bearer ${apikey}`,
       },
       body: JSON.stringify(data),
     });
@@ -177,7 +177,7 @@ export async function generateGPTResponse(question: string): Promise<string> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${config.API_KEY}`,
+        Authorization: `Bearer ${apikey}`,
       },
       body: JSON.stringify(data),
     });

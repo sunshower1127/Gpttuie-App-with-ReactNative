@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { TimerPickerModal } from "react-native-timer-picker";
-import { LinearGradient } from "expo-linear-gradient";
 import { Audio } from "expo-av";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { TimerPickerModal } from "react-native-timer-picker";
 
 const TimerPicker = ({ setShowPicker, timerDuration, setTimerDuration }) => {
   return (

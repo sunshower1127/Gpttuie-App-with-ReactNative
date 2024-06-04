@@ -1,6 +1,6 @@
 // 페이지 표시기
 import React from "react";
-import { View, Animated, Dimensions, StyleSheet } from "react-native";
+import { Animated, Dimensions, StyleSheet, View } from "react-native";
 
 const PageIndicator = ({ scrollX, pages }) => {
   const renderDots = () => {

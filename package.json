@@ -14,7 +14,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@types/react": "~18.2.45",
-    "expo": "~51.0.8",
+    "expo": "~51.0.9",
     "expo-av": "^14.0.5",
     "expo-haptics": "^13.0.1",
     "expo-image-picker": "~15.0.4",

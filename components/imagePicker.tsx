@@ -1,5 +1,4 @@
 import * as ImagePicker from "expo-image-picker";
-import { Animated } from "react-native";
 
 //이미지 picker 함수
 const handlePickImage = async (recipe, index) => {

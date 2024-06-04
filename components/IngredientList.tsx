@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { List } from "react-native-paper";
 
 // 재료 리스트

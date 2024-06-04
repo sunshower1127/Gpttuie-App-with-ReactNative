@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
   Animated,
   Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { IconButton, MD3Colors } from "react-native-paper";
-import RatingModal from "../../components/starRating";
+import App from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/imagePicker";
-import App from "../../components/GptUI";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { StackRouteProp } from "../../models/stackNav";
-import { useNavigation } from "@react-navigation/native"; //추가사항
-import { MyNavigation } from "../../models/stackNav"; //추가사항
+import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
+import { StackRouteProp } from "../../models/stackNav";
 
 const RecipeProcess = () => {
   //레시피 저장정보 불러오가
-  const navigation = useNavigation<MyNavigation>();
   const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
-  const [showTimer, setShowTimer] = useState(false);
   const [recipe, setRecipe] = useState(route.params);
-  const title = route.params.title;
-  const ingredients = recipe.ingredients || [];
-  const servingSize = recipe.servingSize;
-  const country = recipe.country;
-  const steps = recipe.steps || [];
-  const description = steps.map((step) => step.description).join("\n");
-  const rating = recipe.rating;
-  const oneLineReview = recipe.oneLineReview;
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
