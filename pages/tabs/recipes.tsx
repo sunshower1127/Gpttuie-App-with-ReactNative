@@ -14,13 +14,12 @@ import UploadBtn from "../../components/uploadBtn";
 const MyComponent = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const navigation = useNavigation<MyNavigation>();
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      const loadedRecipes = await loadAllRecipes();
-      setRecipes(loadedRecipes);
-    };
-    fetchRecipes();
-  }, []);
+  const fetchRecipes = async () => {
+    const loadedRecipes = await loadAllRecipes();
+    setRecipes(loadedRecipes);
+  };
+
+  fetchRecipes();
 
   const handleDeleteRecipe = async (index: number) => {
     try {

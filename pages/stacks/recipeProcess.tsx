@@ -13,7 +13,7 @@ import { IconButton, MD3Colors } from "react-native-paper";
 import RatingModal from "../../components/starRating";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
-import handlePickImage from "../../components/ImagePicker";
+import handlePickImage from "../../components/imagePicker";
 import App from "../../components/GptUI";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";
@@ -61,7 +61,7 @@ const RecipeProcess = () => {
         <Text style={styles.recipeTitle}>{recipe.title}</Text>
       </View>
 
-      {index != 0 && (
+      {index !== 0 && (
         <TouchableOpacity
           onPress={() => {
             handlePickImage(recipe, index);
@@ -80,7 +80,7 @@ const RecipeProcess = () => {
         <Text style={styles.stepDescription}>{item.description}</Text>
       )}
 
-      {index === recipe.steps.length - 1 && (
+      {index === recipe.steps.length && (
         <View>
           <RatingModal
             onModalVisibilityChange={setIsModalVisible}
@@ -96,7 +96,7 @@ const RecipeProcess = () => {
             style={{
               marginTop: 10,
               fontSize: 30,
-              color: "darkgreen",
+              color: theme.colors.primary,
             }}
           >
             재료
@@ -111,7 +111,7 @@ const RecipeProcess = () => {
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
         <FlatList
-          data={recipe.steps}
+          data={[null, ...recipe.steps]}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
           horizontal
@@ -142,7 +142,7 @@ const RecipeProcess = () => {
         </View>
       )}
 
-      <PageIndicator scrollX={scrollX} pages={recipe.steps} />
+      <PageIndicator scrollX={scrollX} pages={[null, ...recipe.steps]} />
     </View>
   );
 };

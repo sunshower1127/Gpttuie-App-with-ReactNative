@@ -115,11 +115,11 @@ export default function RecipeSetting() {
         style={[
           styles.item,
           {
-            position: "absolute",
-            bottom: 160,
-            left: 100,
-            right: 100,
-            alignItems: "center",
+            // position: "absolute",
+            // bottom: 160,
+            // left: 100,
+            // right: 100,
+            // alignItems: "center",
           },
         ]}
         onPress={onPress}

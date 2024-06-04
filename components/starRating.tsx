@@ -57,7 +57,7 @@ const RatingModal = ({
   };
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <Portal>
         <Modal
           visible={visible}
@@ -72,7 +72,7 @@ const RatingModal = ({
 
           <TextInput
             label="한줄평을 입력해 주세요"
-            mode="flat"
+            mode="outlined"
             keyboardType="default"
             value={text}
             onChangeText={setText}
@@ -87,7 +87,7 @@ const RatingModal = ({
             }}
           >
             <Button
-              mode="contained"
+              mode="outlined"
               icon="book"
               style={styles.button}
               onPress={() => {
@@ -113,7 +113,7 @@ const RatingModal = ({
       <Button
         mode="contained"
         icon="check"
-        buttonColor="purple"
+        buttonColor={theme.colors.primary}
         onPress={showModal}
         style={styles.check}
       >

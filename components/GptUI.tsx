@@ -12,6 +12,7 @@ import { Chip, Avatar } from "react-native-paper";
 import { generateGPTResponse } from "../utils/gpt";
 import TimerPicker from "./TimePicker";
 import * as Haptics from "expo-haptics";
+import theme from "../constants/theme";
 
 const App = () => {
   // 스크롤뷰 관련 함수
@@ -110,6 +111,7 @@ const App = () => {
       >
         <Chip
           icon="information"
+          mode="outlined"
           style={{ marginHorizontal: 5 }}
           onPress={() =>
             Linking.openURL("https://m.10000recipe.com/recipe/view_weight.html")
@@ -119,6 +121,7 @@ const App = () => {
         </Chip>
         <Chip
           icon="information"
+          mode="outlined"
           style={{ marginHorizontal: 5 }}
           onPress={() => {
             setShowPicker(true);
@@ -174,7 +177,7 @@ const App = () => {
                 </View>
                 <View
                   style={{
-                    backgroundColor: "green",
+                    backgroundColor: theme.colors.secondaryContainer,
                     borderRadius: 10,
                     padding: 10,
                     maxWidth: "90%",
@@ -182,7 +185,7 @@ const App = () => {
                     marginLeft: 5,
                   }}
                 >
-                  <Text style={{ color: "white" }}>{message.text}</Text>
+                  <Text style={{ color: "black" }}>{message.text}</Text>
                 </View>
               </>
             )}
