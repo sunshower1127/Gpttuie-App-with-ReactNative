@@ -76,4 +76,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+apikey.js
+
 # @end expo-cli
