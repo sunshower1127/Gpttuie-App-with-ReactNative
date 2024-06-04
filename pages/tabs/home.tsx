@@ -10,7 +10,7 @@ export default function Home() {
     if (name !== "Recipe") return;
     const recipe = data;
     console.log("Downloaded Recipe : ", recipe);
-    saveRecipe(recipe);
+    saveRecipe({ ...recipe, id: Date.now().toString() });
     alert("레시피 저장 완료");
   };
   return (

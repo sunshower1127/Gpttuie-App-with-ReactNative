@@ -1,5 +1,4 @@
 import config from "../apikey";
-import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
 // GPT API를 사용하여 레시피 후보 3개를 추천받는 함수
