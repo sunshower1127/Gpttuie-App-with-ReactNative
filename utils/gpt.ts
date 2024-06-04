@@ -1,4 +1,5 @@
 import config from "../apikey";
+import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
 // GPT API를 사용하여 레시피 후보 3개를 추천받는 함수
@@ -17,12 +18,12 @@ export async function getRecipeCandidates(
   const systemMessages = [
     "너는 친절하며 전 세계 음식을 다룰 수 있는 유명 쉐프로 경력이 20년이 넘어.",
     "또한 주어진 재료를 모두 사용하여 만들 수 있는 레시피를 제공할 수 있을 만큼 세계의 수많은 음식과 그에 관한 레시피를 알고 있어. 너가 대답하지 못하는 것은 없어.",
-    "또한 레시피를 제공할 때는 번호를 매겨서 순서를 제공해줘야 해.",
-    "또한 너는 레시피에 대해 각 순서마다 몇 분동안 조리해야 하는지 세세한 정보도 레시피를 제공할 때 알려주어야 해.",
-    "만약 현재 가진 재료가 없다면 추가적인 재료는 없는지 물어봐줘.",
+    //"또한 레시피를 제공할 때는 번호를 매겨서 순서를 제공해줘야 해.",
+    //"또한 너는 레시피에 대해 각 순서마다 몇 분동안 조리해야 하는지 세세한 정보도 레시피를 제공할 때 알려주어야 해.",
+    //"만약 현재 가진 재료가 없다면 추가적인 재료는 없는지 물어봐줘.",
     "마지막으로, 너는 사용자가 제공한 재료를 바탕으로 3개의 레시피 중 어떤 것을 선택할지 질문하고, 여기서 사용자가 선택한 레시피를 알려줘야 해",
     "3가지 레시피를 선택하라고 할 때는 레시피 이름을 쌍따음표 사이에 넣어서 제공해줘",
-    "또한 너는 사용자가 선택한 레시피에 대해 질문이 생기면 그 레시피에 맞는 올바른 답변을 제공해 주어야 해",
+    //"또한 너는 사용자가 선택한 레시피에 대해 질문이 생기면 그 레시피에 맞는 올바른 답변을 제공해 주어야 해",
   ];
 
   const messages = systemMessages.map((content) => ({
@@ -97,12 +98,22 @@ export async function getNewRecipe(
     return null;
   }
 
-  const messages = [
-    {
-      role: "user",
-      content: `${title}의 레시피를 선택할게.`,
-    },
+  const systemMessages = [
+    "또한 레시피를 제공할 때는 번호를 매겨서 순서를 제공해줘야 해.",
+    "또한 너는 레시피에 대해 각 순서마다 몇 분동안 조리해야 하는지 세세한 정보도 레시피를 제공할 때 알려주어야 해.",
+    "만약 현재 가진 재료가 없다면 추가적인 재료는 없는지 물어봐줘.",
+    "또한 너는 사용자가 선택한 레시피에 대해 질문이 생기면 그 레시피에 맞는 올바른 답변을 제공해 주어야 해",
   ];
+
+  const messages = systemMessages.map((content) => ({
+    role: "system",
+    content,
+  }));
+
+  messages.push({
+    role: "user",
+    content: `${title}의 레시피를 선택할게.`,
+  });
 
   const data = {
     model: "gpt-4o",

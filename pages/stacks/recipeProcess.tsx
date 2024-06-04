@@ -13,7 +13,7 @@ import { IconButton, MD3Colors } from "react-native-paper";
 import RatingModal from "../../components/starRating";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
-import handlePickImage from "../../components/imagePicker";
+import handlePickImage from "../../components/ImagePicker";
 import App from "../../components/GptUI";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackRouteProp } from "../../models/stackNav";

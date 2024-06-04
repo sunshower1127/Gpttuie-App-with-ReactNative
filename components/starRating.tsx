@@ -13,6 +13,7 @@ import {
 import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
 import { Recipe } from "../models/recipe";
 import { saveRecipe } from "./saveRecipe";
+import theme from "../constants/theme";
 
 type RatingModalProps = {
   onModalVisibilityChange: (visibility: boolean) => void;
@@ -66,13 +67,13 @@ const RatingModal = ({
           <Text style={{ marginBottom: 10, fontSize: 18 }}>
             평점을 입력해 주세요
           </Text>
-          {newRecipe.rating ? (
-            <StarRatingDisplay rating={newRecipe.rating} />
-          ) : (
-            <StarRating rating={rating} onChange={setRating} />
-          )}
+
+          <StarRating rating={rating} onChange={setRating} />
+
           <TextInput
-            label={newRecipe.oneLineReview ? null : "한줄평"}
+            label="한줄평을 입력해 주세요"
+            mode="flat"
+            keyboardType="default"
             value={text}
             onChangeText={setText}
             multiline={true}
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   check: {
     position: "absolute",
     right: 0,
-    bottom: -150,
+    bottom: -50,
   },
   modal: {
     position: "absolute",
