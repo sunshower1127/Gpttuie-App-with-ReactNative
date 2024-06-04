@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Avatar, Button, Divider } from "react-native-paper";
-import { Recipe } from "../../models/recipe";
-import {
-  saveRecipe,
-  loadAllRecipes,
-  deleteRecipe,
-} from "../../components/saveRecipe";
 import { useNavigation } from "@react-navigation/native";
-import { MyNavigation } from "../../models/stackNav";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Avatar, Button, Divider } from "react-native-paper";
+import { deleteRecipe, loadAllRecipes } from "../../components/saveRecipe";
 import UploadBtn from "../../components/uploadBtn";
+import { Recipe } from "../../models/recipe";
+import { MyNavigation } from "../../models/stackNav";
 
 const MyComponent = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

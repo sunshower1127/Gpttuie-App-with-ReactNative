@@ -15,7 +15,7 @@ export default function UploadBtn({ recipe }: { recipe: Recipe }) {
         navigation.navigate("게시물_작성", recipe);
       }}
     >
-      Share
+      업로드
     </Button>
   );
 }

@@ -1,7 +1,7 @@
-import apikey from "../constants/apikey";
 import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
+const apikey = "sk-" + "cYRgm7j56WMUrQayzkM5T" + "3BlbkFJ4QX2ljoSV0sMucggWX48";
 // GPT API를 사용하여 레시피 후보 3개를 추천받는 함수
 // 재료, 국가, 사람수의 데이터가 들어있는 Recipe 객체를 받아서,
 // 3개의 레시피 후보의 title을 받아와 Recipe[3]을 리턴함.

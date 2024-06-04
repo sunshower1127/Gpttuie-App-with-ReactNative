@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "gpttuie-init",
+    "name": "gpttuie",
     "slug": "gpttuie",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,15 +11,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptiveicon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.sunshower1127.gpttuieinit"
@@ -27,9 +25,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-secure-store"
-    ],
+    "plugins": ["expo-secure-store"],
     "extra": {
       "eas": {
         "projectId": "21c2e3df-6b36-4351-9537-ad9ded155e22"
