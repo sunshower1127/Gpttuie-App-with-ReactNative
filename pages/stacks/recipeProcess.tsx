@@ -48,7 +48,7 @@ export default function RecipeProcess() {
 
       Alert.alert(
         "나가기",
-        "레시피가 저장되지 않았습니다. 저장하시겠습니까?",
+        "레시피가 저장되지 않았습니다.\n저장하시겠습니까?",
         [
           {
             text: "저장",
@@ -73,7 +73,7 @@ export default function RecipeProcess() {
     };
 
     navigation.setOptions({
-      title: `${recipe.title}  ${recipe.servingSize}인분`,
+      headerTitle: `${recipe.title}  ${recipe.servingSize}인분`,
       headerLeft: () => <Button onPress={handleLeftBtn}>나가기</Button>,
     });
   }, [recipe]);
@@ -102,7 +102,7 @@ export default function RecipeProcess() {
           {item.image ? (
             <Image source={{ uri: item.image }} style={styles.image} />
           ) : (
-            <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
+            <IconButton icon="camera" size={30} />
           )}
         </TouchableOpacity>
       )}
