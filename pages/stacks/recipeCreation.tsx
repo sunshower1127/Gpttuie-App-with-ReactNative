@@ -16,14 +16,14 @@ export default function RecipeCreation() {
 
   // useEffect쓰면 단 한번만 실행됨
   useEffect(() => {
-    const recipeSetting = route.params;
+    const { recipe: recipeSetting, text: extraRequest } = route.params;
     if (!recipeSetting) {
       alert("에러 : 선택한 레시피가 없습니다.");
       return;
     }
 
     const getRecipe = async () => {
-      const newRecipe = await getNewRecipe(recipeSetting);
+      const newRecipe = await getNewRecipe(recipeSetting, extraRequest);
       if (!newRecipe) {
         alert("레시피 생성에 실패했습니다.");
         setIsLoading(false);

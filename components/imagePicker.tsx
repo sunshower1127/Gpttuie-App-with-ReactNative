@@ -28,14 +28,14 @@ export default async function handlePickImage(
 
     if (result.canceled) return;
 
-    const newRecipe = {
+    const updatedRecipe = {
       ...recipe,
       steps: recipe.steps.map((step, i) => {
         if (i !== index) return step;
         return { ...step, image: result.assets[0].uri };
       }),
     };
-    setRecipe(newRecipe);
+    setRecipe(updatedRecipe);
   };
 
   Alert.alert(

@@ -36,7 +36,10 @@ export default function RecipeSetting() {
     console.log("RecipeSetting: ", recipeSetting);
     console.log("<-- RecipeSetting");
 
-    navigation.push("레시피_선택", recipeSetting);
+    navigation.push("레시피_선택", {
+      recipe: recipeSetting,
+      text: extraRequest,
+    });
   };
 
   const [isRecommended, setIsRecommended] = useState(true);

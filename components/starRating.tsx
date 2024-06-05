@@ -78,7 +78,6 @@ const RatingModal = ({
             label="한줄평을 입력해 주세요"
             mode="outlined"
             keyboardType="default"
-            value={text}
             onChangeText={setText}
             multiline={true}
             style={{ marginTop: 5, width: "100%" }}
