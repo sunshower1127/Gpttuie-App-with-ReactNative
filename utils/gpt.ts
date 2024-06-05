@@ -39,9 +39,9 @@ export async function getRecipeCandidates(
 
   messages.push({
     role: "user",
-    content: `재료 : ${ingredients.join(
+    content: `재료로 "${ingredients.join(
       ", "
-    )}, ${country}, ${servingSize}인분의 요리 3개를 추천해줘.`,
+    )}"를 사용하고, ${country}인 요리를 3개 추천해줘.`,
   });
 
   const data = {
@@ -105,8 +105,9 @@ export async function getNewRecipe(
   }
 
   const systemMessages = [
-    "레시피를 제공할 때, 먼저 재료를 나열해주고, 레시피 단계를 제공할 때는 번호를 붙여서 설명해줘",
-    "또한 너는 레시피에 대해 각 순서마다 몇 분동안 조리해야 하는지 세세한 정보도 레시피를 제공할 때 알려주어야 해.",
+    "레시피를 제공할 때, 먼저 재료를 나열해줘. 각각의 재료 앞에는 구별하기 쉽게 - 를 붙여줘. 또 레시피 단계를 제공할 때는 번호를 붙여서 설명해줘",
+    "이 레시피 단계는 자세하게 알려줘야해. 특히 몇분동안 조리해야하는지 같은 정보가 중요해.",
+    "레시피 단계를 알려줄땐 말끝마다 '요'를 붙여줘",
   ];
 
   const messages = systemMessages.map((content) => ({
@@ -139,7 +140,7 @@ export async function getNewRecipe(
     const content: string = un_responseData.choices[0].message.content;
     // 1. 2. 3. 기준으로 받은 레시피 문자열 나누기
     const descriptions = content
-      .split(/\d\.\s/)
+      .split(/\d+\.\s/)
       .filter(Boolean)
       .map((desc, index) => `${index}. ${desc}`)
       .slice(1);

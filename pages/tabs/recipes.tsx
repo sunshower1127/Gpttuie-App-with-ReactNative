@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   recipeTitle: {
-    fontSize: 30,
+    fontSize: 24,
+    marginLeft: 10,
   },
   rightSection: {
     flexDirection: "row",
@@ -134,7 +135,8 @@ const styles = StyleSheet.create({
   },
   oneLineReview: {
     marginRight: 10,
-    fontSize: 18,
+    fontSize: 16,
+    color: "gray",
   },
   divider: {
     marginTop: 10,

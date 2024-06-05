@@ -69,6 +69,7 @@ const RatingModal = ({
           </Text>
           <Rating
             showRating
+            startingValue={newRecipe.rating}
             onFinishRating={setRating}
             style={{ paddingVertical: 10 }}
           />
@@ -77,6 +78,7 @@ const RatingModal = ({
             label="한줄평을 입력해 주세요"
             mode="outlined"
             keyboardType="default"
+            value={text}
             onChangeText={setText}
             multiline={true}
             style={{ marginTop: 5, width: "100%" }}
@@ -95,12 +97,13 @@ const RatingModal = ({
               onPress={() => {
                 const updatedRecipe = updateRecipe(text, rating);
                 onRecipeUpdate(updatedRecipe);
-                navigation.push("메인"), saveRecipe(updatedRecipe);
+                navigation.pop();
+                saveRecipe(updatedRecipe);
               }}
             >
-              {newRecipe.rating ? "닫기" : "레시피 저장"}
+              저장하기
             </Button>
-            {newRecipe.rating ? null : (
+            {/* {newRecipe.rating ? null : (
               <Button
                 mode="contained"
                 style={styles.button}
@@ -108,7 +111,7 @@ const RatingModal = ({
               >
                 저장하지 않고 닫기
               </Button>
-            )}
+            )} */}
           </View>
         </Modal>
       </Portal>
@@ -130,6 +133,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
+    opacity: 0.7,
   },
   modal: {
     position: "absolute",

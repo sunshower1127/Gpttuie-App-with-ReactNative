@@ -1,6 +1,7 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Animated,
   Dimensions,
   FlatList,
@@ -10,21 +11,24 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { IconButton, MD3Colors } from "react-native-paper";
+import { Button, IconButton, MD3Colors } from "react-native-paper";
 import App from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/imagePicker";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
-import { StackRouteProp } from "../../models/stackNav";
+import { MyNavigation, StackRouteProp } from "../../models/stackNav";
+import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 
-const RecipeProcess = () => {
-  //레시피 저장정보 불러오가
+export default function RecipeProcess() {
+  //레시피 저장정보 불러오기
   const route = useRoute<RouteProp<StackRouteProp, "레시피_프로세스">>();
+  const initialRecipe = route.params;
   const [recipe, setRecipe] = useState(route.params);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation<MyNavigation>();
 
   // Modal 보이는지 여부 설정 함수
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,24 +38,64 @@ const RecipeProcess = () => {
     setRecipe(updatedRecipe);
   };
 
+  useEffect(() => {
+    const handleLeftBtn = async () => {
+      const savedRecipe = await loadRecipe(recipe.id);
+      if (savedRecipe && initialRecipe === recipe) {
+        navigation.pop();
+        return;
+      }
+
+      Alert.alert(
+        "나가기",
+        "레시피가 저장되지 않았습니다. 저장하시겠습니까?",
+        [
+          {
+            text: "저장",
+            onPress: () => {
+              saveRecipe(recipe);
+              navigation.pop();
+            },
+          },
+          {
+            text: "저장안함",
+            onPress: () => {
+              navigation.pop();
+            },
+          },
+          {
+            text: "취소",
+            style: "cancel",
+          },
+        ],
+        { cancelable: true }
+      );
+    };
+
+    navigation.setOptions({
+      title: `${recipe.title}  ${recipe.servingSize}인분`,
+      headerLeft: () => <Button onPress={handleLeftBtn}>나가기</Button>,
+    });
+  }, [recipe]);
+
   // 타이머 모달 보이는지 여부 설정 함수
 
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
-      <View
+      {/* <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
         }}
       >
         <Text style={styles.recipeTitle}>{recipe.title}</Text>
-      </View>
+      </View> */}
 
       {index !== 0 && (
         <TouchableOpacity
           onPress={() => {
-            handlePickImage(recipe, index - 1);
+            handlePickImage(recipe, setRecipe, index - 1);
           }}
           style={[styles.imageContainer]}
         >
@@ -132,7 +176,7 @@ const RecipeProcess = () => {
       <PageIndicator scrollX={scrollX} pages={[null, ...recipe.steps]} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -177,5 +221,3 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 });
-
-export default RecipeProcess;

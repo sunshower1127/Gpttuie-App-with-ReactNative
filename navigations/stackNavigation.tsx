@@ -52,14 +52,14 @@ export default function StackNavigation() {
           component={RecipeCreation}
           options={{
             headerShown: true,
-            headerTitle: "레시피 생성 완료!",
+            headerTitle: "레시피 생성!",
           }}
         />
         <Stack.Screen
           name="레시피_프로세스"
           component={RecipeProcess}
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
         />
         <Stack.Screen
