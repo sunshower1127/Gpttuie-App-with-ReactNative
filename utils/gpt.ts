@@ -2,6 +2,11 @@ import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
 const apikey = "sk-" + "cYRgm7j56WMUrQayzkM5T" + "3BlbkFJ4QX2ljoSV0sMucggWX48";
+
+const gptVersion = "gpt-3.5-turbo";
+
+
+
 // GPT API를 사용하여 레시피 후보 3개를 추천받는 함수
 // 재료, 국가, 사람수의 데이터가 들어있는 Recipe 객체를 받아서,
 // 3개의 레시피 후보의 title을 받아와 Recipe[3]을 리턴함.
@@ -39,7 +44,7 @@ export async function getRecipeCandidates(
   });
 
   const data = {
-    model: "gpt-4o",
+    model: gptVersion,
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
@@ -116,7 +121,7 @@ export async function getNewRecipe(
   });
 
   const data = {
-    model: "gpt-4o",
+    model: gptVersion,
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
@@ -166,7 +171,7 @@ export async function generateGPTResponse(question: string): Promise<string> {
   ];
 
   const data = {
-    model: "gpt-4o",
+    model: gptVersion,
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,

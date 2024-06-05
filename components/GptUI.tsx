@@ -149,11 +149,12 @@ const App = () => {
             {message.sender === "user" ? (
               <>
                 <View style={{ marginRight: 5 }}>
-                  {/* <Avatar.Image
+                  <Avatar.Image
                     size={24}
-                    source={require("../assets/logo.png")
-                    }
-                  /> */}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/gpttuie.appspot.com/o/assets%2Flogo.png?alt=media&token=14b897aa-ce89-46c5-9621-8246ddfd7399",
+                    }}
+                  />
                 </View>
                 <View
                   style={{

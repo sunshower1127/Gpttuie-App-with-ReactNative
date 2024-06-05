@@ -39,7 +39,8 @@
     "react-native-timer-picker": "^1.8.2",
     "react-native-vector-icons": "^10.1.0",
     "react-native-webview": "^13.8.6",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "expo-sharing": "~12.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

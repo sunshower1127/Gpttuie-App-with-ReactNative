@@ -1,12 +1,5 @@
-import WebView from "react-native-webview";
+import DownloadableWebView from "../../components/downloadableWebView";
 
 export default function Profile() {
-  return (
-    <WebView
-      source={{
-        uri: "https://gpttuie.web.app/profile",
-        headers: { "Cache-Control": "no-cache" },
-      }}
-    />
-  );
+  return <DownloadableWebView path="profile" />;
 }

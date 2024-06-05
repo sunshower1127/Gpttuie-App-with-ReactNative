@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   check: {
     position: "absolute",
     right: 0,
-    bottom: -50,
+    top: 0,
   },
   modal: {
     position: "absolute",
