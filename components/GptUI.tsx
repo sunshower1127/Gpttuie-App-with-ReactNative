@@ -149,10 +149,11 @@ const App = () => {
             {message.sender === "user" ? (
               <>
                 <View style={{ marginRight: 5 }}>
-                  <Avatar.Image
+                  {/* <Avatar.Image
                     size={24}
-                    source={require("../assets/logo.png")}
-                  />
+                    source={require("../assets/logo.png")
+                    }
+                  /> */}
                 </View>
                 <View
                   style={{
