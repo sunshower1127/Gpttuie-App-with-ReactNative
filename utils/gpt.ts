@@ -3,9 +3,16 @@ import { Recipe } from "../models/recipe";
 
 const apikey = "sk-" + "cYRgm7j56WMUrQayzkM5T" + "3BlbkFJ4QX2ljoSV0sMucggWX48";
 
-const gptVersion = "gpt-3.5-turbo";
+let gptVersion = "gpt-3.5-turbo";
 
+export function setGptVersion(v: string) {
+  gptVersion = v;
+}
 
+export function getGptVersion() {
+  console.log(gptVersion);
+  return gptVersion;
+}
 
 // GPT API를 사용하여 레시피 후보 3개를 추천받는 함수
 // 재료, 국가, 사람수의 데이터가 들어있는 Recipe 객체를 받아서,
@@ -39,7 +46,7 @@ export async function getRecipeCandidates(
   });
 
   const data = {
-    model: gptVersion,
+    model: getGptVersion(),
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
@@ -114,7 +121,7 @@ export async function getNewRecipe(
   });
 
   const data = {
-    model: gptVersion,
+    model: getGptVersion(),
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,
@@ -164,7 +171,7 @@ export async function generateGPTResponse(question: string): Promise<string> {
   ];
 
   const data = {
-    model: gptVersion,
+    model: getGptVersion(),
     messages: messages,
     temperature: 0.5,
     top_p: 1.0,

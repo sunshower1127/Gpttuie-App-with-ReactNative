@@ -1,8 +1,11 @@
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import Logo from "../../components/logo";
+import { useState } from "react";
+import { getGptVersion, setGptVersion } from "../../utils/gpt";
 
 export default function Contact() {
+  const [version, setVersion] = useState(getGptVersion());
   return (
     <View
       style={{
@@ -21,6 +24,21 @@ export default function Contact() {
       <Text variant={"bodyMedium"}> 김선우 : sunshower1127@gmail.com</Text>
       <Text variant={"bodyMedium"}> 오 현 : auth58100@naver.com</Text>
       <Text variant={"bodyMedium"}> 윤수일 : etham512@naver.com</Text>
+      <Button
+        mode="outlined"
+        onPress={() => {
+          if (version === "gpt-3.5-turbo") {
+            setVersion("gpt-4o");
+            setGptVersion("gpt-4o");
+          } else if (version === "gpt-4o") {
+            setVersion("gpt-3.5-turbo");
+            setGptVersion("gpt-3.5-turbo");
+          }
+        }}
+      >
+        {" "}
+        {version}{" "}
+      </Button>
     </View>
   );
 }

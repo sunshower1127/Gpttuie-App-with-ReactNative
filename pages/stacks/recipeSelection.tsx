@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
+    gap: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
   loadingContainer: {
     flex: 1,
