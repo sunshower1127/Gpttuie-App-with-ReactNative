@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 import { Button, IconButton, MD3Colors } from "react-native-paper";
-import App from "../../components/GptUI";
+import GptUI from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/imagePicker";
@@ -29,6 +29,7 @@ export default function RecipeProcess() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const navigation = useNavigation<MyNavigation>();
+  const [extraData, setExtraData] = useState(0);
 
   // Modal 보이는지 여부 설정 함수
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -78,24 +79,14 @@ export default function RecipeProcess() {
     });
   }, [recipe]);
 
-  // 타이머 모달 보이는지 여부 설정 함수
-
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={styles.recipeTitle}>{recipe.title}</Text>
-      </View> */}
-
       {index !== 0 && (
         <TouchableOpacity
           onPress={() => {
             handlePickImage(recipe, setRecipe, index - 1);
+            setExtraData(extraData + 1);
           }}
           style={[styles.imageContainer]}
         >
@@ -160,6 +151,7 @@ export default function RecipeProcess() {
               )
             );
           }}
+          extraData={extraData}
         />
       </View>
       {!isModalVisible && (
@@ -169,7 +161,7 @@ export default function RecipeProcess() {
             backgroundColor: isModalVisible ? "rgba(0, 0, 0, 0.5)" : null,
           }}
         >
-          <App />
+          <GptUI />
         </View>
       )}
 

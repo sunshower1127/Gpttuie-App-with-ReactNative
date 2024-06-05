@@ -13,7 +13,7 @@ import theme from "../constants/theme";
 import { generateGPTResponse } from "../utils/gpt";
 import TimerPicker from "./TimePicker";
 
-const App = () => {
+const GptUI = () => {
   // 스크롤뷰 관련 함수
   const scrollViewRef = useRef<ScrollView | null>(null);
 
@@ -216,4 +216,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default GptUI;

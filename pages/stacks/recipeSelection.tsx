@@ -18,7 +18,7 @@ export default function RecipeSelection() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const recipeSetting = route.params;
+    const { recipe: recipeSetting, text: extraRequest } = route.params;
     if (!recipeSetting) {
       alert("에러 : 레시피 설정이 없습니다.");
       return;
@@ -39,7 +39,10 @@ export default function RecipeSelection() {
         console.log("Recipes: ", candidate);
         console.log("<-- RecipeSelection");
         setIsLoading(false);
-        navigation.push("레시피_생성", recipeSetting);
+        navigation.push("레시피_생성", {
+          recipe: recipeSetting,
+          text: extraRequest,
+        });
       }
     };
 

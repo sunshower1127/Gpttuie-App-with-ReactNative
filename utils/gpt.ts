@@ -91,6 +91,7 @@ export async function getRecipeCandidates(
 // steps의 description을 채워넣어 Recipe 객체를 리턴함.
 export async function getNewRecipe(
   recipeSetting: Readonly<Recipe>,
+  text: string,
   n = 1
 ): Promise<Recipe | null> {
   const { title, ingredients } = recipeSetting;
@@ -108,6 +109,7 @@ export async function getNewRecipe(
     "레시피를 제공할 때, 먼저 재료를 나열해줘. 각각의 재료 앞에는 구별하기 쉽게 - 를 붙여줘. 또 레시피 단계를 제공할 때는 번호를 붙여서 설명해줘",
     "이 레시피 단계는 자세하게 알려줘야해. 특히 몇분동안 조리해야하는지 같은 정보가 중요해.",
     "레시피 단계를 알려줄땐 말끝마다 '요'를 붙여줘",
+    "나는 " + text + "를 추가 요구사항으로 원해 ",
   ];
 
   const messages = systemMessages.map((content) => ({
@@ -158,7 +160,7 @@ export async function getNewRecipe(
     return newRecipe;
   } catch (error) {
     console.error("API 호출 중 오류 발생:", error);
-    return await getNewRecipe(recipeSetting, n + 1);
+    return await getNewRecipe(recipeSetting, text, n + 1);
   }
 }
 //여기에 추가사항 입력 구현
