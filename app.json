@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "gpttuie-init",
-    "slug": "gpttuie-init",
+    "name": "gpttuie",
+    "slug": "gpttuie",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -26,6 +24,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-secure-store"],
+    "extra": {
+      "eas": {
+        "projectId": "21c2e3df-6b36-4351-9537-ad9ded155e22"
+      }
+    },
+    "owner": "sunshower1127"
   }
 }

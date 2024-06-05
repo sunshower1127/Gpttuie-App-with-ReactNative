@@ -1,7 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Snackbar, Text, TextInput } from "react-native-paper";
+import {
+  Button,
+  Snackbar,
+  Text,
+  TextInput,
+  Chip,
+  Title,
+} from "react-native-paper";
 import CountryBtn from "../../components/countryBtn";
 import IngredigentsPicker from "../../components/ingredientsPicker";
 import { Recipe } from "../../models/recipe";
@@ -13,6 +20,7 @@ import { MyNavigation } from "../../models/stackNav";
 // 설정이 끝나면 stack의 RecipeSelection 페이지로 이동함
 export default function RecipeSetting() {
   const [ingredients, setIngredients] = useState<string[]>([]);
+  const [title, setTitle] = useState("");
   const [country, setCountry] = useState("한식");
   const [servingSize, setServingSize] = useState("1");
   const [visible, setVisible] = useState(false);
@@ -24,6 +32,7 @@ export default function RecipeSetting() {
       return;
     }
     const recipeSetting: Recipe = {
+      title: title,
       servingSize: servingSizeInt,
       country,
       ingredients,
@@ -34,6 +43,14 @@ export default function RecipeSetting() {
     console.log("<-- RecipeSetting");
 
     navigation.push("레시피_선택", recipeSetting);
+  };
+
+  const [isRecommended, setIsRecommended] = useState(true);
+  const handleChipPress = (isRecommended) => {
+    setIsRecommended(isRecommended);
+    if (!isRecommended) {
+      setTitle("");
+    }
   };
 
   return (
@@ -58,16 +75,53 @@ export default function RecipeSetting() {
         value={country}
         onValueChange={setCountry}
       />
-
       <IngredigentsPicker
         style={styles.item}
         value={ingredients}
         setValue={setIngredients}
       />
+      <View>
+        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+          <Chip
+            style={{ marginRight: 10, justifyContent: "center" }}
+            onPress={() => handleChipPress(true)}
+            selected={isRecommended}
+          >
+            gpttuie의 추천음식
+          </Chip>
+          <Chip
+            style={{ marginRight: 10, justifyContent: "center" }}
+            onPress={() => handleChipPress(false)}
+            selected={!isRecommended}
+          >
+            원하는 음식
+          </Chip>
+        </View>
+
+        <TextInput
+          placeholder="만들고 싶은 음식을 입력하세요"
+          keyboardType="default"
+          mode="flat"
+          value={title}
+          onChangeText={(title) => {
+            setTitle(title), console.log(title);
+          }}
+          style={[styles.textInput, isRecommended && styles.hidden]}
+        />
+      </View>
 
       <Button
         mode={"contained"}
-        style={styles.item}
+        style={[
+          styles.item,
+          {
+            // position: "absolute",
+            // bottom: 160,
+            // left: 100,
+            // right: 100,
+            // alignItems: "center",
+          },
+        ]}
         onPress={onPress}
         icon={"chef-hat"}
       >
@@ -92,5 +146,12 @@ const styles = StyleSheet.create({
 
   item: {
     marginBottom: 30,
+  },
+  textInput: {
+    marginVertical: 10,
+    width: 280,
+  },
+  hidden: {
+    display: "none",
   },
 });

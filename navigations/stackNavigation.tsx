@@ -44,6 +44,7 @@ export default function StackNavigation() {
           component={RecipeSelection}
           options={{
             headerShown: true,
+            headerTitle: "레시피를 선택해주세요",
           }}
         />
         <Stack.Screen
@@ -51,6 +52,7 @@ export default function StackNavigation() {
           component={RecipeCreation}
           options={{
             headerShown: true,
+            headerTitle: "레시피 생성 완료!",
           }}
         />
         <Stack.Screen
@@ -65,6 +67,7 @@ export default function StackNavigation() {
           component={CreatePost}
           options={{
             headerShown: true,
+            headerTitle: "게시물 작성하기",
           }}
         />
       </Stack.Navigator>

@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Avatar, Button, Divider } from "react-native-paper";
-import { Recipe } from "../../models/recipe";
-import {
-  saveRecipe,
-  loadAllRecipes,
-  deleteRecipe,
-} from "../../components/saveRecipe";
 import { useNavigation } from "@react-navigation/native";
-import { MyNavigation } from "../../models/stackNav";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Avatar, Button, Divider } from "react-native-paper";
+import { deleteRecipe, loadAllRecipes } from "../../components/saveRecipe";
 import UploadBtn from "../../components/uploadBtn";
+import { Recipe } from "../../models/recipe";
+import { MyNavigation } from "../../models/stackNav";
 
 const MyComponent = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const navigation = useNavigation<MyNavigation>();
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      const loadedRecipes = await loadAllRecipes();
-      setRecipes(loadedRecipes);
-    };
-    fetchRecipes();
-  }, []);
+  const fetchRecipes = async () => {
+    const loadedRecipes = await loadAllRecipes();
+    setRecipes(loadedRecipes);
+  };
+
+  fetchRecipes();
 
   const handleDeleteRecipe = async (index: number) => {
     try {
@@ -33,15 +28,15 @@ const MyComponent = () => {
     }
   };
 
-  const handleSaveRecipe = async (recipe: Recipe) => {
-    try {
-      await saveRecipe(recipe);
-      const loadedRecipes = await loadAllRecipes();
-      setRecipes(loadedRecipes);
-    } catch (error) {
-      console.error("레시피 저장 중 에러 발생:", error);
-    }
-  };
+  // const handleSaveRecipe = async (recipe: Recipe) => {
+  //   try {
+  //     await saveRecipe(recipe);
+  //     const loadedRecipes = await loadAllRecipes();
+  //     setRecipes(loadedRecipes);
+  //   } catch (error) {
+  //     console.error("레시피 저장 중 에러 발생:", error);
+  //   }
+  // };
 
   const handleOpenRecipe = (recipe: Recipe) => {
     navigation.push("레시피_프로세스", recipe);

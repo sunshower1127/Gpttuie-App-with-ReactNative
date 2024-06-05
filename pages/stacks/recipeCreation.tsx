@@ -41,9 +41,6 @@ export default function RecipeCreation() {
   }, []);
 
   const handleClick = () => {
-    // 기기에 레시피 저장
-    // saveRecipeInDevice(recipe);
-
     // 메인 스택창만 남기고 다 끄고, 레시피 프로세스로 이동하기
     navigation.reset({
       index: 1,

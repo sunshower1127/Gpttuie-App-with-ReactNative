@@ -40,7 +40,7 @@ export default function TabNavigation() {
 
   const renderScene = BottomNavigation.SceneMap({
     home: Home,
-    recipes: Recipes,
+    recipes: () => <Recipes key={index} />,
     search: Search,
     profile: Profile,
     create: RecipeSetting,

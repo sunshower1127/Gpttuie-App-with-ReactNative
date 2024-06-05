@@ -1,6 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { MyNavigation, StackRouteProp } from "../models/stackNav";
 import { StyleSheet, View } from "react-native";
 import {
   Button,
@@ -10,8 +9,10 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
-import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
+import StarRating from "react-native-star-rating-widget";
+import theme from "../constants/theme";
 import { Recipe } from "../models/recipe";
+import { MyNavigation } from "../models/stackNav";
 import { saveRecipe } from "./saveRecipe";
 
 type RatingModalProps = {
@@ -56,31 +57,23 @@ const RatingModal = ({
   };
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <Portal>
         <Modal
           visible={visible}
           onDismiss={hideModal}
-          contentContainerStyle={[
-            styles.modal,
-            {
-              backgroundColor: "white",
-              padding: 20,
-              margin: 20,
-              borderRadius: 10,
-            },
-          ]}
+          contentContainerStyle={[styles.modal]}
         >
           <Text style={{ marginBottom: 10, fontSize: 18 }}>
             평점을 입력해 주세요
           </Text>
-          {newRecipe.rating ? (
-            <StarRatingDisplay rating={newRecipe.rating} />
-          ) : (
-            <StarRating rating={rating} onChange={setRating} />
-          )}
+
+          <StarRating rating={rating} onChange={setRating} />
+
           <TextInput
-            label={newRecipe.oneLineReview ? null : "한줄평"}
+            label="한줄평을 입력해 주세요"
+            mode="outlined"
+            keyboardType="default"
             value={text}
             onChangeText={setText}
             multiline={true}
@@ -94,7 +87,7 @@ const RatingModal = ({
             }}
           >
             <Button
-              mode="contained"
+              mode="outlined"
               icon="book"
               style={styles.button}
               onPress={() => {
@@ -120,7 +113,7 @@ const RatingModal = ({
       <Button
         mode="contained"
         icon="check"
-        buttonColor="purple"
+        buttonColor={theme.colors.primary}
         onPress={showModal}
         style={styles.check}
       >
@@ -134,7 +127,7 @@ const styles = StyleSheet.create({
   check: {
     position: "absolute",
     right: 0,
-    bottom: -350,
+    bottom: -50,
   },
   modal: {
     position: "absolute",
@@ -142,6 +135,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "90%",
     height: 300,
+    backgroundColor: "white",
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
   },
   button: {
     marginTop: 30,
