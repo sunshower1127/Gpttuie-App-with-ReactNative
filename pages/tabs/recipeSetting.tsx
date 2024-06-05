@@ -20,9 +20,10 @@ import { MyNavigation } from "../../models/stackNav";
 // 설정이 끝나면 stack의 RecipeSelection 페이지로 이동함
 export default function RecipeSetting() {
   const [ingredients, setIngredients] = useState<string[]>([]);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(null);
   const [country, setCountry] = useState("한식");
   const [servingSize, setServingSize] = useState("1");
+  const [extraRequest, setExtraRequest] = useState("");
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation<MyNavigation>();
   const onPress = () => {
@@ -102,26 +103,22 @@ export default function RecipeSetting() {
           placeholder="만들고 싶은 음식을 입력하세요"
           keyboardType="default"
           mode="flat"
-          value={title}
-          onChangeText={(title) => {
-            setTitle(title), console.log(title);
-          }}
+          onChangeText={setTitle}
           style={[styles.textInput, isRecommended && styles.hidden]}
+        />
+
+        <TextInput
+          placeholder="추가로 요청할 사항을 입력하세요"
+          keyboardType="default"
+          mode="outlined"
+          onChangeText={setExtraRequest}
+          style={styles.textInput}
         />
       </View>
 
       <Button
         mode={"contained"}
-        style={[
-          styles.item,
-          {
-            // position: "absolute",
-            // bottom: 160,
-            // left: 100,
-            // right: 100,
-            // alignItems: "center",
-          },
-        ]}
+        style={styles.item}
         onPress={onPress}
         icon={"chef-hat"}
       >

@@ -17,20 +17,12 @@ const IngredientList = ({ ingredients }) => {
             return (
               <List.Item
                 key={index}
-                title={
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text>{item}</Text>
-                  </View>
-                }
+                title={<Text>{item}</Text>}
                 description={unit}
                 left={(props) => (
                   <List.Icon {...props} icon="bread-slice-outline" />
                 )}
+                style={{ marginLeft: -10 }} // 왼쪽 여백 조정
               />
             );
           })}
@@ -44,20 +36,12 @@ const IngredientList = ({ ingredients }) => {
             return (
               <List.Item
                 key={index}
-                title={
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text>{item}</Text>
-                  </View>
-                }
+                title={<Text>{item}</Text>}
                 description={unit}
                 left={(props) => (
                   <List.Icon {...props} icon="bread-slice-outline" />
                 )}
+                style={{ marginLeft: -10 }} // 왼쪽 여백 조정
               />
             );
           })}
