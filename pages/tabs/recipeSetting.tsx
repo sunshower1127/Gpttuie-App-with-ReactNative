@@ -53,19 +53,17 @@ export default function RecipeSetting() {
         레시피 설정
       </Text>
 
-      <View style={{ flexDirection: "column" }}>
-        <TextInput
-          style={styles.item}
-          label="인분"
-          keyboardType="number-pad"
-          mode="outlined"
-          value={servingSize}
-          onChangeText={(text) => setServingSize(text)}
-        />
-      </View>
+      <TextInput
+        style={styles.item}
+        label="인분"
+        keyboardType="number-pad"
+        mode="outlined"
+        value={servingSize}
+        onChangeText={(text) => setServingSize(text)}
+      />
 
       <CountryBtn
-        style={[styles.item, { marginTop: 30 }]}
+        style={styles.item}
         value={country}
         onValueChange={setCountry}
       />
@@ -131,15 +129,16 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    marginBottom: 40,
+    marginBottom: 10,
   },
 
   item: {
-    marginBottom: 30,
+    marginBottom: 15,
   },
   textInput: {
     marginVertical: 10,
     width: 280,
+    height: 50,
   },
   hidden: {
     display: "none",

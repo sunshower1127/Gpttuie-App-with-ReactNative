@@ -11,15 +11,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Button, IconButton, MD3Colors } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
 import App from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/imagePicker";
+import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
-import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 
 export default function RecipeProcess() {
   //레시피 저장정보 불러오기
@@ -74,6 +74,7 @@ export default function RecipeProcess() {
 
     navigation.setOptions({
       headerTitle: `${recipe.title}  ${recipe.servingSize}인분`,
+      headerTitleAlign: "center",
       headerLeft: () => <Button onPress={handleLeftBtn}>나가기</Button>,
     });
   }, [recipe]);

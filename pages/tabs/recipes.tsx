@@ -44,6 +44,9 @@ const MyComponent = () => {
 
   return (
     <View>
+      {recipes.length === 0 && (
+        <Text style={styles.error}>저장된 레시피가 없습니다.</Text>
+      )}
       {recipes.map((recipe, index) => (
         <View key={index} style={styles.recipeContainer}>
           <View style={styles.header}>
@@ -146,6 +149,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginHorizontal: 10,
+  },
+
+  error: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 40,
   },
 });
 
