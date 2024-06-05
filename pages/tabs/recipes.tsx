@@ -28,16 +28,6 @@ const MyComponent = () => {
     }
   };
 
-  // const handleSaveRecipe = async (recipe: Recipe) => {
-  //   try {
-  //     await saveRecipe(recipe);
-  //     const loadedRecipes = await loadAllRecipes();
-  //     setRecipes(loadedRecipes);
-  //   } catch (error) {
-  //     console.error("레시피 저장 중 에러 발생:", error);
-  //   }
-  // };
-
   const handleOpenRecipe = (recipe: Recipe) => {
     navigation.push("레시피_프로세스", recipe);
   };

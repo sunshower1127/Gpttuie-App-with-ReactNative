@@ -11,7 +11,7 @@ import {
 import { Avatar, Chip } from "react-native-paper";
 import theme from "../constants/theme";
 import { generateGPTResponse } from "../utils/gpt";
-import TimerPicker from "./TimePicker";
+import TimerPicker from "./timePicker";
 
 const GptUI = () => {
   // 스크롤뷰 관련 함수

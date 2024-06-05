@@ -11,11 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Button, IconButton, MD3Colors } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
 import GptUI from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
-import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/imagePicker";
+import PageIndicator from "../../components/pageIndicator";
 import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
@@ -29,7 +29,6 @@ export default function RecipeProcess() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const navigation = useNavigation<MyNavigation>();
-  const [extraData, setExtraData] = useState(0);
 
   // Modal 보이는지 여부 설정 함수
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -87,7 +86,6 @@ export default function RecipeProcess() {
         <TouchableOpacity
           onPress={() => {
             handlePickImage(recipe, setRecipe, index - 1);
-            setExtraData(extraData + 1);
           }}
           style={[styles.imageContainer]}
         >
@@ -152,7 +150,6 @@ export default function RecipeProcess() {
               )
             );
           }}
-          extraData={extraData}
         />
       </View>
       {!isModalVisible && (
