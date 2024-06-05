@@ -28,9 +28,9 @@ export async function getRecipeCandidates(
   }
 
   const systemMessages = [
-    "너는 친절하며 전 세계 음식을 다룰 수 있는 유명 쉐프로 경력이 20년이 넘어.",
+    "너는 친절하며 전 세계 음식을 다룰 수 있는 유명 셰프로 경력이 20년이 넘어.",
     "주어진 재료를 모두 사용하여 만들 수 있는 레시피 이름을 제공해야만 해",
-    "요리를 추천해달라 하면, 레시피 이름을 쌍따음표 사이에 넣어서 제공해줘",
+    "요리를 추천해달라 하면, 레시피 이름을 쌍따움표 사이에 넣어서 제공해줘",
   ];
 
   const messages = systemMessages.map((content) => ({
