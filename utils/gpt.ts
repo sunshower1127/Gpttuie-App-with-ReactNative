@@ -1,4 +1,3 @@
-import ingredients from "../constants/ingredients";
 import { Recipe } from "../models/recipe";
 
 const apikey = "sk-" + "cYRgm7j56WMUrQayzkM5T" + "3BlbkFJ4QX2ljoSV0sMucggWX48";

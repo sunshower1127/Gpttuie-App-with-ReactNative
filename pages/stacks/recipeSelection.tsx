@@ -1,12 +1,11 @@
-import { RouteProp, useRoute, useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import RecipeSelectionCard from "../../components/recipeSelectionCard";
 import { Recipe } from "../../models/recipe";
-import { StackRouteProp } from "../../models/stackNav";
+import { MyNavigation, StackRouteProp } from "../../models/stackNav";
 import { getRecipeCandidates } from "../../utils/gpt";
-import { MyNavigation } from "../../models/stackNav";
 
 // 유저의 레시피 세팅에 따라서 GPT에게 레시피 후보를 물어보는 페이지
 // 레시피 후보를 3개 받아와서 보여줌.

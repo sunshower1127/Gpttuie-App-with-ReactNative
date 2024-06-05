@@ -1,7 +1,7 @@
+import { Share } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { Recipe } from "../models/recipe";
 import { saveRecipe } from "./saveRecipe";
-import { Share } from "react-native";
 
 export default function DownloadableWebView({ path }: { path?: string }) {
   const handleMessage = async (event: WebViewMessageEvent) => {

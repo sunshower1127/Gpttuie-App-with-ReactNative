@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import Logo from "../../components/logo";
-import { useState } from "react";
 import { getGptVersion, setGptVersion } from "../../utils/gpt";
 
 export default function Contact() {

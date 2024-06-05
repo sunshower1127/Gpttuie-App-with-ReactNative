@@ -1,14 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  Button,
-  Snackbar,
-  Text,
-  TextInput,
-  Chip,
-  Title,
-} from "react-native-paper";
+import { Button, Chip, Snackbar, Text, TextInput } from "react-native-paper";
 import CountryBtn from "../../components/countryBtn";
 import IngredigentsPicker from "../../components/ingredientsPicker";
 import { Recipe } from "../../models/recipe";

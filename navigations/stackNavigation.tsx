@@ -2,12 +2,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "react-native-paper";
 import { StackRouteProp } from "../models/stackNav";
-import Main from "../pages/stacks/main";
 import Contact from "../pages/stacks/contact";
+import CreatePost from "../pages/stacks/createPost";
+import Main from "../pages/stacks/main";
 import RecipeCreation from "../pages/stacks/recipeCreation";
 import RecipeProcess from "../pages/stacks/recipeProcess";
 import RecipeSelection from "../pages/stacks/recipeSelection";
-import CreatePost from "../pages/stacks/createPost";
 
 const Stack = createNativeStackNavigator<StackRouteProp>();
 

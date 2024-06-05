@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
 import { Button } from "react-native-paper";
 import { Recipe } from "../models/recipe";
 import { MyNavigation } from "../models/stackNav";

@@ -9,7 +9,8 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
-import StarRating from "react-native-star-rating-widget";
+
+import { Rating } from "react-native-ratings";
 import theme from "../constants/theme";
 import { Recipe } from "../models/recipe";
 import { MyNavigation } from "../models/stackNav";
@@ -66,8 +67,11 @@ const RatingModal = ({
           <Text style={{ marginBottom: 10, fontSize: 18 }}>
             평점을 입력해 주세요
           </Text>
-
-          {/* <StarRating rating={rating} onChange={setRating} /> */}
+          <Rating
+            showRating
+            onFinishRating={setRating}
+            style={{ paddingVertical: 10 }}
+          />
 
           <TextInput
             label="한줄평을 입력해 주세요"
