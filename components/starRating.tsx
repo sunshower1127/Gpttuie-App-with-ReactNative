@@ -67,7 +67,7 @@ const RatingModal = ({
             평점을 입력해 주세요
           </Text>
 
-          <StarRating rating={rating} onChange={setRating} />
+          {/* <StarRating rating={rating} onChange={setRating} /> */}
 
           <TextInput
             label="한줄평을 입력해 주세요"

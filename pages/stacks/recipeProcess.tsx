@@ -51,7 +51,7 @@ const RecipeProcess = () => {
       {index !== 0 && (
         <TouchableOpacity
           onPress={() => {
-            handlePickImage(recipe, index);
+            handlePickImage(recipe, index - 1);
           }}
           style={[styles.imageContainer]}
         >
