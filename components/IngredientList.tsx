@@ -8,40 +8,42 @@ const IngredientList = ({ ingredients }) => {
   const secondHalf = ingredients.slice(halfLength);
 
   return (
-    <ScrollView style={{ flexDirection: "row" }}>
-      <View style={{ width: "50%" }}>
-        {firstHalf.map((ingredient, index) => {
-          const [item, unit] = ingredient.split(/ (?=\d|약)/);
+    <ScrollView>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ width: "50%" }}>
+          {firstHalf.map((ingredient, index) => {
+            const [item, unit] = ingredient.split(/ (?=\d|약)/);
 
-          return (
-            <List.Item
-              key={index}
-              title={<Text>{item}</Text>}
-              description={unit}
-              left={(props) => (
-                <List.Icon {...props} icon="bread-slice-outline" />
-              )}
-              style={{ marginLeft: -10 }} // 왼쪽 여백 조정
-            />
-          );
-        })}
-      </View>
-      <View style={{ width: "50%" }}>
-        {secondHalf.map((ingredient, index) => {
-          const [item, unit] = ingredient.split(/ (?=\d|약)/);
+            return (
+              <List.Item
+                key={index}
+                title={<Text>{item}</Text>}
+                description={unit}
+                left={(props) => (
+                  <List.Icon {...props} icon="bread-slice-outline" />
+                )}
+                style={{ marginLeft: -10 }} // 왼쪽 여백 조정
+              />
+            );
+          })}
+        </View>
+        <View style={{ width: "50%" }}>
+          {secondHalf.map((ingredient, index) => {
+            const [item, unit] = ingredient.split(/ (?=\d|약)/);
 
-          return (
-            <List.Item
-              key={index}
-              title={<Text>{item}</Text>}
-              description={unit}
-              left={(props) => (
-                <List.Icon {...props} icon="bread-slice-outline" />
-              )}
-              style={{ marginLeft: -10 }} // 왼쪽 여백 조정
-            />
-          );
-        })}
+            return (
+              <List.Item
+                key={index}
+                title={<Text>{item}</Text>}
+                description={unit}
+                left={(props) => (
+                  <List.Icon {...props} icon="bread-slice-outline" />
+                )}
+                style={{ marginLeft: -10 }} // 왼쪽 여백 조정
+              />
+            );
+          })}
+        </View>
       </View>
     </ScrollView>
   );

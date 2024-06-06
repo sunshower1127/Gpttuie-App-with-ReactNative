@@ -4,11 +4,17 @@ import { Recipe } from "../models/recipe";
 import { MyNavigation } from "../models/stackNav";
 
 // RecipeSelection에서 후보군을 보여줄때 사용되는 카드 컴포넌트
-export default function RecipeSelectionCard({ recipe }: { recipe: Recipe }) {
+export default function RecipeSelectionCard({
+  recipe,
+  text,
+}: {
+  recipe: Recipe;
+  text: string;
+}) {
   const navigation = useNavigation<MyNavigation>();
   const { title } = recipe;
   const onPress = () => {
-    navigation.push("레시피_생성", recipe);
+    navigation.push("레시피_생성", { recipe, text });
   };
   return (
     <Button

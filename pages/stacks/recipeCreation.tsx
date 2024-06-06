@@ -17,6 +17,7 @@ export default function RecipeCreation() {
   // useEffect쓰면 단 한번만 실행됨
   useEffect(() => {
     const { recipe: recipeSetting, text: extraRequest } = route.params;
+    console.log(recipeSetting, extraRequest);
     if (!recipeSetting) {
       alert("에러 : 선택한 레시피가 없습니다.");
       return;

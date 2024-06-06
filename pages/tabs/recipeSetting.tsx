@@ -33,7 +33,7 @@ export default function RecipeSetting() {
     };
 
     console.log("RecipeSetting -->");
-    console.log("RecipeSetting: ", recipeSetting);
+    console.log("RecipeSetting: ", recipeSetting, "extra :", extraRequest);
     console.log("<-- RecipeSetting");
 
     navigation.push("레시피_선택", {

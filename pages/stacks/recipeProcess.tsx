@@ -15,7 +15,7 @@ import { Button, IconButton } from "react-native-paper";
 import GptUI from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
 import handlePickImage from "../../components/imagePicker";
-import PageIndicator from "../../components/pageIndicator";
+import PageIndicator from "../../components/PageIndicator";
 import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
