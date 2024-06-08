@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Avatar, Button, Divider } from "react-native-paper";
 import { deleteRecipe, loadAllRecipes } from "../../components/saveRecipe";
 import UploadBtn from "../../components/uploadBtn";
@@ -33,7 +33,7 @@ const MyComponent = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       {recipes.length === 0 && (
         <Text style={styles.error}>저장된 레시피가 없습니다.</Text>
       )}
@@ -88,7 +88,7 @@ const MyComponent = () => {
           <Divider style={styles.divider} />
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
