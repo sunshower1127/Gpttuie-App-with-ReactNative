@@ -16,9 +16,9 @@ export default function Contact() {
       }}
     >
       <Logo />
-      <Text variant={"titleLarge"}>
-        Gpttuie 서비스는 숭실대학교 3학년 1학기 소프트웨어프로젝트 수업의
-        팀프로젝트의 결과물입니다.
+      <Text variant={"bodyMedium"}>
+        Gpttuie는 숭실대학교 3학년 1학기 소프트웨어프로젝트 강의의
+        팀프로젝트입니다!
       </Text>
       <Text variant={"bodyLarge"}>팀원들</Text>
       <Text variant={"bodyMedium"}> 김선우 : sunshower1127@gmail.com</Text>
@@ -36,8 +36,7 @@ export default function Contact() {
           }
         }}
       >
-        {" "}
-        {version}{" "}
+        {version}
       </Button>
     </View>
   );

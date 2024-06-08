@@ -9,13 +9,14 @@ export default function UploadBtn({ recipe }: { recipe: Recipe }) {
 
   return (
     <Button
+      icon={"upload"}
       mode="contained"
       onPress={() => {
         console.log("레시피", recipe);
         navigation.navigate("게시물_작성", recipe);
       }}
     >
-      글 쓰기
+      업로드
     </Button>
   );
 }

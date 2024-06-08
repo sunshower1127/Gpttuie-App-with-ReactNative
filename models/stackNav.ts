@@ -16,8 +16,8 @@ export type StackRouteProp = {
   메인: undefined;
   컨택트: undefined;
   // 띄어쓰기 대신 언더하이픈 추가함
-  레시피_선택: Recipe;
-  레시피_생성: Recipe;
+  레시피_선택: { recipe: Recipe; text: string };
+  레시피_생성: { recipe: Recipe; text: string };
   레시피_프로세스: Recipe;
   게시물_작성: Recipe;
 };

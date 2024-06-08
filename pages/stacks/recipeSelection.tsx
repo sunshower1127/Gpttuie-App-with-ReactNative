@@ -14,11 +14,11 @@ export default function RecipeSelection() {
   const navigation = useNavigation<MyNavigation>();
   const route = useRoute<RouteProp<StackRouteProp, "레시피_선택">>();
   const [recipeCandidates, setRecipeCandidates] = useState<Recipe[]>([]);
-
+  const [extraRequest, setExtraRequest] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const recipeSetting = route.params;
+    const { recipe: recipeSetting, text: extraRequest } = route.params;
     if (!recipeSetting) {
       alert("에러 : 레시피 설정이 없습니다.");
       return;
@@ -26,20 +26,34 @@ export default function RecipeSelection() {
 
     const getCandidates = async () => {
       if (!recipeSetting.title) {
-        const candidates = await getRecipeCandidates(recipeSetting);
-        if (candidates) setRecipeCandidates(candidates);
+        const candidates = await getRecipeCandidates(
+          recipeSetting,
+          extraRequest
+        );
+        if (candidates) {
+          setRecipeCandidates(candidates);
+          setExtraRequest(extraRequest);
+        }
         console.log("RecipeSelection -->");
         console.log("Recipes: ", candidates);
+        console.log(extraRequest);
         console.log("<-- RecipeSelection");
         setIsLoading(false);
       } else {
         const candidate = await recipeSetting;
-        if (candidate) setRecipeCandidates([candidate]);
+        if (candidate) {
+          setRecipeCandidates([candidate]);
+          setExtraRequest(extraRequest);
+        }
         console.log("RecipeSelection -->");
         console.log("Recipes: ", candidate);
+        console.log(extraRequest);
         console.log("<-- RecipeSelection");
         setIsLoading(false);
-        navigation.push("레시피_생성", recipeSetting);
+        navigation.push("레시피_생성", {
+          recipe: recipeSetting,
+          text: extraRequest,
+        });
       }
     };
 
@@ -54,7 +68,7 @@ export default function RecipeSelection() {
   ) : (
     <View style={styles.container}>
       {recipeCandidates?.map((recipe, index) => (
-        <RecipeSelectionCard key={index} recipe={recipe} />
+        <RecipeSelectionCard key={index} recipe={recipe} text={extraRequest} />
       ))}
     </View>
   );

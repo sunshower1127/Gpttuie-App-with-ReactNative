@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import {
   Button,
   Modal,
@@ -78,9 +78,7 @@ const RatingModal = ({
             label="한줄평을 입력해 주세요"
             mode="outlined"
             keyboardType="default"
-            value={text}
             onChangeText={setText}
-            multiline={true}
             style={{ marginTop: 5, width: "100%" }}
           />
           <View
@@ -122,7 +120,7 @@ const RatingModal = ({
         onPress={showModal}
         style={styles.check}
       >
-        완료
+        평가하기
       </Button>
     </PaperProvider>
   );
@@ -131,9 +129,9 @@ const RatingModal = ({
 const styles = StyleSheet.create({
   check: {
     position: "absolute",
-    right: 0,
-    top: 0,
-    opacity: 0.7,
+    right: 10,
+    top: Dimensions.get("window").height / 2.05,
+    opacity: 0.9,
   },
   modal: {
     position: "absolute",

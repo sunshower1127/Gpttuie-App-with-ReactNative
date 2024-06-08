@@ -2,6 +2,8 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
+import HR from "../../components/hr";
+import theme from "../../constants/theme";
 import { Recipe } from "../../models/recipe";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
 import { getNewRecipe } from "../../utils/gpt";
@@ -16,14 +18,15 @@ export default function RecipeCreation() {
 
   // useEffect쓰면 단 한번만 실행됨
   useEffect(() => {
-    const recipeSetting = route.params;
+    const { recipe: recipeSetting, text: extraRequest } = route.params;
+    console.log(recipeSetting, extraRequest);
     if (!recipeSetting) {
       alert("에러 : 선택한 레시피가 없습니다.");
       return;
     }
 
     const getRecipe = async () => {
-      const newRecipe = await getNewRecipe(recipeSetting);
+      const newRecipe = await getNewRecipe(recipeSetting, extraRequest);
       if (!newRecipe) {
         alert("레시피 생성에 실패했습니다.");
         setIsLoading(false);
@@ -58,15 +61,22 @@ export default function RecipeCreation() {
     </View>
   ) : (
     <ScrollView style={styles.container}>
-      <Text variant="headlineMedium">{`${recipe?.title} ${recipe.servingSize}인분`}</Text>
+      <Text
+        variant="headlineMedium"
+        style={styles.ac}
+      >{`${recipe?.title} ${recipe.servingSize}인분`}</Text>
+      <HR />
       <Text variant="titleLarge" style={styles.subtitle}>
         재료
       </Text>
-      <Text>{recipe.ingredients.join("\n")}</Text>
+      <Text style={styles.ac}>{recipe.ingredients.join("\n")}</Text>
       <Text variant="titleLarge" style={styles.subtitle}>
         레시피
       </Text>
-      <Text>{recipe.steps.map((step) => step.description)}</Text>
+      <Text style={styles.ac}>
+        {recipe.steps.map((step) => step.description)}
+      </Text>
+      <HR />
       <Button
         mode={"contained"}
         onPress={handleClick}
@@ -92,10 +102,16 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginTop: 20,
+    marginBottom: 10,
+    textAlign: "center",
+    color: theme.colors.primary,
   },
   btn: {
     marginTop: 20,
     width: 200,
     alignSelf: "center",
+  },
+  ac: {
+    textAlign: "center",
   },
 });

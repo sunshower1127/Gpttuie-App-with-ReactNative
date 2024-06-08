@@ -7,19 +7,19 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { Button, IconButton, MD3Colors } from "react-native-paper";
-import App from "../../components/GptUI";
+import Markdown from "react-native-markdown-display";
+import { Button, IconButton, Text } from "react-native-paper";
+import GptUI from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
 import PageIndicator from "../../components/PageIndicator";
 import handlePickImage from "../../components/imagePicker";
+import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
-import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 
 export default function RecipeProcess() {
   //레시피 저장정보 불러오기
@@ -48,7 +48,7 @@ export default function RecipeProcess() {
 
       Alert.alert(
         "나가기",
-        "레시피가 저장되지 않았습니다. 저장하시겠습니까?",
+        "레시피가 저장되지 않았습니다.\n저장하시겠습니까?",
         [
           {
             text: "저장",
@@ -73,25 +73,15 @@ export default function RecipeProcess() {
     };
 
     navigation.setOptions({
-      title: `${recipe.title}  ${recipe.servingSize}인분`,
+      headerTitle: `${recipe.title}  ${recipe.servingSize}인분`,
+      headerTitleAlign: "center",
       headerLeft: () => <Button onPress={handleLeftBtn}>나가기</Button>,
     });
   }, [recipe]);
 
-  // 타이머 모달 보이는지 여부 설정 함수
-
   // Card 안에 들어갈 요소들
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={styles.recipeTitle}>{recipe.title}</Text>
-      </View> */}
-
       {index !== 0 && (
         <TouchableOpacity
           onPress={() => {
@@ -102,17 +92,32 @@ export default function RecipeProcess() {
           {item.image ? (
             <Image source={{ uri: item.image }} style={styles.image} />
           ) : (
-            <IconButton icon="camera" iconColor={MD3Colors.error50} size={30} />
+            <IconButton icon="camera" size={30} />
           )}
         </TouchableOpacity>
       )}
-
       {index !== 0 && (
-        <Text style={styles.stepDescription}>{item.description}</Text>
+        <Markdown
+          style={{
+            body: {
+              fontSize: 16,
+              marginTop: 15,
+            },
+          }}
+        >
+          {item.description}
+        </Markdown>
       )}
 
       {index === recipe.steps.length && (
-        <View>
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            width: Dimensions.get("window").width,
+            height: "100%",
+          }}
+        >
           <RatingModal
             onModalVisibilityChange={setIsModalVisible}
             newRecipe={recipe}
@@ -165,11 +170,11 @@ export default function RecipeProcess() {
       {!isModalVisible && (
         <View
           style={{
-            flex: 0.5,
+            flex: 0.6,
             backgroundColor: isModalVisible ? "rgba(0, 0, 0, 0.5)" : null,
           }}
         >
-          <App />
+          <GptUI />
         </View>
       )}
 

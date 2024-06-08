@@ -28,20 +28,25 @@ export default async function handlePickImage(
 
     if (result.canceled) return;
 
-    const newRecipe = {
+    const updatedRecipe = {
       ...recipe,
       steps: recipe.steps.map((step, i) => {
         if (i !== index) return step;
         return { ...step, image: result.assets[0].uri };
       }),
     };
-    setRecipe(newRecipe);
+    setRecipe(updatedRecipe);
   };
 
   Alert.alert(
     "이미지 선택",
-    "카메라로 사진을 찍거나 갤러리에서 선택하세요.",
+    "사진을 가져올 방법을 선택해주세요",
     [
+      {
+        text: "취소",
+        style: "cancel",
+      },
+
       {
         text: "카메라",
         onPress: async () => await pickImage(true),

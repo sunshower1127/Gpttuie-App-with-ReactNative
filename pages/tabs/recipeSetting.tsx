@@ -33,10 +33,13 @@ export default function RecipeSetting() {
     };
 
     console.log("RecipeSetting -->");
-    console.log("RecipeSetting: ", recipeSetting);
+    console.log("RecipeSetting: ", recipeSetting, "extra :", extraRequest);
     console.log("<-- RecipeSetting");
 
-    navigation.push("레시피_선택", recipeSetting);
+    navigation.push("레시피_선택", {
+      recipe: recipeSetting,
+      text: extraRequest,
+    });
   };
 
   const [isRecommended, setIsRecommended] = useState(true);
@@ -53,19 +56,17 @@ export default function RecipeSetting() {
         레시피 설정
       </Text>
 
-      <View style={{ flexDirection: "column" }}>
-        <TextInput
-          style={styles.item}
-          label="인분"
-          keyboardType="number-pad"
-          mode="outlined"
-          value={servingSize}
-          onChangeText={(text) => setServingSize(text)}
-        />
-      </View>
+      <TextInput
+        style={styles.item}
+        label="인분"
+        keyboardType="number-pad"
+        mode="outlined"
+        value={servingSize}
+        onChangeText={(text) => setServingSize(text)}
+      />
 
       <CountryBtn
-        style={[styles.item, { marginTop: 30 }]}
+        style={styles.item}
         value={country}
         onValueChange={setCountry}
       />
@@ -103,7 +104,7 @@ export default function RecipeSetting() {
         <TextInput
           placeholder="추가로 요청할 사항을 입력하세요"
           keyboardType="default"
-          mode="outlined"
+          mode="flat"
           onChangeText={setExtraRequest}
           style={styles.textInput}
         />
@@ -111,7 +112,7 @@ export default function RecipeSetting() {
 
       <Button
         mode={"contained"}
-        style={styles.item}
+        style={[styles.item, { marginTop: 20 }]}
         onPress={onPress}
         icon={"chef-hat"}
       >
@@ -131,15 +132,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    marginBottom: 40,
+    marginBottom: 10,
+    marginTop: 10,
   },
 
   item: {
-    marginBottom: 30,
+    marginBottom: 15,
   },
   textInput: {
-    marginVertical: 10,
+    marginVertical: 9,
     width: 280,
+    height: 50,
+    fontSize: 13,
+    backgroundColor: "white",
   },
   hidden: {
     display: "none",

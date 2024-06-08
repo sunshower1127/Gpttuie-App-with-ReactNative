@@ -8,46 +8,51 @@ const IngredientList = ({ ingredients }) => {
   const secondHalf = ingredients.slice(halfLength);
 
   return (
-    <View style={{ flexDirection: "row" }}>
-      <View style={{ width: "50%" }}>
-        <ScrollView>
+    <ScrollView>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ width: "50%", marginRight: -5, marginBottom: 40 }}>
           {firstHalf.map((ingredient, index) => {
             const [item, unit] = ingredient.split(/ (?=\d|약)/);
 
             return (
               <List.Item
                 key={index}
-                title={<Text>{item}</Text>}
+                title={(props) => (
+                  <Text numberOfLines={2} ellipsizeMode="tail">
+                    {item}
+                  </Text>
+                )}
                 description={unit}
                 left={(props) => (
                   <List.Icon {...props} icon="bread-slice-outline" />
                 )}
-                style={{ marginLeft: -10 }} // 왼쪽 여백 조정
               />
             );
           })}
-        </ScrollView>
-      </View>
-      <View style={{ width: "50%" }}>
-        <ScrollView>
+        </View>
+
+        <View style={{ width: "50%", marginRight: 5, marginBottom: 40 }}>
           {secondHalf.map((ingredient, index) => {
             const [item, unit] = ingredient.split(/ (?=\d|약)/);
 
             return (
               <List.Item
                 key={index}
-                title={<Text>{item}</Text>}
+                title={(props) => (
+                  <Text numberOfLines={2} ellipsizeMode="tail">
+                    {item}
+                  </Text>
+                )}
                 description={unit}
                 left={(props) => (
                   <List.Icon {...props} icon="bread-slice-outline" />
                 )}
-                style={{ marginLeft: -10 }} // 왼쪽 여백 조정
               />
             );
           })}
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
