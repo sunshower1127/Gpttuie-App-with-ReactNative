@@ -2,11 +2,11 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
+import HR from "../../components/hr";
+import theme from "../../constants/theme";
 import { Recipe } from "../../models/recipe";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
 import { getNewRecipe } from "../../utils/gpt";
-import HR from "../../components/hr";
-import theme from "../../constants/theme";
 
 // 유저가 고른 3개중 하나의 레시피에 대한 조리순서 정보를 GPT에게서 가져옴.
 // 가져온 정보를 보여주고, 요리하기 버튼을 누르면 RecipeProcess 페이지로 이동함

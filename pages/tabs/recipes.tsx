@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Avatar, Button, Divider } from "react-native-paper";
 import { deleteRecipe, loadAllRecipes } from "../../components/saveRecipe";
 import UploadBtn from "../../components/uploadBtn";

@@ -10,18 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Text } from "react-native-paper";
-import { Button, IconButton } from "react-native-paper";
+import Markdown from "react-native-markdown-display";
+import { Button, IconButton, Text } from "react-native-paper";
 import GptUI from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
-import handlePickImage from "../../components/imagePicker";
 import PageIndicator from "../../components/PageIndicator";
+import handlePickImage from "../../components/imagePicker";
 import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
-import Markdown from "react-native-markdown-display";
-import { Step } from "../../models/recipe";
 
 export default function RecipeProcess() {
   //레시피 저장정보 불러오기
