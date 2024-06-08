@@ -16,6 +16,7 @@ const IngredientList = ({ ingredients }) => {
 
             return (
               <List.Item
+                key={index}
                 title={(props) => (
                   <Text numberOfLines={2} ellipsizeMode="tail">
                     {item}
@@ -36,6 +37,7 @@ const IngredientList = ({ ingredients }) => {
 
             return (
               <List.Item
+                key={index}
                 title={(props) => (
                   <Text numberOfLines={2} ellipsizeMode="tail">
                     {item}

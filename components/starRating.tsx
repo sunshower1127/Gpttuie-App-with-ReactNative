@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import {
   Button,
   Modal,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   check: {
     position: "absolute",
     right: 10,
-    top: "50%",
+    top: Dimensions.get("window").height / 2.05,
     opacity: 0.9,
   },
   modal: {

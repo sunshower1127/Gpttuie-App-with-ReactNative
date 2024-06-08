@@ -128,8 +128,10 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   oneLineReview: {
+    marginLeft: 50,
     fontSize: 14,
     color: "gray",
+    marginBottom: 10,
   },
   divider: {
     marginTop: 15,
