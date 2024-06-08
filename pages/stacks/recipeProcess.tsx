@@ -7,10 +7,10 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Text } from "react-native-paper";
 import { Button, IconButton } from "react-native-paper";
 import GptUI from "../../components/GptUI";
 import IngredientList from "../../components/IngredientList";
@@ -20,6 +20,8 @@ import { loadRecipe, saveRecipe } from "../../components/saveRecipe";
 import RatingModal from "../../components/starRating";
 import theme from "../../constants/theme";
 import { MyNavigation, StackRouteProp } from "../../models/stackNav";
+import Markdown from "react-native-markdown-display";
+import { Step } from "../../models/recipe";
 
 export default function RecipeProcess() {
   //레시피 저장정보 불러오기
@@ -96,13 +98,28 @@ export default function RecipeProcess() {
           )}
         </TouchableOpacity>
       )}
-
       {index !== 0 && (
-        <Text style={styles.stepDescription}>{item.description}</Text>
+        <Markdown
+          style={{
+            body: {
+              fontSize: 16,
+              marginTop: 15,
+            },
+          }}
+        >
+          {item.description}
+        </Markdown>
       )}
 
       {index === recipe.steps.length && (
-        <View>
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            width: Dimensions.get("window").width,
+            height: "100%",
+          }}
+        >
           <RatingModal
             onModalVisibilityChange={setIsModalVisible}
             newRecipe={recipe}
@@ -155,7 +172,7 @@ export default function RecipeProcess() {
       {!isModalVisible && (
         <View
           style={{
-            flex: 0.5,
+            flex: 0.6,
             backgroundColor: isModalVisible ? "rgba(0, 0, 0, 0.5)" : null,
           }}
         >

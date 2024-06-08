@@ -104,7 +104,7 @@ export default function RecipeSetting() {
         <TextInput
           placeholder="추가로 요청할 사항을 입력하세요"
           keyboardType="default"
-          mode="outlined"
+          mode="flat"
           onChangeText={setExtraRequest}
           style={styles.textInput}
         />
@@ -112,7 +112,7 @@ export default function RecipeSetting() {
 
       <Button
         mode={"contained"}
-        style={styles.item}
+        style={[styles.item, { marginTop: 20 }]}
         onPress={onPress}
         icon={"chef-hat"}
       >
@@ -133,15 +133,18 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 10,
+    marginTop: 10,
   },
 
   item: {
     marginBottom: 15,
   },
   textInput: {
-    marginVertical: 10,
+    marginVertical: 9,
     width: 280,
     height: 50,
+    fontSize: 13,
+    backgroundColor: "white",
   },
   hidden: {
     display: "none",

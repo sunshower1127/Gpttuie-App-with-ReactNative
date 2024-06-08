@@ -34,7 +34,7 @@ const MyComponent = () => {
 
   return (
     <ScrollView>
-      {recipes.length === 0 && (
+      {(!recipes || recipes.length === 0) && (
         <Text style={styles.error}>저장된 레시피가 없습니다.</Text>
       )}
       {recipes.map((recipe, index) => (
@@ -77,6 +77,7 @@ const MyComponent = () => {
               </Button>
               <UploadBtn recipe={recipe} />
               <Button
+                icon="delete"
                 mode="elevated"
                 style={styles.button}
                 onPress={() => handleDeleteRecipe(index)}
@@ -94,18 +95,18 @@ const MyComponent = () => {
 
 const styles = StyleSheet.create({
   recipeContainer: {
-    marginBottom: 20,
+    marginBottom: 2,
     marginTop: 10,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 5,
+    marginTop: 0,
     marginHorizontal: 10,
   },
   recipeTitle: {
-    fontSize: 24,
+    fontSize: 18,
     marginLeft: 10,
   },
   rightSection: {
@@ -124,15 +125,14 @@ const styles = StyleSheet.create({
   },
   bottomcontainer: {
     justifyContent: "flex-end",
-    marginTop: 10,
+    marginTop: 0,
   },
   oneLineReview: {
-    marginRight: 10,
-    fontSize: 16,
+    fontSize: 14,
     color: "gray",
   },
   divider: {
-    marginTop: 10,
+    marginTop: 15,
   },
 
   buttoncontainer: {

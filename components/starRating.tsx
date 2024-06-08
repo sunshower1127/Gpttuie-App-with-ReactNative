@@ -79,7 +79,6 @@ const RatingModal = ({
             mode="outlined"
             keyboardType="default"
             onChangeText={setText}
-            multiline={true}
             style={{ marginTop: 5, width: "100%" }}
           />
           <View
@@ -121,7 +120,7 @@ const RatingModal = ({
         onPress={showModal}
         style={styles.check}
       >
-        완료
+        평가하기
       </Button>
     </PaperProvider>
   );
@@ -130,8 +129,9 @@ const RatingModal = ({
 const styles = StyleSheet.create({
   check: {
     position: "absolute",
-    right: 0,
-    top: 0,
+    right: 10,
+    top: "50%",
+    opacity: 0.9,
   },
   modal: {
     position: "absolute",

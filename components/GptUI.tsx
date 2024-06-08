@@ -106,6 +106,8 @@ const GptUI = () => {
         style={{
           flexDirection: "row",
           margin: 5,
+          paddingTop: 10,
+          backgroundColor: "#fafafa",
         }}
       >
         <Chip
@@ -130,7 +132,7 @@ const GptUI = () => {
         </Chip>
       </View>
       <ScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: "100%", backgroundColor: "#fafafa" }}
         ref={scrollViewRef}
         onContentSizeChange={() =>
           scrollViewRef.current?.scrollToEnd({ animated: true })
@@ -140,15 +142,39 @@ const GptUI = () => {
           <View
             key={index}
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 10,
+              width: "100%",
+              marginVertical: 5,
               marginHorizontal: 10,
             }}
           >
             {message.sender === "user" ? (
-              <>
-                <View style={{ marginRight: 5 }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <View
+                  style={{
+                    flex: 0,
+                    backgroundColor: "#e6e6e6",
+                    borderRadius: 10,
+                    padding: 10,
+                    maxWidth: "90%",
+                    marginRight: 10,
+                  }}
+                >
+                  <Text>{message.text}</Text>
+                </View>
+                <View
+                  style={{
+                    marginRight: 20,
+                    flex: 0,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Avatar.Image
                     size={24}
                     source={{
@@ -156,21 +182,22 @@ const GptUI = () => {
                     }}
                   />
                 </View>
+              </View>
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                }}
+              >
                 <View
                   style={{
-                    backgroundColor: "#e6e6e6",
-                    borderRadius: 10,
-                    padding: 10,
-                    maxWidth: "90%",
-                    alignSelf: "flex-end",
+                    marginRight: 5,
+                    flex: 0,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <Text>{message.text}</Text>
-                </View>
-              </>
-            ) : (
-              <>
-                <View>
                   <Avatar.Image
                     size={24}
                     source={require("../assets/chatgpt.png")}
@@ -182,13 +209,14 @@ const GptUI = () => {
                     borderRadius: 10,
                     padding: 10,
                     maxWidth: "90%",
-                    alignSelf: "flex-start",
+
                     marginLeft: 5,
+                    flex: 0,
                   }}
                 >
                   <Text style={{ color: "black" }}>{message.text}</Text>
                 </View>
-              </>
+              </View>
             )}
           </View>
         ))}
