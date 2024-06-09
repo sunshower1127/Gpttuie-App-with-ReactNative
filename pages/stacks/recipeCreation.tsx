@@ -1,6 +1,7 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
+import Markdown from "react-native-markdown-display";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 import HR from "../../components/hr";
 import theme from "../../constants/theme";
@@ -47,10 +48,7 @@ export default function RecipeCreation() {
     // 메인 스택창만 남기고 다 끄고, 레시피 프로세스로 이동하기
     navigation.reset({
       index: 1,
-      routes: [
-        { name: "메인" },
-        { name: "레시피_프로세스", params: recipe }, // tlqkf 절대로 객체를 params로 주지마...
-      ],
+      routes: [{ name: "메인" }, { name: "레시피_프로세스", params: recipe }],
     });
   };
 
@@ -62,8 +60,11 @@ export default function RecipeCreation() {
   ) : (
     <ScrollView style={styles.container}>
       <Text
-        variant="headlineMedium"
-        style={styles.ac}
+        variant="headlineSmall"
+        style={{
+          textAlign: "center",
+          color: "#303030",
+        }}
       >{`${recipe?.title} ${recipe.servingSize}인분`}</Text>
       <HR />
       <Text variant="titleLarge" style={styles.subtitle}>
@@ -73,9 +74,9 @@ export default function RecipeCreation() {
       <Text variant="titleLarge" style={styles.subtitle}>
         레시피
       </Text>
-      <Text style={styles.ac}>
-        {recipe.steps.map((step) => step.description)}
-      </Text>
+      <Markdown>
+        {recipe.steps.map((step) => step.description).join("\n")}
+      </Markdown>
       <HR />
       <Button
         mode={"contained"}
@@ -111,7 +112,5 @@ const styles = StyleSheet.create({
     width: 200,
     alignSelf: "center",
   },
-  ac: {
-    textAlign: "center",
-  },
+  ac: {},
 });

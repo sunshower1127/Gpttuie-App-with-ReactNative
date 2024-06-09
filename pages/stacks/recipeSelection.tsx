@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import RecipeSelectionCard from "../../components/recipeSelectionCard";
 import { Recipe } from "../../models/recipe";
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     gap: 30,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: Dimensions.get("window").height * 0.4,
   },
   loadingContainer: {
     flex: 1,

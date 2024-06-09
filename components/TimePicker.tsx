@@ -15,14 +15,14 @@ const TimerPicker = ({ setShowPicker, timerDuration, setTimerDuration }) => {
           setTimerDuration(pickedDuration);
           setShowPicker(false);
         }}
-        modalTitle="Set Timer"
+        modalTitle="타이머 세팅"
         onCancel={() => setShowPicker(false)}
         closeOnOverlayPress
         Audio={Audio}
         LinearGradient={LinearGradient}
         Haptics={Haptics}
         styles={{
-          theme: "dark",
+          theme: "light",
         }}
         modalProps={{
           overlayOpacity: 0.2,
@@ -34,7 +34,7 @@ const TimerPicker = ({ setShowPicker, timerDuration, setTimerDuration }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#202020",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },

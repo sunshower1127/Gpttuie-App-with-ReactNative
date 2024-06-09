@@ -36,6 +36,7 @@ export default function StackNavigation() {
           component={Main}
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen name="컨택트" component={Contact} />
@@ -45,6 +46,7 @@ export default function StackNavigation() {
           options={{
             headerShown: true,
             headerTitle: "레시피를 선택해주세요",
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
@@ -53,6 +55,7 @@ export default function StackNavigation() {
           options={{
             headerShown: true,
             headerTitle: "레시피 생성!",
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
@@ -60,6 +63,7 @@ export default function StackNavigation() {
           component={RecipeProcess}
           options={{
             headerShown: true,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
@@ -68,6 +72,7 @@ export default function StackNavigation() {
           options={{
             headerShown: true,
             headerTitle: "게시물 작성하기",
+            gestureEnabled: false,
           }}
         />
       </Stack.Navigator>
